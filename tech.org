@@ -1,0 +1,28 @@
+### -*- mode: org; -*-
+#+STARTUP: hidestars #+STARTUP: odd #+STARTUP: logdone
+
+* Component list
+*** DefaultWorkQueue		OgreMain/src/Threading
+    - manage worker threads
+*** AnimableValue		OgreMain/src
+    - dispatch resetToBaseValue, setAsBaseValue, setValue, applyDeltaValue based on object type
+*** Animation		        OgreMain/src
+    - name, length, interpolation modes
+    - indexed set of node animation tracks, searchable by index ("handle")
+    - indexed set of numeric animation tracks, searchable by index ("handle")
+    - indexed set of vertex animation tracks, searchable by index ("handle")
+    - applicable to:
+      - nodes
+      - skeletons
+      - entities
+      - animables
+      - vertex data
+    - can optimise tracks (calls out to track)
+*** AnimationState		OgreMain/src
+    - 
+* Omissions
+*** AlignedAllocator
+*** Any
+*** AtomicWrappers
+*** AxisAlignedBox: most methods
+
