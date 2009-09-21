@@ -20,6 +20,21 @@
 
 (in-package :tech)
 
+(defstruct (vector2 (:conc-name v2-) (:constructor make-v2 (x y)))
+  (x 0 :type real)
+  (y 0 :type real))
+
+(defstruct (vector3 (:conc-name v3-) (:constructor make-v3 (x y z)))
+  (x 0 :type real)
+  (y 0 :type real)
+  (z 0 :type real))
+
+(defstruct (vector4 (:conc-name v4-) (:constructor make-v4 (x y z w)))
+  (x 0 :type real)
+  (y 0 :type real)
+  (z 0 :type rea)l
+  (w 0 :type real))
+
 ;;;;
 ;;;;     1-----2
 ;;;;    /|    /|
@@ -30,27 +45,69 @@
 ;;;;  |/    |/
 ;;;;  6-----7
 ;;;;
-(defclass axis-aligned-box ()
-  ((extent :accessor aab-extent :type (member :null :finite :infinite))
-   (minumum :accessor aab-minimum :type vector3)
-   (maximum :accessor aab-maximum :type vector3)
-   (corners :accessor aab-corners))
-  (:documentation
-   "A 3D box aligned with the x/y/z axes.
+(defstruct (axis-aligned-box (:conc-name aab-) (:constructor %make-axis-aligned-box (extent minimum maximum)))
+  "A 3D box aligned with the x/y/z axes.
 
 This class represents a simple box which is aligned with the
 axes. Internally it only stores 2 points as the extremeties of
 the box, one which is the minima of all 3 axes, and the other
 which is the maxima of all 3 axes. This class is typically used
 for an axis-aligned bounding box (AABB) for collision and
-visibility determination."))
+visibility determination."
+  (extent nil :type (member :null :finite :infinite))
+  (minumum nil :type vector3)
+  (maximum nil :type vector3)
+  (corners nil :type list))
 
-(defgeneric aab-set-null (aab))
-(defgeneric aab-set-infinite (aab))
-(defgeneric aab-set-extents (aab min max))
-(defgeneric aab-set-extents* (aab min-x min-y min-z max-x max-y max-z))
+(defun aab-set-null (aab)     (setf (aab-extent aab) :null))
+(defun aab-set-finite (aab)   (setf (aab-extent aab) :finite))
+(defun aab-set-infinite (aab) (setf (aab-extent aab) :infinite))
+(defun aab-set-minimum (aab v3)
+  (set-finite aab)
+  (setf (aab-minimum aab) v3))
+(defun aab-set-minimum* (aab x y z)
+  (set-finite aab)
+  (setf (v3-x (aab-minimum aab)) x
+        (v3-y (aab-minimum aab)) y
+        (v3-z (aab-minimum aab)) z))
+(defun aab-set-maximum (aab v3)
+  (set-finite aab)
+  (setf (aab-maximum aab) v3))
+(defun aab-set-maximum* (aab x y z)
+  (set-finite aab)
+  (setf (v3-x (aab-maximum aab)) x
+        (v3-y (aab-maximum aab)) y
+        (v3-z (aab-maximum aab)) z))
+(defun aab-set-extents (aab min max)
+  (aab-set-minimum aab min)
+  (aab-set-maximum aab max))
+(defun aab-set-extents* (aab min-x min-y min-z max-x max-y max-z)
+  (aab-set-minimum* aab min-x min-y min-z)
+  (aab-set-maximum* aab max-x max-y max-z))
 
-(defmethod initialize-instance :after ((o axis-aligned-box) &key extent &allow-other-keys)
-  (cond ((null extent)
-         (aab-set-minimum o -0.5 -0.5 -0.5)
-         (aab-set-maximum o 0.5 0.5 0.5))))
+(defun make-aab (&key extent origin)
+  (multiple-value-bind (extent minimum maximum)
+      (cond (extent (values extent (make-v3 -0.5 -0.5 -0.5) (make-v3 0.5 0.5 0.5)))
+            (origin (values (aab-extent origin) min max))
+            (t      (values :null (make-v3 -0.5 -0.5 -0.5) (make-v3 0.5 0.5 0.5))))
+    (%make-axis-aligned-box extent minimum maximum)))
+
+(defun make-aab* (min max)
+  (%make-axis-aligned-box :finite min max))
+
+(defun make-aab** (x-min y-min z-min x-max y-max z-max)
+  (%make-axis-aligned-box :finite (make-v3 x-min y-min z-min) (make-v3 x-max y-max z-max)))
+
+(defun aab-get-all-corners (aab)
+  (unless (eq (aab-extent aab) :finite)
+    (error "~@<Can't get corners of a null or infinite AAB.~:@>"))
+  (setf (aab-corners aab)
+        (make-array 8 :initial-contents
+                    (list (aab-minimum aab)
+                          (make-v3 (v3-x (aab-minimum aab)) (v3-y (aab-maximum aab)) (v3-z (aab-minimum aab)))
+                          (make-v3 (v3-x (aab-maximum aab)) (v3-y (aab-maximum aab)) (v3-z (aab-minimum aab)))
+                          (make-v3 (v3-x (aab-maximum aab)) (v3-y (aab-minimum aab)) (v3-z (aab-minimum aab)))
+                          (aab-maximum aab)
+                          (make-v3 (v3-x (aab-minimum aab)) (v3-y (aab-maximum aab)) (v3-z (aab-maximum aab)))
+                          (make-v3 (v3-x (aab-minimum aab)) (v3-y (aab-minimum aab)) (v3-z (aab-maximum aab)))
+                          (make-v3 (v3-x (aab-maximum aab)) (v3-y (aab-minimum aab)) (v3-z (aab-maximum aab)))))))
