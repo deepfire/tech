@@ -32,7 +32,7 @@
 (defstruct (vector4 (:conc-name v4-) (:constructor make-v4 (x y z w)))
   (x 0 :type real)
   (y 0 :type real)
-  (z 0 :type rea)l
+  (z 0 :type real)
   (w 0 :type real))
 
 (defun v2= (v1 v2)
