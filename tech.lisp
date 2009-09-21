@@ -97,31 +97,31 @@ the more specific types of animation.
 You should not create these animations directly. They will be created via a parent
 object which owns the animation, e.g. Skeleton."))
 
-(defgeneric create-node-track (animation handle &optional node))
-(defgeneric create-numeric-track (animation handle &optional animable-value))
-(defgeneric create-vertex-track (animation handle vertex-animation-type &optional vertex-data))
+(defgeneric animation-create-node-track (animation handle &optional node))
+(defgeneric animation-create-numeric-track (animation handle &optional animable-value))
+(defgeneric animation-create-vertex-track (animation handle vertex-animation-type &optional vertex-data))
 
-(defgeneric get-num-node-tracks (animation))
-(defgeneric get-num-numeric-tracks (animation))
-(defgeneric get-num-vertex-tracks (animation))
+(defgeneric animation-num-node-tracks (animation))
+(defgeneric animation-num-numeric-tracks (animation))
+(defgeneric animation-num-vertex-tracks (animation))
 
-(defgeneric get-node-track (animation handle))
-(defgeneric get-numeric-track (animation handle))
-(defgeneric get-vertex-track (animation handle))
+(defgeneric animation-node-track (animation handle))
+(defgeneric animation-numeric-track (animation handle))
+(defgeneric animation-vertex-track (animation handle))
 
-(defgeneric has-node-track (animation handle))
-(defgeneric has-numeric-track (animation handle))
-(defgeneric has-vertex-track (animation handle))
+(defgeneric animation-has-node-track (animation handle))
+(defgeneric animation-has-numeric-track (animation handle))
+(defgeneric animation-has-vertex-track (animation handle))
 
-(defgeneric destroy-node-track (animation handle))
-(defgeneric destroy-numeric-track (animation handle))
-(defgeneric destroy-vertex-track (animation handle))
+(defgeneric animation-destroy-node-track (animation handle))
+(defgeneric animation-destroy-numeric-track (animation handle))
+(defgeneric animation-destroy-vertex-track (animation handle))
 
-(defgeneric destroy-all-node-tracks (animation))
-(defgeneric destroy-all-numeric-tracks (animation))
-(defgeneric destroy-all-vertex-tracks (animation))
+(defgeneric animation-destroy-all-node-tracks (animation))
+(defgeneric animation-destroy-all-numeric-tracks (animation))
+(defgeneric animation-destroy-all-vertex-tracks (animation))
 
-(defgeneric destroy-all-tracks (animation))
+(defgeneric animation-destroy-all-tracks (animation))
 
 (defgeneric animation-apply (animation target time-position weight scale &key &allow-other-keys))
 
