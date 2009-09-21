@@ -173,22 +173,25 @@ visibility determination."
   (maximum nil :type vector3)
   (corners nil :type list))
 
+(defun aab-null-p (aab)       (eq (aab-extent aab) :null))
+(defun aab-finite-p (aab)     (eq (aab-extent aab) :finite))
+(defun aab-infinite-p (aab)   (eq (aab-extent aab) :infinite))
 (defun aab-set-null (aab)     (setf (aab-extent aab) :null))
 (defun aab-set-finite (aab)   (setf (aab-extent aab) :finite))
 (defun aab-set-infinite (aab) (setf (aab-extent aab) :infinite))
 (defun aab-set-minimum (aab v3)
-  (set-finite aab)
+  (aab-set-finite aab)
   (setf (aab-minimum aab) v3))
 (defun aab-set-minimum* (aab x y z)
-  (set-finite aab)
+  (aab-set-finite aab)
   (setf (v3-x (aab-minimum aab)) x
         (v3-y (aab-minimum aab)) y
         (v3-z (aab-minimum aab)) z))
 (defun aab-set-maximum (aab v3)
-  (set-finite aab)
+  (aab-set-finite aab)
   (setf (aab-maximum aab) v3))
 (defun aab-set-maximum* (aab x y z)
-  (set-finite aab)
+  (aab-set-finite aab)
   (setf (v3-x (aab-maximum aab)) x
         (v3-y (aab-maximum aab)) y
         (v3-z (aab-maximum aab)) z))
@@ -225,3 +228,20 @@ visibility determination."
                           (make-v3 (v3-x (aab-minimum aab)) (v3-y (aab-maximum aab)) (v3-z (aab-maximum aab)))
                           (make-v3 (v3-x (aab-minimum aab)) (v3-y (aab-minimum aab)) (v3-z (aab-maximum aab)))
                           (make-v3 (v3-x (aab-maximum aab)) (v3-y (aab-minimum aab)) (v3-z (aab-maximum aab)))))))
+
+(defun aab-get-corner (aab corner)
+  (case corner
+    (:far-left-bottom   (aab-minium aab))
+    (:far-left-top      (make-v3 (v3-x (aab-minimum aab)) (v3-y (aab-maximum aab)) (v3-z (aab-minimum aab))))
+    (:far-right-top     (make-v3 (v3-x (aab-maximum aab)) (v3-y (aab-maximum aab)) (v3-z (aab-minimum aab))))
+    (:far-right-bottom  (make-v3 (v3-x (aab-maximum aab)) (v3-y (aab-minimum aab)) (v3-z (aab-minimum aab))))
+    (:near-right-bottom (make-v3 (v3-x (aab-maximum aab)) (v3-y (aab-minimum aab)) (v3-z (aab-maximum aab))))
+    (:near-left-bottom  (make-v3 (v3-x (aab-minimum aab)) (v3-y (aab-minimum aab)) (v3-z (aab-maximum aab))))
+    (:near-left-top     (make-v3 (v3-x (aab-minimum aab)) (v3-y (aab-maximum aab)) (v3-z (aab-maximum aab))))
+    (:near-right-top    (aab-maximum aab))))
+
+(defun merge-aab (aab1 aab2)
+  (cond ((or (aab-infinite-p aab1) (aab-null-p aab2)) aab1)
+        ((aab-infinite-p aab2) (aab-set-infinite aab1))
+        ((aab-null-p aab1) (aab-set-extents aab1 (aab-minimum aab2) (aab-maximum aab2)))
+        (t )))
