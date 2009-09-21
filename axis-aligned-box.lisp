@@ -169,9 +169,9 @@ which is the maxima of all 3 axes. This class is typically used
 for an axis-aligned bounding box (AABB) for collision and
 visibility determination."
   (extent nil :type (member :null :finite :infinite))
-  (minumum nil :type vector3)
+  (minimum nil :type vector3)
   (maximum nil :type vector3)
-  (corners nil :type list))
+  (corners nil :type (or null simple-vector)))
 
 (defun aab-null-p (aab)       (eq (aab-extent aab) :null))
 (defun aab-finite-p (aab)     (eq (aab-extent aab) :finite))
@@ -205,7 +205,7 @@ visibility determination."
 (defun make-aab (&key extent origin)
   (multiple-value-bind (extent minimum maximum)
       (cond (extent (values extent (make-v3 -0.5 -0.5 -0.5) (make-v3 0.5 0.5 0.5)))
-            (origin (values (aab-extent origin) min max))
+            (origin (values (aab-extent origin) (aab-minimum origin) (aab-maximum origin)))
             (t      (values :null (make-v3 -0.5 -0.5 -0.5) (make-v3 0.5 0.5 0.5))))
     (%make-axis-aligned-box extent minimum maximum)))
 
@@ -231,7 +231,7 @@ visibility determination."
 
 (defun aab-get-corner (aab corner)
   (case corner
-    (:far-left-bottom   (aab-minium aab))
+    (:far-left-bottom   (aab-minimum aab))
     (:far-left-top      (make-v3 (v3-x (aab-minimum aab)) (v3-y (aab-maximum aab)) (v3-z (aab-minimum aab))))
     (:far-right-top     (make-v3 (v3-x (aab-maximum aab)) (v3-y (aab-maximum aab)) (v3-z (aab-minimum aab))))
     (:far-right-bottom  (make-v3 (v3-x (aab-maximum aab)) (v3-y (aab-minimum aab)) (v3-z (aab-minimum aab))))
