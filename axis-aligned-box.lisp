@@ -20,6 +20,24 @@
 
 (in-package :tech)
 
+;;;;
+;;;; Generic
+;;;;
+(defgeneric volume (object))
+(defgeneric scale (object v3))
+(defgeneric scalef (object v3))
+(defgeneric intersects-p (object-1 object-2))
+(defgeneric contains-p (object-1 object-2))
+(defgeneric equal-p (object-1 object-2))
+
+(defclass sphere () ())
+(defclass plane () ())
+
+(defun ni () (error "~@<This function is not implemented.~:@>"))
+
+;;;;
+;;;; Vector
+;;;;
 (defstruct (vector2 (:conc-name v2-) (:constructor make-v2 (x y)))
   (x 0 :type real)
   (y 0 :type real))
@@ -64,29 +82,33 @@
            (assert (not (zerop scalar)))
            (let ((finv (/ 1 scalar)))
              (,maker ,@(inst `(* (,acc v) finv)))))
-         (defun ,(name "V~D-NEGF") (v)
+         (defun ,(name "V~D-NEG") (v)
            (,maker ,@(inst `(- (,acc v)))))
          (defun ,(name "V~D-INCF") (v1 v2-or-real)
            (multiple-value-bind (,@(inst repvar dx dy dz dw)) (if (realp v2-or-real)
                                                                   (values ,@(inst `v2-or-real))
                                                                   (values ,@(inst `(,acc v2-or-real))))
-             ,@(inst `(incf (,acc v1) ,repvar) dx dy dz dw)))
+             ,@(inst `(incf (,acc v1) ,repvar) dx dy dz dw))
+           v1)
          (defun ,(name "V~D-DECF") (v1 v2-or-real)
            (multiple-value-bind (,@(inst repvar dx dy dz dw)) (if (realp v2-or-real)
                                                                   (values ,@(inst `v2-or-real))
                                                                   (values ,@(inst `(,acc v2-or-real))))
-             ,@(inst `(decf (,acc v1) ,repvar) dx dy dz dw)))
+             ,@(inst `(decf (,acc v1) ,repvar) dx dy dz dw))
+           v1)
          (defun ,(name "V~D-MULTF") (v1 v2-or-real)
            (multiple-value-bind (,@(inst repvar dx dy dz dw)) (if (realp v2-or-real)
                                                                   (values ,@(inst `v2-or-real))
                                                                   (values ,@(inst `(,acc v2-or-real))))
-             ,@(inst `(setf (,acc v1) (* (,acc v1) ,repvar)) dx dy dz dw)))
+             ,@(inst `(setf (,acc v1) (* (,acc v1) ,repvar)) dx dy dz dw))
+           v1)
          (defun ,(name "V~D-DIVF") (v1 v2-or-real)
            (multiple-value-bind (,@(inst repvar dx dy dz dw)) (if (realp v2-or-real)
                                                                   (values ,@(inst `v2-or-real))
                                                                   (values ,@(inst `(,acc v2-or-real))))
              (assert (and ,@(inst `(not (zerop ,repvar)) dx dy dz dw)))
-             ,@(inst `(setf (,acc v1) (/ (,acc v1) ,repvar)) dx dy dz dw)))
+             ,@(inst `(setf (,acc v1) (/ (,acc v1) ,repvar)) dx dy dz dw))
+           v1)
          (defun ,(name "V~D-LENGTH-SQUARED") (v)
            (+ ,@(inst `(* (,acc v) (,acc v)))))
          (defun ,(name "V~D-DISTANCE-SQUARED") (v1 v2)
@@ -103,10 +125,16 @@
          (defun ,(name "V~D-NORMALIZED") (v2)
            (lret ((ret (,(name "COPY-VECTOR~D") v2)))
              (,(name "V~D-NORMALIZEF") ret)))
+         (defun ,(name "V~D-FLOOR") (v1 v2)
+           (,maker ,@(inst `(min (,acc v1) (,acc v2)))))
+         (defun ,(name "V~D-CEIL") (v1 v2)
+           (,maker ,@(inst `(max (,acc v1) (,acc v2)))))
          (defun ,(name "V~D-FLOORF") (v1 v2)
-           (setf ,@(minst `(,acc v1) `(min (,acc v1) (,acc v2)))))
+           (setf ,@(minst `(,acc v1) `(min (,acc v1) (,acc v2))))
+           v1)
          (defun ,(name "V~D-CEILF") (v1 v2)
-           (setf ,@(minst `(,acc v1) `(max (,acc v1) (,acc v2)))))
+           (setf ,@(minst `(,acc v1) `(max (,acc v1) (,acc v2))))
+           v1)
          (defun ,(name "V~D-MIDPOINT") (v1 v2)
            (,maker ,@(inst `(* (+ (,acc v1) (,acc v2)) 0.5))))
          (defun ,(name "V~D<") (v1 v2)
@@ -143,12 +171,24 @@
 (defvar *v2-negative-unit-y* (make-v2 0.0 -1.0))
 (defvar *v2-unit-scale* (make-v2 1.0 1.0))
 
+(defvar *v3-zero* (make-v3 0.0 0.0 0.0))
+(defvar *v3-unit-x* (make-v3 1.0 0.0 0.0))
+(defvar *v3-unit-y* (make-v3 0.0 1.0 0.0))
+(defvar *v3-unit-z* (make-v3 0.0 0.0 1.0))
+(defvar *v3-negative-unit-x* (make-v3 -1.0 0.0 0.0))
+(defvar *v3-negative-unit-y* (make-v3 0.0 -1.0 0.0))
+(defvar *v3-negative-unit-z* (make-v3 0.0 0.0 -1.0))
+(defvar *v3-unit-scale* (make-v3 1.0 1.0 1.0))
+
 (defun v4= (v1 v2)
   (and (= (v4-x v1) (v4-x v2))
        (= (v4-y v1) (v4-y v2))
        (= (v4-z v1) (v4-z v2))
        (= (v4-w v1) (v4-w v2))))
 
+;;;;
+;;;; Axis-aligned box
+;;;;
 ;;;;
 ;;;;     1-----2
 ;;;;    /|    /|
@@ -159,7 +199,7 @@
 ;;;;  |/    |/
 ;;;;  6-----7
 ;;;;
-(defstruct (axis-aligned-box (:conc-name aab-) (:constructor %make-axis-aligned-box (extent minimum maximum)))
+(defstruct (axis-aligned-box (:conc-name aab-) (:constructor %make-axis-aligned-box (extent min max)))
   "A 3D box aligned with the x/y/z axes.
 
 This class represents a simple box which is aligned with the
@@ -169,45 +209,45 @@ which is the maxima of all 3 axes. This class is typically used
 for an axis-aligned bounding box (AABB) for collision and
 visibility determination."
   (extent nil :type (member :null :finite :infinite))
-  (minimum nil :type vector3)
-  (maximum nil :type vector3)
+  (min nil :type vector3)
+  (max nil :type vector3)
   (corners nil :type (or null simple-vector)))
 
 (defun aab-null-p (aab)       (eq (aab-extent aab) :null))
 (defun aab-finite-p (aab)     (eq (aab-extent aab) :finite))
 (defun aab-infinite-p (aab)   (eq (aab-extent aab) :infinite))
-(defun aab-set-null (aab)     (setf (aab-extent aab) :null))
-(defun aab-set-finite (aab)   (setf (aab-extent aab) :finite))
-(defun aab-set-infinite (aab) (setf (aab-extent aab) :infinite))
-(defun aab-set-minimum (aab v3)
-  (aab-set-finite aab)
-  (setf (aab-minimum aab) v3))
-(defun aab-set-minimum* (aab x y z)
-  (aab-set-finite aab)
-  (setf (v3-x (aab-minimum aab)) x
-        (v3-y (aab-minimum aab)) y
-        (v3-z (aab-minimum aab)) z))
-(defun aab-set-maximum (aab v3)
-  (aab-set-finite aab)
-  (setf (aab-maximum aab) v3))
-(defun aab-set-maximum* (aab x y z)
-  (aab-set-finite aab)
-  (setf (v3-x (aab-maximum aab)) x
-        (v3-y (aab-maximum aab)) y
-        (v3-z (aab-maximum aab)) z))
+(defun aab-nullf (aab)        (setf (aab-extent aab) :null))
+(defun aab-finitef (aab)      (setf (aab-extent aab) :finite))
+(defun aab-infinitef (aab)    (setf (aab-extent aab) :infinite))
+(defun aab-set-min (aab v3)
+  (aab-finitef aab)
+  (setf (aab-min aab) v3))
+(defun aab-set-min* (aab x y z)
+  (aab-finitef aab)
+  (setf (v3-x (aab-min aab)) x
+        (v3-y (aab-min aab)) y
+        (v3-z (aab-min aab)) z))
+(defun aab-set-max (aab v3)
+  (aab-finitef aab)
+  (setf (aab-max aab) v3))
+(defun aab-set-max* (aab x y z)
+  (aab-finitef aab)
+  (setf (v3-x (aab-max aab)) x
+        (v3-y (aab-max aab)) y
+        (v3-z (aab-max aab)) z))
 (defun aab-set-extents (aab min max)
-  (aab-set-minimum aab min)
-  (aab-set-maximum aab max))
+  (aab-set-min aab min)
+  (aab-set-max aab max))
 (defun aab-set-extents* (aab min-x min-y min-z max-x max-y max-z)
-  (aab-set-minimum* aab min-x min-y min-z)
-  (aab-set-maximum* aab max-x max-y max-z))
+  (aab-set-min* aab min-x min-y min-z)
+  (aab-set-max* aab max-x max-y max-z))
 
 (defun make-aab (&key extent origin)
-  (multiple-value-bind (extent minimum maximum)
+  (multiple-value-bind (extent min max)
       (cond (extent (values extent (make-v3 -0.5 -0.5 -0.5) (make-v3 0.5 0.5 0.5)))
-            (origin (values (aab-extent origin) (aab-minimum origin) (aab-maximum origin)))
+            (origin (values (aab-extent origin) (aab-min origin) (aab-max origin)))
             (t      (values :null (make-v3 -0.5 -0.5 -0.5) (make-v3 0.5 0.5 0.5))))
-    (%make-axis-aligned-box extent minimum maximum)))
+    (%make-axis-aligned-box extent min max)))
 
 (defun make-aab* (min max)
   (%make-axis-aligned-box :finite min max))
@@ -220,28 +260,213 @@ visibility determination."
     (error "~@<Can't get corners of a null or infinite AAB.~:@>"))
   (setf (aab-corners aab)
         (make-array 8 :initial-contents
-                    (list (aab-minimum aab)
-                          (make-v3 (v3-x (aab-minimum aab)) (v3-y (aab-maximum aab)) (v3-z (aab-minimum aab)))
-                          (make-v3 (v3-x (aab-maximum aab)) (v3-y (aab-maximum aab)) (v3-z (aab-minimum aab)))
-                          (make-v3 (v3-x (aab-maximum aab)) (v3-y (aab-minimum aab)) (v3-z (aab-minimum aab)))
-                          (aab-maximum aab)
-                          (make-v3 (v3-x (aab-minimum aab)) (v3-y (aab-maximum aab)) (v3-z (aab-maximum aab)))
-                          (make-v3 (v3-x (aab-minimum aab)) (v3-y (aab-minimum aab)) (v3-z (aab-maximum aab)))
-                          (make-v3 (v3-x (aab-maximum aab)) (v3-y (aab-minimum aab)) (v3-z (aab-maximum aab)))))))
+                    (list (aab-min aab)
+                          (make-v3 (v3-x (aab-min aab)) (v3-y (aab-max aab)) (v3-z (aab-min aab)))
+                          (make-v3 (v3-x (aab-max aab)) (v3-y (aab-max aab)) (v3-z (aab-min aab)))
+                          (make-v3 (v3-x (aab-max aab)) (v3-y (aab-min aab)) (v3-z (aab-min aab)))
+                          (aab-max aab)
+                          (make-v3 (v3-x (aab-min aab)) (v3-y (aab-max aab)) (v3-z (aab-max aab)))
+                          (make-v3 (v3-x (aab-min aab)) (v3-y (aab-min aab)) (v3-z (aab-max aab)))
+                          (make-v3 (v3-x (aab-max aab)) (v3-y (aab-min aab)) (v3-z (aab-max aab)))))))
 
 (defun aab-get-corner (aab corner)
   (case corner
-    (:far-left-bottom   (aab-minimum aab))
-    (:far-left-top      (make-v3 (v3-x (aab-minimum aab)) (v3-y (aab-maximum aab)) (v3-z (aab-minimum aab))))
-    (:far-right-top     (make-v3 (v3-x (aab-maximum aab)) (v3-y (aab-maximum aab)) (v3-z (aab-minimum aab))))
-    (:far-right-bottom  (make-v3 (v3-x (aab-maximum aab)) (v3-y (aab-minimum aab)) (v3-z (aab-minimum aab))))
-    (:near-right-bottom (make-v3 (v3-x (aab-maximum aab)) (v3-y (aab-minimum aab)) (v3-z (aab-maximum aab))))
-    (:near-left-bottom  (make-v3 (v3-x (aab-minimum aab)) (v3-y (aab-minimum aab)) (v3-z (aab-maximum aab))))
-    (:near-left-top     (make-v3 (v3-x (aab-minimum aab)) (v3-y (aab-maximum aab)) (v3-z (aab-maximum aab))))
-    (:near-right-top    (aab-maximum aab))))
+    (:far-left-bottom   (aab-min aab))
+    (:far-left-top      (make-v3 (v3-x (aab-min aab)) (v3-y (aab-max aab)) (v3-z (aab-min aab))))
+    (:far-right-top     (make-v3 (v3-x (aab-max aab)) (v3-y (aab-max aab)) (v3-z (aab-min aab))))
+    (:far-right-bottom  (make-v3 (v3-x (aab-max aab)) (v3-y (aab-min aab)) (v3-z (aab-min aab))))
+    (:near-right-bottom (make-v3 (v3-x (aab-max aab)) (v3-y (aab-min aab)) (v3-z (aab-max aab))))
+    (:near-left-bottom  (make-v3 (v3-x (aab-min aab)) (v3-y (aab-min aab)) (v3-z (aab-max aab))))
+    (:near-left-top     (make-v3 (v3-x (aab-min aab)) (v3-y (aab-max aab)) (v3-z (aab-max aab))))
+    (:near-right-top    (aab-max aab))))
 
-(defun merge-aab (aab1 aab2)
+(defun aab-mergef (aab1 aab2)
+  "Merges the passed in box into the current box. The result is the
+box which encompasses both."
   (cond ((or (aab-infinite-p aab1) (aab-null-p aab2)) aab1)
-        ((aab-infinite-p aab2) (aab-set-infinite aab1))
-        ((aab-null-p aab1) (aab-set-extents aab1 (aab-minimum aab2) (aab-maximum aab2)))
-        (t )))
+        ((aab-infinite-p aab2) (aab-infinitef aab1))
+        ((aab-null-p aab1) (aab-set-extents aab1 (aab-min aab2) (aab-max aab2)))
+        (t (aab-set-extents aab1 (v3-floor (aab-min aab1) (aab-min aab2)) (v3-floor (aab-max aab1) (aab-max aab2))))))
+
+(defun aab-mergef* (aab v3)
+  "Extends the box to encompass the specified point (if needed)."
+  (ecase (aab-extent aab)
+    (:null
+     (aab-set-extents aab v3 v3))
+    (:finite
+     (v3-ceilf (aab-max aab) v3)
+     (v3-floorf (aab-min aab) v3))
+    (:infinite)))
+
+(defun aab-transform (aab m4)
+  "Transforms the box according to the matrix supplied.
+
+By calling this method you get the axis-aligned box which
+surrounds the transformed version of this box. Therefore each
+corner of the box is transformed by the matrix, then the
+extents are mapped back onto the axes to produce another
+AABB. Useful when you have a local AABB for an object which
+is then transformed."
+  (when (aab-finite-p aab)
+    (let ((oldmin (aab-min aab))
+          (oldmax (aab-max aab))
+          current-corner)
+      (aab-nullf aab)
+      ;; We sequentially compute the corners in the following order :
+      ;; 0, 6, 5, 1, 2, 4 ,7 , 3
+      ;; This sequence allows us to only change one member at a time to get at all corners.
+      
+      ;; For each one, we transform it using the matrix
+      ;; Which gives the resulting point and merge the resulting point.
+      (setf current-corner oldmin)
+      (aab-mergef aab (m4* m4 current-corner))
+
+      (setf (v3-z current-corner) (v3-z oldmax))
+      (aab-mergef aab (m4* m4 current-corner))
+
+      (setf (v3-y current-corner) (v3-y oldmax))
+      (aab-mergef aab (m4* m4 current-corner))
+
+      (setf (v3-z current-corner) (v3-z oldmin))
+      (aab-mergef aab (m4* m4 current-corner))
+
+      (setf (v3-x current-corner) (v3-x oldmax))
+      (aab-mergef aab (m4* m4 current-corner))
+
+      (setf (v3-z current-corner) (v3-z oldmax))
+      (aab-mergef aab (m4* m4 current-corner))
+
+      (setf (v3-y current-corner) (v3-y oldmin))
+      (aab-mergef aab (m4* m4 current-corner))
+
+      (setf (v3-z current-corner) (v3-z oldmin))
+      (aab-mergef aab (m4* m4 current-corner)))))
+
+(defun aab-transform-affine (aab m4)
+  "Transforms the box according to the affine matrix supplied.
+
+By calling this method you get the axis-aligned box which
+surrounds the transformed version of this box. Therefore each
+corner of the box is transformed by the matrix, then the
+extents are mapped back onto the axes to produce another
+AABB. Useful when you have a local AABB for an object which
+is then transformed.
+
+The matrix must be an affine matrix. m4-affine-p."
+  (assert (m4-affine-p m4))
+  (when (aab-finite-p aab)
+    (let* ((centre (aab-centre aab))
+           (halfsize (aab-halfsize aab))
+           (new-centre (transform-affine m4 centre))
+           (new-halfsize (make-v3 (+ (* (abs (m4ref m4 0 0)) (v3-x halfsize))
+                                     (* (abs (m4ref m4 0 1)) (v3-y halfsize))
+                                     (* (abs (m4ref m4 0 2)) (v3-z halfsize)))
+                                  (+ (* (abs (m4ref m4 1 0)) (v3-x halfsize))
+                                     (* (abs (m4ref m4 1 1)) (v3-y halfsize))
+                                     (* (abs (m4ref m4 1 2)) (v3-z halfsize)))
+                                  (+ (* (abs (m4ref m4 2 0)) (v3-x halfsize))
+                                     (* (abs (m4ref m4 2 1)) (v3-y halfsize))
+                                     (* (abs (m4ref m4 2 2)) (v3-z halfsize))))))
+      (aab-set-extents aab (v3- new-centre new-halfsize) (v3+ new-centre new-halfsize)))))
+
+(defun aab-intersects (aab1 aab2)
+  (cond ((or (aab-null-p aab1) (aab-null-p aab2)) nil)
+        ((or (aab-infinite-p aab1) (aab-infinite-p aab2)) t)
+        ((or (< (v3-x (aab-max aab1)) (v3-x (aab-min aab2)))
+             (< (v3-y (aab-max aab1)) (v3-y (aab-min aab2)))
+             (< (v3-z (aab-max aab1)) (v3-z (aab-min aab2)))
+             (> (v3-x (aab-min aab1)) (v3-x (aab-max aab2)))
+             (> (v3-y (aab-min aab1)) (v3-y (aab-max aab2)))
+             (> (v3-z (aab-min aab1)) (v3-z (aab-max aab2))))
+         nil)
+        (t t)))
+
+(defun aab-intersection (aab1 aab2)
+  (cond ((or (aab-null-p aab1) (aab-null-p aab2)) (make-aab))
+        ((aab-infinite-p aab1) aab2)
+        ((aab-infinite-p aab2) aab1)
+        (t (let ((intmin (v3-ceil (aab-min aab1) (aab-min aab2)))
+                 (intmax (v3-floor (aab-max aab1) (aab-max aab2))))
+             (if (and (< (v3-x intmin) (v3-x intmax))
+                      (< (v3-y intmin) (v3-y intmax))
+                      (< (v3-z intmin) (v3-z intmax)))
+                 (make-aab* intmin intmax)
+                 (make-aab))))))
+
+(defmethod volume ((aab axis-aligned-box))
+  (ecase (aab-extent aab)
+    (:null 0.0)
+    (:finite (let ((d (v3- (aab-max aab) (aab-min aab))))
+               (* (v3-x d) (v3-y d) (v3-z d))))
+    (:infinite #+sbcl sb-ext:single-float-positive-infinity
+               #-sbcl (error "~@<Don't know how to represent infinite values.~:@>"))))
+
+(defmethod scale ((aab axis-aligned-box) (v3 vector3))
+  (ecase (aab-extent aab)
+    ((:null :infinite) aab)
+    (:finite 
+     (let ((min (copy-vector3 (aab-min aab)))
+           (max (copy-vector3 (aab-max aab))))
+       (v3-multf min v3)
+       (v3-multf max v3)
+       (make-aab* min max)))))
+
+(defmethod scalef ((aab axis-aligned-box) (v3 vector3))
+  (when (aab-finite-p aab)
+    (v3-multf (aab-min aab) v3)
+    (v3-multf (aab-max aab) v3)
+    aab))
+
+(defmethod intersects-p ((aab axis-aligned-box) (s sphere)) (ni))
+
+(defmethod intersects-p ((aab axis-aligned-box) (p plane)) (ni))
+
+(defmethod intersects-p ((aab axis-aligned-box) (v vector3))
+  (ecase (aab-extent aab)
+    (:null nil)
+    (:infinite t)
+    (:finite (and (>= (v3-x v) (v3-x (aab-min aab))) (<= (v3-x v) (v3-x (aab-max aab)))
+                  (>= (v3-y v) (v3-y (aab-min aab))) (<= (v3-y v) (v3-y (aab-max aab)))
+                  (>= (v3-z v) (v3-z (aab-min aab))) (<= (v3-z v) (v3-z (aab-max aab)))))))
+
+(defun aab-center (aab)
+  (make-v3 (* (+ (v3-x (aab-min aab)) (v3-x (aab-max aab))) 0.5)
+           (* (+ (v3-y (aab-min aab)) (v3-y (aab-max aab))) 0.5)
+           (* (+ (v3-z (aab-min aab)) (v3-z (aab-max aab))) 0.5)))
+
+(defun aab-size (aab)
+  (ecase (aab-extent aab)
+    (:null *v3-zero*)
+    (:infinite #+sbcl (make-v3 sb-ext:single-float-positive-infinity
+                               sb-ext:single-float-positive-infinity
+                               sb-ext:single-float-positive-infinity)
+               #-sbcl (error "~@<Don't know how to represent infinite values.~:@>"))
+    (:finite (v3- (aab-max aab) (aab-min aab)))))
+
+(defun aab-halfsize (aab)
+  (ecase (aab-extent aab)
+    (:null *v3-zero*)
+    (:infinite #+sbcl (make-v3 sb-ext:single-float-positive-infinity
+                               sb-ext:single-float-positive-infinity
+                               sb-ext:single-float-positive-infinity)
+               #-sbcl (error "~@<Don't know how to represent infinite values.~:@>"))
+    (:finite (v3* (v3- (aab-max aab) (aab-min aab)) 0.5))))
+
+(defmethod contains-p ((aab axis-aligned-box) (v vector3))
+  (intersects-p aab v))
+
+(defmethod contains-p ((aab axis-aligned-box) (containee axis-aligned-box))
+  (cond ((or (aab-infinite-p aab) (aab-null-p containee)) t)
+        ((or (aab-null-p aab) (aab-infinite-p containee)) nil)
+        (t (and (>= (v3-x (aab-min containee)) (v3-x (aab-min aab))) (<= (v3-x (aab-max containee)) (v3-x (aab-max aab)))
+                (>= (v3-y (aab-min containee)) (v3-y (aab-min aab))) (<= (v3-y (aab-max containee)) (v3-y (aab-max aab)))
+                (>= (v3-z (aab-min containee)) (v3-z (aab-min aab))) (<= (v3-z (aab-max containee)) (v3-z (aab-max aab)))))))
+
+(defmethod equal-p ((aab1 axis-aligned-box) (aab2 axis-aligned-box))
+  (and (eq (aab-extent aab1) (aab-extent aab2))
+       (or (not (aab-finite-p aab1))
+           (and (v3= (aab-min aab1) (aab-min aab2))
+                (v3= (aab-max aab1) (aab-max aab2))))))
+
+(defvar *aab-null* (make-aab))
+(defvar *aab-infinite* (make-aab :extent :infinite))
