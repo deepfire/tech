@@ -23,6 +23,13 @@
 ;;;;
 ;;;; Generic
 ;;;;
+(defconstant epsilon 0.000001)
+(defconstant epsilon-square (* epsilon epsilon))
+
+(defun real= (x1 x2 tolerance)
+  (declare (type real x1 x2 tolerance))
+  (< (abs (- x1 x2)) tolerance))
+
 (defgeneric volume (object))
 (defgeneric scale (object v3))
 (defgeneric scalef (object v3))
@@ -119,10 +126,10 @@
            (,(name "V~D-LENGTH") (,(name "V~D-") v1 v2)))
          (defun ,(name "V~D-NORMALIZEF") (v)
            (lret ((length ( ,(name "V~D-LENGTH") v)))
-             (when (> length 0.00000001)
+             (when (> length epsilon)
                (let ((finv (/ 1 length)))
                  (setf ,@(minst `(,acc v) `(* (,acc v) finv)))))))
-         (defun ,(name "V~D-NORMALIZED") (v2)
+         (defun ,(name "V~D-NORMALIZE") (v2)
            (lret ((ret (,(name "COPY-VECTOR~D") v2)))
              (,(name "V~D-NORMALIZEF") ret)))
          (defun ,(name "V~D-FLOOR") (v1 v2)
@@ -143,26 +150,15 @@
            (and ,@(inst `(> (,acc v1) (,acc v2)))))
          (defun ,(name "V~D-DOT") (v1 v2)
            (+ ,@(inst `(* (,acc v1) (,acc v2)))))
+         (defun ,(name "V~D-ABS-DOT") (v1 v2)
+           (+ ,@(inst `(abs (* (,acc v1) (,acc v2))))))
          (defun ,(name "V~D-REFLECT") (v normal)
            (,(name "V~D-") v (,(name "V~D*") (,(name "V~D*") (,(name "V~D-DOT") v normal) 2.0) normal)))
          (defun ,(name "V~D-ZEROP") (v)
-           (< (,(name "V~D-LENGTH-SQUARED") v) 0.0000000000001))))))
+           (< (,(name "V~D-LENGTH-SQUARED") v) epsilon-square))))))
 
 (frob-vector-functions 2)
 (frob-vector-functions 3)
-
-(defun v2-perpendicular (v2)
-  (make-v2 (- (v2-y v2)) (v2-x v2)))
-
-(defun v2-cross (v1 v2)
-  (- (* (v2-x v1) (v2-y v2)) (* (v2-y v1) (v2-x v2))))
-
-(defun v2-random-deviant (v2 angle)
-  (let* ((angle (* 2 angle (random pi)))
-         (sina (sin angle))
-         (cosa (cos angle)))
-    (make-v2 (- (* cosa (v2-x v2)) (* sina (v2-y v2)))
-             (+ (* sina (v2-x v2)) (* cosa (v2-y v2))))))
 
 (defvar *v2-zero* (make-v2 0.0 0.0))
 (defvar *v2-unit-x* (make-v2 1.0 0.0))
@@ -180,11 +176,83 @@
 (defvar *v3-negative-unit-z* (make-v3 0.0 0.0 -1.0))
 (defvar *v3-unit-scale* (make-v3 1.0 1.0 1.0))
 
-(defun v4= (v1 v2)
-  (and (= (v4-x v1) (v4-x v2))
-       (= (v4-y v1) (v4-y v2))
-       (= (v4-z v1) (v4-z v2))
-       (= (v4-w v1) (v4-w v2))))
+(defun v2-cross (v1 v2)
+  (- (* (v2-x v1) (v2-y v2)) (* (v2-y v1) (v2-x v2))))
+
+(defun v3-cross (v1 v2)
+  (make-v3 (- (* (v3-y v1) (v3-z v2)) (* (v3-z v1) (v3-y v2)))
+           (- (* (v3-z v1) (v3-x v2)) (* (v3-x v1) (v3-z v2)))
+           (- (* (v3-x v1) (v3-y v2)) (* (v3-y v1) (v3-x v2)))))
+
+(defun v2-perpendicular (v)
+  (make-v2 (- (v2-y v))
+           (v2-x v)))
+
+(defun v3-perpendicular (v)
+  (let ((perp (v3-cross v *v3-unit-x*)))
+    (lret ((perp (if (< (v3-length-squared perp) epsilon-square)
+                     (v3-cross v *v3-unit-y*)
+                     perp)))
+      (v3-normalizef perp))))
+
+(defun v2-random-deviant (v angle)
+  (let* ((angle (* 2 angle (random pi)))
+         (sina (sin angle))
+         (cosa (cos angle)))
+    (make-v2 (- (* cosa (v2-x v)) (* sina (v2-y v)))
+             (+ (* sina (v2-x v)) (* cosa (v2-y v))))))
+
+(defun v3-random-deviant (v angle &optional (up (v3-perpendicular v)))
+  ;; Rotate up vector by random amount around v
+  (let* ((q1 (q-from-angle-axis (* 2 pi (random 1.0)) v))
+         (new-up (q* q1 up))
+         ;; Finally rotate v by given angle around randomised up
+         (q2 (q-from-angle-axis angle new-up)))
+    (q* q2 v)))
+
+(defun v3-angle-between (v1 v2)
+  (let ((lenproduct (max (* (v3-length v1) (v3-length v2)) epsilon-square)))
+    (acos (clamp (/ (v3-dot v1 v2) lenproduct) -1.0 1.0))))
+
+(defun v3-rotation-to (v1 v2 &optional fallback-axis)
+  "Gets the shortest arc quaternion to rotate this vector to the destination
+vector.
+If you call this with a dest vector that is close to the inverse
+of this vector, we will rotate 180 degrees around the 'fallbackAxis'
+if specified, or a generated axis if not since in this case
+ANY axis of rotation is valid.
+Based on Stan Melax's article in Game Programming Gems."
+  (let* ((v1n (v3-normalize v1))
+         (v2n (v3-normalize v2))
+         (ndot (v3-dot v1n v2n)))
+    (when (>= ndot 1.0)
+      (return-from v3-rotation-to *q-identity*))
+    (if (< ndot (- epsilon 1.0))
+        (if fallback-axis
+            (q-from-angle-axis pi fallback-axis)
+            (let ((axis (v3-cross *v3-unit-x* v1)))
+              (let ((axis (if (v3-zerop axis) (v3-cross *v3-unit-y* v1))))
+                (q-from-angle-axis pi (v3-normalize axis)))))
+        (let* ((s (sqrt (* 2 (1+ ndot))))
+               (invs (/ 1 s))
+               (c (v3-cross v1n v2n)))
+          (q-normalize (make-q (* (v3-x c) invs)
+                               (* (v3-y c) invs)
+                               (* (v3-z c) invs)
+                               (* s 0.5)))))))
+
+(defun v3-position-equalp (v1 v2 &optional (tolerance 0.001))
+  (and (real= (v3-x v1) (v3-x v2) tolerance)
+       (real= (v3-y v1) (v3-y v2) tolerance)
+       (real= (v3-z v1) (v3-z v2) tolerance)))
+
+(defun v3-position-closesp (v1 v2 &optional (tolerance 0.001))
+  (<= (v3-distance-squared v1 v2) 
+      (* tolerance (+ (v3-length-squared v1) (v3-length-squared v2)))))
+
+(defun v3-direction-equalp (v1 v2 tolerance)
+  (let ((angle (acos (v3-dot v1 v2))))
+    (<= (abs angle) tolerance)))
 
 ;;;;
 ;;;; Axis-aligned box
@@ -429,7 +497,7 @@ The matrix must be an affine matrix. m4-affine-p."
                   (>= (v3-y v) (v3-y (aab-min aab))) (<= (v3-y v) (v3-y (aab-max aab)))
                   (>= (v3-z v) (v3-z (aab-min aab))) (<= (v3-z v) (v3-z (aab-max aab)))))))
 
-(defun aab-center (aab)
+(defun aab-centre (aab)
   (make-v3 (* (+ (v3-x (aab-min aab)) (v3-x (aab-max aab))) 0.5)
            (* (+ (v3-y (aab-min aab)) (v3-y (aab-max aab))) 0.5)
            (* (+ (v3-z (aab-min aab)) (v3-z (aab-max aab))) 0.5)))
