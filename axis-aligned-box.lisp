@@ -159,6 +159,7 @@
 
 (frob-vector-functions 2)
 (frob-vector-functions 3)
+(frob-vector-functions 4)
 
 (defvar *v2-zero* (make-v2 0.0 0.0))
 (defvar *v2-unit-x* (make-v2 1.0 0.0))
