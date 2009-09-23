@@ -36,11 +36,20 @@
 (defgeneric intersects-p (object-1 object-2))
 (defgeneric contains-p (object-1 object-2))
 (defgeneric equal-p (object-1 object-2))
-
-(defclass sphere () ())
-(defclass plane () ())
+(defgeneric setv (object-1 object-2))
+(defgeneric mult (object-1 object-2))
+(defgeneric mult-affine (object-1 object-2))
 
 (defun ni () (error "~@<This function is not implemented.~:@>"))
+
+;;;;
+;;;; Quaternion
+;;;;
+(defstruct (quaternion (:conc-name q-) (:constructor make-q (x y z w)))
+  (x 0 :type real)
+  (y 0 :type real)
+  (z 0 :type real)
+  (w 0 :type real))
 
 ;;;;
 ;;;; Vector
@@ -59,6 +68,32 @@
   (y 0 :type real)
   (z 0 :type real)
   (w 0 :type real))
+
+(defvar *v2-zero* (make-v2 0.0 0.0))
+(defvar *v2-unit-x* (make-v2 1.0 0.0))
+(defvar *v2-unit-y* (make-v2 0.0 1.0))
+(defvar *v2-negative-unit-x* (make-v2 -1.0 0.0))
+(defvar *v2-negative-unit-y* (make-v2 0.0 -1.0))
+(defvar *v2-unit-scale* (make-v2 1.0 1.0))
+
+(defvar *v3-zero* (make-v3 0.0 0.0 0.0))
+(defvar *v3-unit-x* (make-v3 1.0 0.0 0.0))
+(defvar *v3-unit-y* (make-v3 0.0 1.0 0.0))
+(defvar *v3-unit-z* (make-v3 0.0 0.0 1.0))
+(defvar *v3-negative-unit-x* (make-v3 -1.0 0.0 0.0))
+(defvar *v3-negative-unit-y* (make-v3 0.0 -1.0 0.0))
+(defvar *v3-negative-unit-z* (make-v3 0.0 0.0 -1.0))
+(defvar *v3-unit-scale* (make-v3 1.0 1.0 1.0))
+
+(defvar *v4-zero* (make-v4 0.0 0.0 0.0 0.0))
+(defvar *v4-unit-x* (make-v4 1.0 0.0 0.0 1.0))
+(defvar *v4-unit-y* (make-v4 0.0 1.0 0.0 1.0))
+(defvar *v4-unit-z* (make-v4 0.0 0.0 1.0 1.0))
+(defvar *v4-unit-w* (make-v4 0.0 0.0 0.0 1.0))
+(defvar *v4-negative-unit-x* (make-v4 -1.0 0.0 0.0 1.0))
+(defvar *v4-negative-unit-y* (make-v4 0.0 -1.0 0.0 1.0))
+(defvar *v4-negative-unit-z* (make-v4 0.0 0.0 -1.0 1.0))
+(defvar *v4-unit-scale* (make-v4 1.0 1.0 1.0 1.0))
 
 (defmacro inst (form &rest repertoire-set)
   `(iter (repeat arity)
@@ -161,22 +196,6 @@
 (frob-vector-functions 3)
 (frob-vector-functions 4)
 
-(defvar *v2-zero* (make-v2 0.0 0.0))
-(defvar *v2-unit-x* (make-v2 1.0 0.0))
-(defvar *v2-unit-y* (make-v2 0.0 1.0))
-(defvar *v2-negative-unit-x* (make-v2 -1.0 0.0))
-(defvar *v2-negative-unit-y* (make-v2 0.0 -1.0))
-(defvar *v2-unit-scale* (make-v2 1.0 1.0))
-
-(defvar *v3-zero* (make-v3 0.0 0.0 0.0))
-(defvar *v3-unit-x* (make-v3 1.0 0.0 0.0))
-(defvar *v3-unit-y* (make-v3 0.0 1.0 0.0))
-(defvar *v3-unit-z* (make-v3 0.0 0.0 1.0))
-(defvar *v3-negative-unit-x* (make-v3 -1.0 0.0 0.0))
-(defvar *v3-negative-unit-y* (make-v3 0.0 -1.0 0.0))
-(defvar *v3-negative-unit-z* (make-v3 0.0 0.0 -1.0))
-(defvar *v3-unit-scale* (make-v3 1.0 1.0 1.0))
-
 (defun v2-cross (v1 v2)
   (- (* (v2-x v1) (v2-y v2)) (* (v2-y v1) (v2-x v2))))
 
@@ -205,10 +224,10 @@
 
 (defun v3-random-deviant (v angle &optional (up (v3-perpendicular v)))
   ;; Rotate up vector by random amount around v
-  (let* ((q1 (q-from-angle-axis (* 2 pi (random 1.0)) v))
+  (let* ((q1 (q<-angle-axis (* 2 pi (random 1.0)) v))
          (new-up (q* q1 up))
          ;; Finally rotate v by given angle around randomised up
-         (q2 (q-from-angle-axis angle new-up)))
+         (q2 (q<-angle-axis angle new-up)))
     (q* q2 v)))
 
 (defun v3-angle-between (v1 v2)
@@ -230,10 +249,10 @@ Based on Stan Melax's article in Game Programming Gems."
       (return-from v3-rotation-to *q-identity*))
     (if (< ndot (- epsilon 1.0))
         (if fallback-axis
-            (q-from-angle-axis pi fallback-axis)
+            (q<-angle-axis pi fallback-axis)
             (let ((axis (v3-cross *v3-unit-x* v1)))
               (let ((axis (if (v3-zerop axis) (v3-cross *v3-unit-y* v1))))
-                (q-from-angle-axis pi (v3-normalise axis)))))
+                (q<-angle-axis pi (v3-normalise axis)))))
         (let* ((s (sqrt (* 2 (1+ ndot))))
                (invs (/ 1 s))
                (c (v3-cross v1n v2n)))
@@ -255,6 +274,621 @@ Based on Stan Melax's article in Game Programming Gems."
   (let ((angle (acos (v3-dot v1 v2))))
     (<= (abs angle) tolerance)))
 
+;;;;
+;;;; Trivial geometrics
+;;;;
+(defstruct (sphere (:constructor make-sphere (o r)))
+  (o (make-v3 0.0 0.0 0.0) :type vector3)
+  (r 0 :type real))
+
+(defstruct (plane (:constructor make-plane (normal d)))
+  (normal (make-v3 0.0 1.0 0.0) :type vector3)
+  (d 0 :type real))
+
+;;;;
+;;;; Matrix
+;;;;
+;; All matrix code adapted from Wild Magic 0.2 Matrix math (free source code)
+;; http://www.geometrictools.com/
+;;
+;; And, of course, re-adapted from Ogre.
+
+;; NOTE.  The (x,y,z) coordinate system is assumed to be right-handed.
+;; Coordinate axis rotation matrices are of the form
+;;   RX =    1       0       0
+;;           0     cos(t) -sin(t)
+;;           0     sin(t)  cos(t)
+;; where t > 0 indicates a counterclockwise rotation in the yz-plane
+;;   RY =  cos(t)    0     sin(t)
+;;           0       1       0
+;;        -sin(t)    0     cos(t)
+;; where t > 0 indicates a counterclockwise rotation in the zx-plane
+;;   RZ =  cos(t) -sin(t)    0
+;;         sin(t)  cos(t)    0
+;;           0       0       1
+;; where t > 0 indicates a counterclockwise rotation in the xy-plane.
+
+(defstruct (matrix3 (:conc-name m3-) (:constructor make-m3 (&optional a)))
+  "Storage format is concatenated set of columns:
+c0x c0y c0z c1x c1y c1z c2x c2y c2z."
+  (a (make-array 9 :element-type 'real) :type (simple-array real (9))))
+
+(defun make-m3a ()
+  (make-array 9 :element-type 'real))
+
+(defun copy-m3 (m)
+  (make-m3 (copy-array (the (simple-array real (9)) (m3-a m)))))
+
+(defun make-m3* (m00 m10 m20 m01 m11 m21 m02 m12 m22)
+  (make-m3 (make-array 9 :element-type 'real :initial-contents (vector m00 m10 m20 m01 m11 m21 m02 m12 m22))))
+
+(defvar *m3-zero* (make-m3* 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0))
+(defvar *m3-identity* (make-m3* 1.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 1.0))
+
+(defun m3 (m r c)
+  (aref (the (simple-array real (9)) (m3-a m)) (+ r (* 3 c))))
+
+(defun (setf m3) (v m r c)
+  (setf (aref (the (simple-array real (9)) (m3-a m)) (+ r (* 3 c))) v))
+
+(defmethod equal-p ((m1 matrix3) (m2 matrix3))
+  (equalp (the (simple-array real (9)) (m3-a m1))
+          (the (simple-array real (9)) (m3-a m2))))
+
+(defmethod setv ((dest matrix3) (src matrix3))
+  (map-into (m3-a dest) #'identity (m3-a src)))
+
+(defun m3+ (m1 m2)
+  (make-m3 (map '(simple-array real (9)) #'+ (m3-a m1) (m3-a m2))))
+
+(defun m3- (m1 m2)
+  (make-m3 (map '(simple-array real (9)) #'- (m3-a m1) (m3-a m2))))
+
+(defun m3-column (m c)
+  (make-v3 (m3 m 0 c) (m3 m 1 c) (m3 m 2 c)))
+
+(defun (setf m3-column) (v m c)
+  (setf (m3 m 0 c) (v3-x v)
+        (m3 m 1 c) (v3-y v)
+        (m3 m 2 c) (v3-z v)))
+
+(defun m3-scale (m)
+  (let ((a (m3-a m)))
+    (make-v3 (aref a 0) (aref a 4) (aref a 8))))
+
+(defun (setf m3-scale) (v m)
+  (let ((a (m3-a m)))
+    (setf (aref a 0) (v3-x v)
+          (aref a 4) (v3-y v)
+          (aref a 8) (v3-z v))))
+
+(defun m3-make-scale (v)
+  (make-m3* (v3-x v) 0.0 0.0  0.0 (v3-y v) 0.0  0.0 0.0 (v3-z v)))
+
+(defun m3-make-scale* (x y z)
+  (make-m3* x 0.0 0.0  0.0 y 0.0  0.0 0.0 z))
+
+(defmethod mult ((m1 matrix3) (m2 matrix3))
+  (lret ((m (make-m3)))
+    (dotimes (c 3)
+      (dotimes (r 3)
+        (setf (m3 m r c) (+ (* (m3 m1 r 0) (m3 m2 0 c))
+                            (* (m3 m1 r 1) (m3 m2 1 c))
+                            (* (m3 m1 r 2) (m3 m2 2 c))))))))
+
+(defmethod mult ((m matrix3) (v vector3))
+  (make-v3 (+ (* (m3 m 0 0) (v3-x v)) (* (m3 m 0 1) (v3-y v)) (* (m3 m 0 2) (v3-z v)))
+           (+ (* (m3 m 1 0) (v3-x v)) (* (m3 m 1 1) (v3-y v)) (* (m3 m 1 2) (v3-z v)))
+           (+ (* (m3 m 2 0) (v3-x v)) (* (m3 m 2 1) (v3-y v)) (* (m3 m 2 2) (v3-z v)))))
+
+(defmethod mult ((v vector3) (m matrix3))
+  (make-v3 (+ (* (m3 m 0 0) (v3-x v)) (* (m3 m 1 0) (v3-y v)) (* (m3 m 2 0) (v3-z v)))
+           (+ (* (m3 m 0 1) (v3-x v)) (* (m3 m 1 1) (v3-y v)) (* (m3 m 2 1) (v3-z v)))
+           (+ (* (m3 m 0 2) (v3-x v)) (* (m3 m 1 2) (v3-y v)) (* (m3 m 2 2) (v3-z v)))))
+
+(defmethod mult ((m matrix3) (r real))
+  (make-m3 (map '(simple-array real (9)) (lambda (x) (* x r)) (m3-a m))))
+
+(defmethod mult ((r real) (m matrix3))
+  (make-m3 (map '(simple-array real (9)) (lambda (x) (* x r)) (m3-a m))))
+
+(defun m3-scalep (m)
+  (not (and (real= (+ (* (m3 m 0 0) (m3 m 0 0)) (* (m3 m 1 0) (m3 m 1 0)) (* (m3 m 2 0) (m3 m 2 0))) 1.0 0.0001)
+            (real= (+ (* (m3 m 0 1) (m3 m 0 1)) (* (m3 m 1 1) (m3 m 1 1)) (* (m3 m 2 1) (m3 m 2 1))) 1.0 0.0001)
+            (real= (+ (* (m3 m 0 2) (m3 m 0 2)) (* (m3 m 1 2) (m3 m 1 2)) (* (m3 m 2 2) (m3 m 2 2))) 1.0 0.0001))))
+
+(defun m3-neg (m)
+  (make-m3 (map '(simple-array real (9)) #'- (m3-a m))))
+
+(defun m3-transpose (m)
+  (let ((a (m3-a m)))
+    (make-m3* (aref a 0) (aref a 3) (aref a 6)
+              (aref a 1) (aref a 4) (aref a 7)
+              (aref a 2) (aref a 5) (aref a 8))))
+
+(defun m3-invert (m tolerance)
+  "Invert a 3x3 using cofactors.  This is about X times faster than
+the Numerical Recipes code which uses Gaussian elimination."
+  (let* ((inv (make-m3* (- (* (m3 m 1 1) (m3 m 2 2)) (* (m3 m 1 2) (m3 m 2 1)))
+                        (- (* (m3 m 1 2) (m3 m 2 0)) (* (m3 m 1 0) (m3 m 2 2)))
+                        (- (* (m3 m 1 0) (m3 m 2 1)) (* (m3 m 1 1) (m3 m 2 0)))
+                        (- (* (m3 m 0 2) (m3 m 2 1)) (* (m3 m 0 1) (m3 m 2 2)))
+                        (- (* (m3 m 0 0) (m3 m 2 2)) (* (m3 m 0 2) (m3 m 2 0)))
+                        (- (* (m3 m 0 1) (m3 m 2 0)) (* (m3 m 0 0) (m3 m 2 1)))
+                        (- (* (m3 m 0 1) (m3 m 1 2)) (* (m3 m 0 2) (m3 m 1 1)))
+                        (- (* (m3 m 0 2) (m3 m 1 0)) (* (m3 m 0 0) (m3 m 1 2)))
+                        (- (* (m3 m 0 0) (m3 m 1 1)) (* (m3 m 0 1) (m3 m 1 0)))))
+         (det (+ (* (m3 m 0 0) (m3 inv 0 0))
+                 (* (m3 m 0 1) (m3 inv 1 0))
+                 (* (m3 m 0 2) (m3 inv 2 0)))))
+    (when (> (abs det) tolerance)
+      (let ((invdet (/ 1 det)))
+        (map-into (m3-a inv) (lambda (x) (* x invdet)) (m3-a inv))
+        inv))))
+
+(defun m3-determinant (m)
+  (let ((cofactor00 (- (* (m3 m 1 1) (m3 m 2 2)) (* (m3 m 1 2) (m3 m 2 1))))
+        (cofactor10 (- (* (m3 m 1 2) (m3 m 2 0)) (* (m3 m 1 0) (m3 m 2 2))))
+        (cofactor20 (- (* (m3 m 1 0) (m3 m 2 1)) (* (m3 m 1 1) (m3 m 2 0)))))
+    (+ (* cofactor00 (m3 m 0 0))
+       (* cofactor10 (m3 m 0 1))
+       (* cofactor20 (m3 m 0 2)))))
+
+(defun m3-bidiagonalise (ka kl kr)
+  (let (identity)
+    ;; map first column to (* 0 0)
+    (let ((length (sqrt (+ (* (m3 ka 0 0) (m3 ka 0 0)) (* (m3 ka 1 0) (m3 ka 1 0)) (* (m3 ka 2 0) (m3 ka 2 0))))))
+      (cond ((> length 0.0)
+             (let* ((sign (if (> (m3 ka 0 0) 1.0) 1.0 -1.0))
+                    (t1 (+ (m3 ka 0 0) (* sign length)))
+                    (invt1 (/ 1 t1))
+                    (v1 (* (m3 ka 1 0) invt1))
+                    (v2 (* (m3 ka 2 0) invt1))
+                    (t2 (/ -2.0 (+ 1.0 (* v1 v1) (* v2 v2))))
+                    (w0 (* t2 (+ (m3 ka 0 0) (* (m3 ka 1 0) v1) (* (m3 ka 2 0) v2))))
+                    (w1 (* t2 (+ (m3 ka 0 1) (* (m3 ka 1 1) v1) (* (m3 ka 2 1) v2))))
+                    (w2 (* t2 (+ (m3 ka 0 2) (* (m3 ka 1 2) v1) (* (m3 ka 2 2) v2)))))
+               (incf (m3 ka 0 0) w0)
+               (incf (m3 ka 0 1) w1)
+               (incf (m3 ka 0 2) w2)
+               (incf (m3 ka 1 1) (* v1 w1))
+               (incf (m3 ka 1 2) (* v1 w2))
+               (incf (m3 ka 2 1) (* v2 w1))
+               (incf (m3 ka 2 2) (* v2 w2))
+
+               (setf (m3 kl 0 0) (1+ t2))
+               (setf (m3 kl 0 1) (* t2 v1) (m3 kl 1 0) (* t2 v1))
+               (setf (m3 kl 0 2) (* t2 v2) (m3 kl 2 0) (* t2 v2))
+               (setf (m3 kl 1 1) (1+ (* t2 v1 v1)))
+               (setf (m3 kl 1 2) (* t2 v1 v2) (m3 kl 2 1) (* t2 v1 v2))
+               (setf (m3 kl 2 2) (1+ (* t2 v1 v2)))))
+            (t
+             (setv kl *m3-identity*)
+             (setf identity t))))
+
+    (flet ((compute-abc (t2 v2 &aux (b (* t2 v2)))
+             (values (1+ t2) b (1+ (* b v2)))))
+      ;; map first row to (* * 0)
+      (let ((length (sqrt (+ (* (m3 ka 0 1) (m3 ka 0 1)) (* (m3 ka 0 2) (m3 ka 0 2))))))
+        (cond ((> length 0.0)
+               (let* ((sign (if (> (m3 ka 0 1) 1.0) 1.0 -1.0))
+                      (t1 (+ (m3 ka 0 1) (* sign length)))
+                      (v2 (/ (m3 ka 0 2) t1))
+                      (t2 (/ -2.0 (+ 1.0 (* v2 v2))))
+                      (w0 (* t2 (+ (m3 ka 0 1) (* (m3 ka 0 2) v2))))
+                      (w1 (* t2 (+ (m3 ka 1 1) (* (m3 ka 1 2) v2))))
+                      (w2 (* t2 (+ (m3 ka 2 1) (* (m3 ka 2 2) v2)))))
+                 (incf (m3 ka 0 1) w0)
+                 (incf (m3 ka 1 1) w1)
+                 (incf (m3 ka 1 2) (* w1 v2))
+                 (incf (m3 ka 2 1) w2)
+                 (incf (m3 ka 2 2) (* w2 v2))
+                 (multiple-value-bind (a b c) (compute-abc t2 v2)
+                   (setf (m3 kr 0 0) 1.0
+                         (m3 kr 0 1) 0.0 (m3 kr 1 0) 0.0
+                         (m3 kr 0 2) 0.0 (m3 kr 2 0) 0.0
+                         (m3 kr 1 1) a
+                         (m3 kr 1 2) b (m3 kr 2 1) b
+                         (m3 kr 2 2) c))))
+              (t
+               (setf identity t))))
+      ;; map second column to (* * 0)
+      (let ((length (sqrt (+ (* (m3 ka 1 1) (m3 ka 1 1)) (* (m3 ka 2 1) (m3 ka 2 1))))))
+        (when (> length 0.0)
+          (let* ((sign (if (> (m3 ka 1 1) 1.0) 1.0 -1.0))
+                 (t1 (+ (m3 ka 1 1) (* sign length)))
+                 (v2 (/ (m3 ka 2 1) t1))
+                 (t2 (/ -2.0 (+ 1.0 (* v2 v2))))
+                 (w1 (* t2 (+ (m3 ka 1 1) (* (m3 ka 2 1) v2))))
+                 (w2 (* t2 (+ (m3 ka 1 2) (* (m3 ka 2 2) v2)))))
+            (incf (m3 ka 1 1) w1)
+            (incf (m3 ka 1 2) w2)
+            (incf (m3 ka 2 2) (* v2 w2))
+            (multiple-value-bind (a b c) (compute-abc t2 v2)
+              (cond (identity
+                     (setf (m3 kl 0 0) 1.0
+                           (m3 kl 0 1) 0.0 (m3 kl 1 0) 0.0
+                           (m3 kl 0 2) 0.0 (m3 kl 2 0) 0.0
+                           (m3 kl 1 1) a
+                           (m3 kl 1 2) b (m3 kl 2 1) b
+                           (m3 kl 2 2) c))
+                    (t
+                     (dotimes (row 3)
+                       (let ((tmp0 (m3 kl row 1))
+                             (tmp1 (m3 kl row 2)))
+                         (setf (m3 kl row 1) (+ (* a tmp0) (* b tmp1))
+                               (m3 kl row 2) (+ (* b tmp0) (* c tmp1))))))))))))))
+
+(defun m3<-axes (a0 a1 a2)
+  (make-m3* (v3-x a0) (v3-y a0) (v3-z a0)
+            (v3-x a1) (v3-y a1) (v3-z a1)
+            (v3-x a2) (v3-y a2) (v3-z a2)))
+
+(defstruct (matrix4 (:conc-name m4-) (:constructor make-m4 (&optional a)))
+  "Storage format is concatenated set of columns:
+c0x c0y c0z c0w c1x c1y c1z c1w c2x c2y c2z c2w c3x c3y c3z c3w."
+  (a (make-array 16 :element-type 'real) :type (simple-array real (16))))
+
+(defun copy-m4 (m)
+  (make-m4 (copy-array (the (simple-array real (16)) (m4-a m)))))
+
+(defun make-m4* (m00 m10 m20 m30 m01 m11 m21 m31 m02 m12 m22 m32 m03 m13 m23 m33)
+  (make-m4 (make-array 16 :element-type 'real :initial-contents (vector m00 m10 m20 m30 m01 m11 m21 m31 m02 m12 m22 m32 m03 m13 m23 m33))))
+
+(defvar *m4-zero* (make-m4* 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0 0.0))
+(defvar *m4-identity* (make-m4* 1.0 0.0 0.0 0.0 #||# 0.0 1.0 0.0 0.0 #||# 0.0 0.0 1.0 0.0 #||# 0.0 0.0 0.0 1.0))
+(defvar *m4-clipspace-2d-to-imagespace* (make-m4* 0.5 0.0 0.0 0.0 #||# 0.0 -0.5 0.0 0.0 #||# 0.0 0.0 1.0 0.0 #||# 0.5 0.5 0.0 1.0)
+  "Useful little matrix which takes 2D clipspace {-1,1} to {0,1} and inverts the Y.")
+
+(defun m4 (m r c)
+  (aref (the (simple-array real (16)) (m4-a m)) (+ r (ash c 2))))
+
+(defun (setf m4) (v m r c)
+  (setf (aref (the (simple-array real (16)) (m4-a m)) (+ r (ash c 2))) v))
+
+(defmethod equal-p ((m1 matrix4) (m2 matrix4))
+  (equalp (the (simple-array real (16)) (m4-a m1))
+          (the (simple-array real (16)) (m4-a m2))))
+
+(defmethod setv ((dest matrix4) (src matrix4))
+  (map-into (m4-a dest) #'identity (m4-a src)))
+
+(defmethod setv ((dest matrix4) (src matrix3))
+  (let ((a4 (m4-a dest))
+        (a3 (m3-a src)))
+    (setf (aref a4 0) (aref a3 0)
+          (aref a4 1) (aref a3 1)
+          (aref a4 2) (aref a3 2)
+          (aref a4 4) (aref a3 3)
+          (aref a4 5) (aref a3 4)
+          (aref a4 6) (aref a3 5)
+          (aref a4 8) (aref a3 6)
+          (aref a4 9) (aref a3 7)
+          (aref a4 10) (aref a3 8))))
+
+(defmethod setv ((dest matrix3) (src matrix4))
+  (let ((a3 (m3-a dest))
+        (a4 (m4-a src)))
+    (setf (aref a3 0) (aref a4 0)
+          (aref a3 1) (aref a4 1)
+          (aref a3 2) (aref a4 2)
+          (aref a3 3) (aref a4 4)
+          (aref a3 4) (aref a4 5)
+          (aref a3 5) (aref a4 6)
+          (aref a3 6) (aref a4 8)
+          (aref a3 7) (aref a4 9)
+          (aref a3 8) (aref a4 10))))
+
+(defun m4-minor (m r0 r1 r2 c0 c1 c2)
+  (- (* (m4 m r0 c0) (- (* (m4 m r1 c1) (m4 m r2 c2)) (* (m4 m r2 c1) (m4 m r1 c2))))
+     (* (m4 m r0 c1) (- (* (m4 m r1 c0) (m4 m r2 c2)) (* (m4 m r2 c0) (m4 m r1 c2))))
+     (- (* (m4 m r0 c2) (- (* (m4 m r1 c0) (m4 m r2 c1)) (* (m4 m r2 c0) (m4 m r1 c1)))))))
+
+(defun m4-trans (m)
+  (let ((a (m4-a m)))
+    (make-v3 (aref a 12) (aref a 13) (aref a 14))))
+
+(defun (setf m4-trans) (v m)
+  (let ((a (m4-a m)))
+    (setf (aref a 12) (v3-x v)
+          (aref a 13) (v3-y v)
+          (aref a 14) (v3-z v))))
+
+(defun m4-make-trans (v)
+  (make-m4* 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 (v3-x v) (v3-y v) (v3-z v) 1.0))
+
+(defun m4-make-trans* (x y z)
+  (make-m4* 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 x y z 1.0))
+
+(defun m4-scale (m)
+  (let ((a (m4-a m)))
+    (make-v3 (aref a 0) (aref a 5) (aref a 10))))
+
+(defun (setf m4-scale) (v m)
+  (let ((a (m4-a m)))
+    (setf (aref a 0) (v3-x v)
+          (aref a 5) (v3-y v)
+          (aref a 10) (v3-z v))))
+
+(defun m4-make-scale (v)
+  (make-m4* (v3-x v) 0.0 0.0 0.0 0.0 (v3-y v) 0.0 0.0 0.0 0.0 (v3-z v) 0.0 0.0 0.0 0.0 1.0))
+
+(defun m4-make-scale* (x y z)
+  (make-m4* x 0.0 0.0 0.0 0.0 y 0.0 0.0 0.0 0.0 z 0.0 0.0 0.0 0.0 1.0))
+
+(defun m4-projection (m)
+  (let ((a (m4-a m)))
+    (make-v4 (aref a 3) (aref a 7) (aref a 11) (aref a 15))))
+
+(defun (setf m4-projection) (v m)
+  (let ((a (m4-a m)))
+    (setf (aref a 3) (v4-x v)
+          (aref a 7) (v4-y v)
+          (aref a 11) (v4-z v)
+          (aref a 15) (v4-w v))))
+
+(defun m4+ (m1 m2)
+  (make-m4 (map '(simple-array real (9)) #'+ (m4-a m1) (m4-a m2))))
+
+(defun m4- (m1 m2)
+  (make-m4 (map '(simple-array real (9)) #'- (m4-a m1) (m4-a m2))))
+
+(defun m4-transpose (m)
+  (let ((a (m4-a m)))
+    (make-m4* (aref a 0) (aref a 4) (aref a 8) (aref a 12)
+              (aref a 1) (aref a 5) (aref a 9) (aref a 13)
+              (aref a 2) (aref a 6) (aref a 10) (aref a 14)
+              (aref a 3) (aref a 7) (aref a 11) (aref a 15))))
+
+(defun m4-concatenate (m1 m2)
+  (make-m4* (+ (* (m4 m1 0 0) (m4 m2 0 0)) (* (m4 m1 0 1) (m4 m2 1 0)) (* (m4 m1 0 2) (m4 m2 2 0)) (* (m4 m1 0 3) (m4 m2 3 0)))
+            (+ (* (m4 m1 1 0) (m4 m2 0 0)) (* (m4 m1 1 1) (m4 m2 1 0)) (* (m4 m1 1 2) (m4 m2 2 0)) (* (m4 m1 1 3) (m4 m2 3 0)))
+            (+ (* (m4 m1 2 0) (m4 m2 0 0)) (* (m4 m1 2 1) (m4 m2 1 0)) (* (m4 m1 2 2) (m4 m2 2 0)) (* (m4 m1 2 3) (m4 m2 3 0)))
+            (+ (* (m4 m1 3 0) (m4 m2 0 0)) (* (m4 m1 3 1) (m4 m2 1 0)) (* (m4 m1 3 2) (m4 m2 2 0)) (* (m4 m1 3 3) (m4 m2 3 0)))
+                                                                                                                                  
+            (+ (* (m4 m1 0 0) (m4 m2 0 1)) (* (m4 m1 0 1) (m4 m2 1 1)) (* (m4 m1 0 2) (m4 m2 2 1)) (* (m4 m1 0 3) (m4 m2 3 1)))
+            (+ (* (m4 m1 1 0) (m4 m2 0 1)) (* (m4 m1 1 1) (m4 m2 1 1)) (* (m4 m1 1 2) (m4 m2 2 1)) (* (m4 m1 1 3) (m4 m2 3 1)))
+            (+ (* (m4 m1 2 0) (m4 m2 0 1)) (* (m4 m1 2 1) (m4 m2 1 1)) (* (m4 m1 2 2) (m4 m2 2 1)) (* (m4 m1 2 3) (m4 m2 3 1)))
+            (+ (* (m4 m1 3 0) (m4 m2 0 1)) (* (m4 m1 3 1) (m4 m2 1 1)) (* (m4 m1 3 2) (m4 m2 2 1)) (* (m4 m1 3 3) (m4 m2 3 1)))
+                                                                                                                                  
+            (+ (* (m4 m1 0 0) (m4 m2 0 2)) (* (m4 m1 0 1) (m4 m2 1 2)) (* (m4 m1 0 2) (m4 m2 2 2)) (* (m4 m1 0 3) (m4 m2 3 2)))
+            (+ (* (m4 m1 1 0) (m4 m2 0 2)) (* (m4 m1 1 1) (m4 m2 1 2)) (* (m4 m1 1 2) (m4 m2 2 2)) (* (m4 m1 1 3) (m4 m2 3 2)))
+            (+ (* (m4 m1 2 0) (m4 m2 0 2)) (* (m4 m1 2 1) (m4 m2 1 2)) (* (m4 m1 2 2) (m4 m2 2 2)) (* (m4 m1 2 3) (m4 m2 3 2)))
+            (+ (* (m4 m1 3 0) (m4 m2 0 2)) (* (m4 m1 3 1) (m4 m2 1 2)) (* (m4 m1 3 2) (m4 m2 2 2)) (* (m4 m1 3 3) (m4 m2 3 2)))
+                                                                                                                                  
+            (+ (* (m4 m1 0 0) (m4 m2 0 3)) (* (m4 m1 0 1) (m4 m2 1 3)) (* (m4 m1 0 2) (m4 m2 2 3)) (* (m4 m1 0 3) (m4 m2 3 3)))
+            (+ (* (m4 m1 1 0) (m4 m2 0 3)) (* (m4 m1 1 1) (m4 m2 1 3)) (* (m4 m1 1 2) (m4 m2 2 3)) (* (m4 m1 1 3) (m4 m2 3 3)))
+            (+ (* (m4 m1 2 0) (m4 m2 0 3)) (* (m4 m1 2 1) (m4 m2 1 3)) (* (m4 m1 2 2) (m4 m2 2 3)) (* (m4 m1 2 3) (m4 m2 3 3)))
+            (+ (* (m4 m1 3 0) (m4 m2 0 3)) (* (m4 m1 3 1) (m4 m2 1 3)) (* (m4 m1 3 2) (m4 m2 2 3)) (* (m4 m1 3 3) (m4 m2 3 3)))))
+
+(defun m4-affine-p (m)
+  (let ((a (m4-a m)))
+    (and (zerop (aref a 3)) (zerop (aref a 7)) (zerop (aref a 11))
+         (= 1 (aref a 15)))))
+
+(defun m4-concatenate-affine (m1 m2)
+  (assert (and (m4-affine-p m1) (m4-affine-p m2)))
+  (make-m4* (+ (* (m4 m1 0 0) (m4 m2 0 0)) (* (m4 m1 0 1) (m4 m2 1 0)) (* (m4 m1 0 2) (m4 m2 2 0)))
+            (+ (* (m4 m1 1 0) (m4 m2 0 0)) (* (m4 m1 1 1) (m4 m2 1 0)) (* (m4 m1 1 2) (m4 m2 2 0)))
+            (+ (* (m4 m1 2 0) (m4 m2 0 0)) (* (m4 m1 2 1) (m4 m2 1 0)) (* (m4 m1 2 2) (m4 m2 2 0)))
+            0.0
+                                                                                                      
+            (+ (* (m4 m1 0 0) (m4 m2 0 1)) (* (m4 m1 0 1) (m4 m2 1 1)) (* (m4 m1 0 2) (m4 m2 2 1)))
+            (+ (* (m4 m1 1 0) (m4 m2 0 1)) (* (m4 m1 1 1) (m4 m2 1 1)) (* (m4 m1 1 2) (m4 m2 2 1)))
+            (+ (* (m4 m1 2 0) (m4 m2 0 1)) (* (m4 m1 2 1) (m4 m2 1 1)) (* (m4 m1 2 2) (m4 m2 2 1)))
+            0.0
+                                                                                                      
+            (+ (* (m4 m1 0 0) (m4 m2 0 2)) (* (m4 m1 0 1) (m4 m2 1 2)) (* (m4 m1 0 2) (m4 m2 2 2)))
+            (+ (* (m4 m1 1 0) (m4 m2 0 2)) (* (m4 m1 1 1) (m4 m2 1 2)) (* (m4 m1 1 2) (m4 m2 2 2)))
+            (+ (* (m4 m1 2 0) (m4 m2 0 2)) (* (m4 m1 2 1) (m4 m2 1 2)) (* (m4 m1 2 2) (m4 m2 2 2)))
+            0.0
+                                                                                                                                  
+            (+ (* (m4 m1 0 0) (m4 m2 0 3)) (* (m4 m1 0 1) (m4 m2 1 3)) (* (m4 m1 0 2) (m4 m2 2 3)) (m4 m1 0 3))
+            (+ (* (m4 m1 1 0) (m4 m2 0 3)) (* (m4 m1 1 1) (m4 m2 1 3)) (* (m4 m1 1 2) (m4 m2 2 3)) (m4 m1 1 3))
+            (+ (* (m4 m1 2 0) (m4 m2 0 3)) (* (m4 m1 2 1) (m4 m2 1 3)) (* (m4 m1 2 2) (m4 m2 2 3)) (m4 m1 2 3))
+            1.0))
+
+(defmethod mult ((m1 matrix4) (m2 matrix4))
+  (m4-concatenate m1 m2))
+
+(defmethod mult ((m matrix4) (v vector3))
+  "Vector transformation using '*'.
+Transforms the given 3-D vector by the matrix, projecting the 
+result back into w = 1.
+This means that the initial w is considered to be 1.0,
+and then all the tree elements of the resulting 3-D vector are
+divided by the resulting w."
+  (let ((invw (/ 1.0 (+ (* (m4 m 3 0) (v3-x v)) (* (m4 m 3 1) (v3-y v)) (* (m4 m 3 2) (v3-z v)) (m4 m 3 3)))))
+    (make-v3 (* invw (+ (* (m4 m 0 0) (v3-x v)) (* (m4 m 0 1) (v3-y v)) (* (m4 m 0 2) (v3-z v)) (m4 m 0 3)))
+             (* invw (+ (* (m4 m 1 0) (v3-x v)) (* (m4 m 1 1) (v3-y v)) (* (m4 m 1 2) (v3-z v)) (m4 m 1 3)))
+             (* invw (+ (* (m4 m 2 0) (v3-x v)) (* (m4 m 2 1) (v3-y v)) (* (m4 m 2 2) (v3-z v)) (m4 m 2 3))))))
+
+(defmethod mult ((m matrix4) (v vector4))
+  (make-v4 (+ (* (m4 m 0 0) (v4-x v)) (* (m4 m 0 1) (v4-y v)) (* (m4 m 0 2) (v4-z v)) (* (m4 m 0 3) (v4-w v)))
+           (+ (* (m4 m 1 0) (v4-x v)) (* (m4 m 1 1) (v4-y v)) (* (m4 m 1 2) (v4-z v)) (* (m4 m 1 3) (v4-w v)))
+           (+ (* (m4 m 2 0) (v4-x v)) (* (m4 m 2 1) (v4-y v)) (* (m4 m 2 2) (v4-z v)) (* (m4 m 2 3) (v4-w v)))
+           (+ (* (m4 m 3 0) (v4-x v)) (* (m4 m 3 1) (v4-y v)) (* (m4 m 3 2) (v4-z v)) (* (m4 m 3 3) (v4-w v)))))
+
+(defmethod mult ((v vector4) (m matrix4))
+  (make-v4 (+ (* (m4 m 0 0) (v4-x v)) (* (m4 m 1 0) (v4-y v)) (* (m4 m 2 0) (v4-z v)) (* (m4 m 3 0) (v4-w v)))
+           (+ (* (m4 m 0 1) (v4-x v)) (* (m4 m 1 1) (v4-y v)) (* (m4 m 2 1) (v4-z v)) (* (m4 m 3 1) (v4-w v)))
+           (+ (* (m4 m 0 2) (v4-x v)) (* (m4 m 1 2) (v4-y v)) (* (m4 m 2 2) (v4-z v)) (* (m4 m 3 2) (v4-w v)))
+           (+ (* (m4 m 0 3) (v4-x v)) (* (m4 m 1 3) (v4-y v)) (* (m4 m 2 3) (v4-z v)) (* (m4 m 3 3) (v4-w v)))))
+
+(defmethod mult-affine ((m matrix4) (v vector3))
+  (assert (m4-affine-p m))
+  (make-v3 (+ (* (m4 m 0 0) (v3-x v)) (* (m4 m 0 1) (v3-y v)) (* (m4 m 0 2) (v3-z v)))
+           (+ (* (m4 m 1 0) (v3-x v)) (* (m4 m 1 1) (v3-y v)) (* (m4 m 1 2) (v3-z v)))
+           (+ (* (m4 m 2 0) (v3-x v)) (* (m4 m 2 1) (v3-y v)) (* (m4 m 2 2) (v3-z v)))))
+
+(defmethod mult-affine ((m matrix4) (v vector4))
+  (assert (m4-affine-p m))
+  (make-v4 (+ (* (m4 m 0 0) (v4-x v)) (* (m4 m 0 1) (v4-y v)) (* (m4 m 0 2) (v4-z v)) (* (m4 m 0 3) (v4-w v)))
+           (+ (* (m4 m 1 0) (v4-x v)) (* (m4 m 1 1) (v4-y v)) (* (m4 m 1 2) (v4-z v)) (* (m4 m 1 3) (v4-w v)))
+           (+ (* (m4 m 2 0) (v4-x v)) (* (m4 m 2 1) (v4-y v)) (* (m4 m 2 2) (v4-z v)) (* (m4 m 2 3) (v4-w v)))
+           (v4-w v)))
+
+(defun m4-adjoint (m)
+  (make-m4* (m4-minor m 1 2 3 1 2 3)
+            (- (m4-minor m 1 2 3 0 2 3))
+            (m4-minor m 1 2 3 0 1 3)
+            (- (m4-minor m 1 2 3 0 1 2))
+
+            (- (m4-minor m 0 2 3 1 2 3))
+            (m4-minor m 0 2 3 0 2 3)
+            (- (m4-minor m 0 2 3 0 1 3))
+            (m4-minor m 0 2 3 0 1 2)
+
+            (m4-minor m 0 1 3 1 2 3)
+            (- (m4-minor m 0 1 3 0 2 3))
+            (m4-minor m 0 1 3 0 1 3)
+            (- (m4-minor m 0 1 2 0 1 2))
+
+            (- (m4-minor m 0 1 2 1 2 3))
+            (m4-minor m 0 1 2 0 2 3)
+            (- (m4-minor m 0 1 2 0 1 3))
+            (m4-minor m 0 1 2 0 1 2)))
+
+(defun m4-determinant (m)
+  (- (+ (* (m4 m 0 0) (m4-minor m 1 2 3 1 2 3))
+        (* (m4 m 0 2) (m4-minor m 1 2 3 0 1 3)))
+     (* (m4 m 0 1) (m4-minor m 1 2 3 0 2 3))
+     (* (m4 m 0 3) (m4-minor m 1 2 3 0 1 2))))
+
+(defun m4-invert (m)
+  (let ((m00 (m4 m 0 0)) (m01 (m4 m 0 1)) (m02 (m4 m 0 2)) (m03 (m4 m 0 3))
+        (m10 (m4 m 1 0)) (m11 (m4 m 1 1)) (m12 (m4 m 1 2)) (m13 (m4 m 1 3))
+        (m20 (m4 m 2 0)) (m21 (m4 m 2 1)) (m22 (m4 m 2 2)) (m23 (m4 m 2 3))
+        (m30 (m4 m 3 0)) (m31 (m4 m 3 1)) (m32 (m4 m 3 2)) (m33 (m4 m 3 3)))
+    (let ((v0 (- (* m20 m31) (* m21 m30)))
+          (v1 (- (* m20 m32) (* m22 m30)))
+          (v2 (- (* m20 m33) (* m23 m30)))
+          (v3 (- (* m21 m32) (* m22 m31)))
+          (v4 (- (* m21 m33) (* m23 m31)))
+          (v5 (- (* m22 m33) (* m23 m32))))
+      (let ((t00 (+ (+ (- (* v5 m11) (* v4 m12)) (* v3 m13))))
+            (t10 (- (+ (- (* v5 m10) (* v2 m12)) (* v1 m13))))
+            (t20 (+ (+ (- (* v4 m10) (* v2 m11)) (* v0 m13))))
+            (t30 (- (+ (- (* v3 m10) (* v1 m11)) (* v0 m12)))))
+        (let ((invdet (/ 1 (+ (* t00 m00) (* t10 m01) (* t20 m02) (* t30 m03)))))
+          (let ((d00 (* t00 invdet))
+                (d10 (* t10 invdet))
+                (d20 (* t20 invdet))
+                (d30 (* t30 invdet))
+                (d01 (* (- (+ (- (* v5 m01) (* v4 m02)) (* v3 m03))) invdet))
+                (d11 (* (+ (+ (- (* v5 m00) (* v2 m02)) (* v1 m03))) invdet))
+                (d21 (* (- (+ (- (* v4 m00) (* v2 m01)) (* v0 m03))) invdet))
+                (d31 (* (+ (+ (- (* v3 m00) (* v1 m01)) (* v0 m02))) invdet)))
+            (let ((v0 (- (* m10 m31) (* m11 m30)))
+                  (v1 (- (* m10 m32) (* m12 m30)))
+                  (v2 (- (* m10 m33) (* m13 m30)))
+                  (v3 (- (* m11 m32) (* m12 m31)))
+                  (v4 (- (* m11 m33) (* m13 m31)))
+                  (v5 (- (* m12 m33) (* m23 m32))))
+              (let ((d02 (* (+ (+ (- (* v5 m01) (* v4 m02)) (* v3 m03))) invdet))
+                    (d12 (* (- (+ (- (* v5 m00) (* v2 m02)) (* v1 m03))) invdet))
+                    (d22 (* (+ (+ (- (* v4 m00) (* v2 m01)) (* v0 m03))) invdet))
+                    (d32 (* (- (+ (- (* v3 m00) (* v1 m01)) (* v0 m02))) invdet)))
+                (let ((v0 (- (* m10 m21) (* m11 m20)))
+                      (v1 (- (* m10 m22) (* m12 m20)))
+                      (v2 (- (* m10 m23) (* m13 m20)))
+                      (v3 (- (* m11 m22) (* m12 m21)))
+                      (v4 (- (* m11 m23) (* m13 m21)))
+                      (v5 (- (* m12 m23) (* m23 m22))))
+                  (let ((d03 (* (- (+ (- (* v5 m01) (* v4 m02)) (* v3 m03))) invdet))
+                        (d13 (* (+ (+ (- (* v5 m00) (* v2 m02)) (* v1 m03))) invdet))
+                        (d23 (* (- (+ (- (* v4 m00) (* v2 m01)) (* v0 m03))) invdet))
+                        (d33 (* (+ (+ (- (* v3 m00) (* v1 m01)) (* v0 m02))) invdet)))
+                    (make-m4* d00 d10 d20 d30
+                              d01 d11 d21 d31
+                              d02 d12 d22 d32
+                              d03 d13 d23 d33)))))))))))
+
+(defun m4-invert-affine (m)
+  (assert (m4-affine-p m))
+  (let ((m00 (m4 m 0 0)) (m01 (m4 m 0 1)) (m02 (m4 m 0 2)) (m03 (m4 m 0 3))
+        (m10 (m4 m 1 0)) (m11 (m4 m 1 1)) (m12 (m4 m 1 2)) (m13 (m4 m 1 3))
+        (m20 (m4 m 2 0)) (m21 (m4 m 2 1)) (m22 (m4 m 2 2)) (m23 (m4 m 2 3)))
+    (let ((t00 (- (* m22 m11) (* m21 m12)))
+          (t10 (- (* m20 m12) (* m22 m10)))
+          (t20 (- (* m21 m10) (* m20 m11))))
+      (let ((invdet (/ 1 (+ (* m00 t00) (* m01 t10) (* m02 t20)))))
+        (let ((t00 (* t00 invdet)) (t10 (* t10 invdet)) (t20 (* t20 invdet))
+              (m00 (* m00 invdet)) (m01 (* m01 invdet)) (m02 (* m02 invdet)))
+          (let ((r00 t00)
+                (r01 (- (* m02 m21) (* m01 m22)))
+                (r02 (- (* m01 m12) (* m02 m11)))
+                (r10 t10)
+                (r11 (- (* m00 m22) (* m02 m20)))
+                (r12 (- (* m02 m10) (* m00 m12)))
+                (r20 t20)
+                (r21 (- (* m01 m20) (* m00 m21)))
+                (r22 (- (* m00 m11) (* m01 m10))))
+            (let ((r03 (- (+ (* r00 m03) (* r01 m13) (* r02 m23))))
+                  (r13 (- (+ (* r10 m03) (* r11 m13) (* r12 m23))))
+                  (r23 (- (+ (* r20 m03) (* r21 m13) (* r22 m23)))))
+              (make-m4* r00 r10 r20 0.0
+                        r01 r11 r21 0.0
+                        r02 r12 r22 0.0
+                        r03 r13 r23 1.0))))))))
+
+(defmethod mult ((m matrix4) (p plane))
+  (let* ((n (plane-normal p))
+         (v (mult (m4-transpose (m4-invert m))
+                  (make-v4 (v3-x n) (v3-y n) (v3-z n) (plane-d p))))
+         (new-normal (make-v3 (v4-x v) (v4-y v) (v4-z v))))
+    (v3-normalisef new-normal)
+    (error "~@<I think Ogre source has a bug in here: division of a scalar by a vector yields a vector, yet must yield a scalar, by this very local logic.~:@>")
+    (make-plane new-normal (/ (v4-w v) new-normal))))
+
+(defmethod mult ((m matrix4) (r real))
+  (make-m4 (map '(simple-array real (16)) (lambda (x) (* x r)) (m4-a m))))
+
+(defmethod mult ((r real) (m matrix4))
+  (make-m4 (map '(simple-array real (16)) (lambda (x) (* x r)) (m4-a m))))
+
+(defun m4-scalep (m)
+  (not (and (real= (+ (* (m4 m 0 0) (m4 m 0 0)) (* (m4 m 1 0) (m4 m 1 0)) (* (m4 m 2 0) (m4 m 2 0))) 1.0 0.0001)
+            (real= (+ (* (m4 m 0 1) (m4 m 0 1)) (* (m4 m 1 1) (m4 m 1 1)) (* (m4 m 2 1) (m4 m 2 1))) 1.0 0.0001)
+            (real= (+ (* (m4 m 0 2) (m4 m 0 2)) (* (m4 m 1 2) (m4 m 1 2)) (* (m4 m 2 2) (m4 m 2 2))) 1.0 0.0001))))
+
+(defun m4-negative-scalep (m)
+  (minusp (m4-determinant m)))
+
+(defun q<-m4 (m)
+  (let ((m3 (make-m3)))
+    (setv m3 m)
+    (q<-m3 m3)))
+
+(defun m4<-m3 (m)
+  (lret ((m4 (make-m4)))
+    (setv m4 *m4-identity*)
+    (setv m4 m)))
+
+(defun m4<-q (q)
+  (lret ((m4 (make-m4)))
+    (setv m4 *m4-identity*)
+    (setv m4 (m3<-q q))))
+
+(defun m4-make-transform (translation scale orientation)
+  ;; Ordering:
+  ;;    1. Scale
+  ;;    2. Rotate
+  ;;    3. Translate
+  (lret ((m (m4<-m3 (mult (m3<-q orientation) (m3-make-scale scale)))))
+    (setf (m4-trans m) translation
+          (m4-projection m) *v4-unit-w*)))
+
+(defun m4-make-inverse-transform (translation scale orientation)
+  (let ((invtranslation (v3-neg translation))
+        (invscale (make-v3 (/ 1 (v3-x scale)) (/ 1 (v3-y scale)) (/ 1 (v3-z scale))))
+        (invorientation (q-invert orientation)))
+    ;; Because we're inverting, order is translation, rotation, scale
+    ;; So make translation relative to scale & rotation
+    (let ((invtranslation (mult invorientation (mult invtranslation invscale))))
+      (lret ((m (m4<-m3 (mult (m3-make-scale invscale) (m3<-q invorientation)))))
+        (setf (m4-trans m) invtranslation
+              (m4-projection m) *v4-unit-w*)))))
 ;;;;
 ;;;; Axis-aligned box
 ;;;;
@@ -281,6 +915,9 @@ visibility determination."
   (min nil :type vector3)
   (max nil :type vector3)
   (corners nil :type (or null simple-vector)))
+
+(defvar *aab-null* (make-aab))
+(defvar *aab-infinite* (make-aab :extent :infinite))
 
 (defun aab-null-p (aab)       (eq (aab-extent aab) :null))
 (defun aab-finite-p (aab)     (eq (aab-extent aab) :finite))
@@ -388,30 +1025,30 @@ is then transformed."
       ;; For each one, we transform it using the matrix
       ;; Which gives the resulting point and merge the resulting point.
       (setf current-corner oldmin)
-      (aab-mergef aab (m4* m4 current-corner))
+      (aab-mergef aab (mult m4 current-corner))
 
       (setf (v3-z current-corner) (v3-z oldmax))
-      (aab-mergef aab (m4* m4 current-corner))
+      (aab-mergef aab (mult m4 current-corner))
 
       (setf (v3-y current-corner) (v3-y oldmax))
-      (aab-mergef aab (m4* m4 current-corner))
+      (aab-mergef aab (mult m4 current-corner))
 
       (setf (v3-z current-corner) (v3-z oldmin))
-      (aab-mergef aab (m4* m4 current-corner))
+      (aab-mergef aab (mult m4 current-corner))
 
       (setf (v3-x current-corner) (v3-x oldmax))
-      (aab-mergef aab (m4* m4 current-corner))
+      (aab-mergef aab (mult m4 current-corner))
 
       (setf (v3-z current-corner) (v3-z oldmax))
-      (aab-mergef aab (m4* m4 current-corner))
+      (aab-mergef aab (mult m4 current-corner))
 
       (setf (v3-y current-corner) (v3-y oldmin))
-      (aab-mergef aab (m4* m4 current-corner))
+      (aab-mergef aab (mult m4 current-corner))
 
       (setf (v3-z current-corner) (v3-z oldmin))
-      (aab-mergef aab (m4* m4 current-corner)))))
+      (aab-mergef aab (mult m4 current-corner)))))
 
-(defun aab-transform-affine (aab m4)
+(defun aab-transform-affine (aab m)
   "Transforms the box according to the affine matrix supplied.
 
 By calling this method you get the axis-aligned box which
@@ -422,20 +1059,20 @@ AABB. Useful when you have a local AABB for an object which
 is then transformed.
 
 The matrix must be an affine matrix. m4-affine-p."
-  (assert (m4-affine-p m4))
+  (assert (m4-affine-p m))
   (when (aab-finite-p aab)
     (let* ((centre (aab-centre aab))
            (halfsize (aab-halfsize aab))
-           (new-centre (transform-affine m4 centre))
-           (new-halfsize (make-v3 (+ (* (abs (m4ref m4 0 0)) (v3-x halfsize))
-                                     (* (abs (m4ref m4 0 1)) (v3-y halfsize))
-                                     (* (abs (m4ref m4 0 2)) (v3-z halfsize)))
-                                  (+ (* (abs (m4ref m4 1 0)) (v3-x halfsize))
-                                     (* (abs (m4ref m4 1 1)) (v3-y halfsize))
-                                     (* (abs (m4ref m4 1 2)) (v3-z halfsize)))
-                                  (+ (* (abs (m4ref m4 2 0)) (v3-x halfsize))
-                                     (* (abs (m4ref m4 2 1)) (v3-y halfsize))
-                                     (* (abs (m4ref m4 2 2)) (v3-z halfsize))))))
+           (new-centre (mult-affine m centre))
+           (new-halfsize (make-v3 (+ (* (abs (m4 m 0 0)) (v3-x halfsize))
+                                     (* (abs (m4 m 0 1)) (v3-y halfsize))
+                                     (* (abs (m4 m 0 2)) (v3-z halfsize)))
+                                  (+ (* (abs (m4 m 1 0)) (v3-x halfsize))
+                                     (* (abs (m4 m 1 1)) (v3-y halfsize))
+                                     (* (abs (m4 m 1 2)) (v3-z halfsize)))
+                                  (+ (* (abs (m4 m 2 0)) (v3-x halfsize))
+                                     (* (abs (m4 m 2 1)) (v3-y halfsize))
+                                     (* (abs (m4 m 2 2)) (v3-z halfsize))))))
       (aab-set-extents aab (v3- new-centre new-halfsize) (v3+ new-centre new-halfsize)))))
 
 (defun aab-intersects (aab1 aab2)
@@ -536,6 +1173,3 @@ The matrix must be an affine matrix. m4-affine-p."
        (or (not (aab-finite-p aab1))
            (and (v3= (aab-min aab1) (aab-min aab2))
                 (v3= (aab-max aab1) (aab-max aab2))))))
-
-(defvar *aab-null* (make-aab))
-(defvar *aab-infinite* (make-aab :extent :infinite))

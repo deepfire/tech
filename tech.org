@@ -2,11 +2,11 @@
 #+STARTUP: hidestars #+STARTUP: odd #+STARTUP: logdone
 
 * Component notes
-*** DefaultWorkQueue		OgreMain/src/Threading
+*** DefaultWorkQueue
     - manage worker threads
-*** AnimableValue		OgreMain/src
+*** AnimableValue
     - dispatch resetToBaseValue, setAsBaseValue, setValue, applyDeltaValue based on object type
-*** Animation		        OgreMain/src
+*** Animation
     - name, length, interpolation modes
     - indexed set of node animation tracks, searchable by index ("handle")
     - indexed set of numeric animation tracks, searchable by index ("handle")
@@ -18,8 +18,9 @@
       - animables
       - vertex data
     - can optimise tracks (calls out to track)
-*** AnimationState		OgreMain/src
-    - 
+*** AnimationState
+*** Matrix4
+    - Ogre source likely has a bug in the * method for (matrix4 plane), see the implementation..
 * Done
 *** Animable
 ***** AnimableValue
