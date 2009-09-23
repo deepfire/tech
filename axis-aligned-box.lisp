@@ -30,6 +30,9 @@
   (declare (type real x1 x2 tolerance))
   (< (abs (- x1 x2)) tolerance))
 
+(defun rad<-deg (deg) (/ (* pi deg) 180.0))
+(defun deg<-rad (rad) (/ (* 180.0 rad) pi))
+
 (defgeneric volume (object))
 (defgeneric scale (object v3))
 (defgeneric scalef (object v3))
@@ -39,23 +42,12 @@
 (defgeneric setv (object-1 object-2))
 (defgeneric mult (object-1 object-2))
 (defgeneric mult-affine (object-1 object-2))
+(defgeneric dot (object-1 object-2))
 
 (defun ni () (error "~@<This function is not implemented.~:@>"))
 
 ;;;;
-;;;; Quaternion
-;;;;
-(defstruct (quaternion (:conc-name q-) (:constructor make-q (w x y z)))
-  (w 1.0 :type real)
-  (x 0.0 :type real)
-  (y 0.0 :type real)
-  (z 0.0 :type real))
-
-(defvar *q-zero* (make-q 0.0 0.0 0.0 0.0))
-(defvar *q-identity* (make-q 1.0 0.0 0.0 0.0))
-
-;;;;
-;;;; Vector
+;;;; Quaternions and vectors
 ;;;;
 (defstruct (vector2 (:conc-name v2-) (:constructor make-v2 (x y)))
   (x 0 :type real)
@@ -71,6 +63,12 @@
   (y 0 :type real)
   (z 0 :type real)
   (w 0 :type real))
+
+(defstruct (quaternion (:conc-name q-) (:constructor make-q (w x y z)))
+  (w 1.0 :type real)
+  (x 0.0 :type real)
+  (y 0.0 :type real)
+  (z 0.0 :type real))
 
 (defvar *v2-zero* (make-v2 0.0 0.0))
 (defvar *v2-unit-x* (make-v2 1.0 0.0))
@@ -98,6 +96,219 @@
 (defvar *v4-negative-unit-z* (make-v4 0.0 0.0 -1.0 1.0))
 (defvar *v4-unit-scale* (make-v4 1.0 1.0 1.0 1.0))
 
+(defvar *q-zero* (make-q 0.0 0.0 0.0 0.0))
+(defvar *q-identity* (make-q 1.0 0.0 0.0 0.0))
+
+;;; quaternions
+(defun q-x-axis (q)
+  (let ((ty (* 2 (q-y q))) (tz (* 2 (q-z q))))
+    (let ((wy (* ty (q-w q))) (wz (* tz (q-w q)))
+          (xy (* ty (q-x q))) (xz (* tz (q-x q)))
+          (yy (* ty (q-y q)))
+          (zz (* tz (q-z q))))
+      (make-v3 (- 1.0 yy zz) (+ xy wz) (- xz wy)))))
+
+(defun q-y-axis (q)
+  (let ((tx (* 2 (q-x q))) (ty (* 2 (q-y q))) (tz (* 2 (q-z q))))
+    (let ((wx (* tx (q-w q))) (wz (* tz (q-w q)))
+          (xx (* tx (q-x q))) (xy (* ty (q-x q)))
+          (yz (* tz (q-y q)))
+          (zz (* tz (q-z q))))
+      (make-v3 (- xy wz) (- 1.0 xx zz) (+ yz wx)))))
+
+(defun q-z-axis (q)
+  (let ((tx (* 2 (q-x q))) (ty (* 2 (q-y q))) (tz (* 2 (q-z q))))
+    (let ((wx (* tx (q-w q))) (wy (* ty (q-w q)))
+          (xx (* tx (q-x q))) (xz (* tz (q-x q)))
+          (yz (* tz (q-y q)))
+          (zz (* tz (q-z q))))
+      (make-v3 (+ xz wy) (- 1.0 xx zz) (+ yz wx)))))
+
+(defun q+ (q1 q2)
+  (make-q (+ (q-w q1) (q-w q2))
+          (+ (q-x q1) (q-x q2))
+          (+ (q-y q1) (q-y q2))
+          (+ (q-z q1) (q-z q2))))
+
+(defun q- (q1 q2)
+  (make-q (- (q-w q1) (q-w q2))
+          (- (q-x q1) (q-x q2))
+          (- (q-y q1) (q-y q2))
+          (- (q-z q1) (q-z q2))))
+
+(defun q-neg (q)
+  (make-q (- (q-w q)) (- (q-x q)) (- (q-y q)) (- (q-z q))))
+
+(defmethod mult ((q1 quaternion) (q2 quaternion))
+  (make-q (- (* (q-w q1) (q-w q2)) (* (q-x q1) (q-x q2)) (* (q-y q1) (q-y q2)) (* (q-z q1) (q-z q2)))
+          (+ (* (q-w q1) (q-x q2)) (* (q-x q1) (q-w q2)) (* (q-y q1) (q-z q2)) (- (* (q-z q1) (q-y q2))))
+          (+ (* (q-w q1) (q-y q2)) (* (q-y q1) (q-w q2)) (* (q-z q1) (q-x q2)) (- (* (q-x q1) (q-z q2))))
+          (+ (* (q-w q1) (q-z q2)) (* (q-z q1) (q-w q2)) (* (q-x q1) (q-y q2)) (- (* (q-y q1) (q-x q2))))))
+
+(defmethod mult ((q quaternion) (r real))
+  (make-q (* (q-w q) r) (* (q-x q) r) (* (q-y q) r) (* (q-z q) r)))
+
+(defmethod mult ((r real) (q quaternion))
+  (make-q (* (q-w q) r) (* (q-x q) r) (* (q-y q) r) (* (q-z q) r)))
+
+(defmethod dot ((q1 quaternion) (q2 quaternion))
+  (+ (* (q-w q1) (q-w q2))
+     (* (q-x q1) (q-x q2))
+     (* (q-y q1) (q-y q2))
+     (* (q-z q1) (q-z q2))))
+
+(defun q-norm (q)
+  (+ (* (q-w q) (q-w q))
+     (* (q-x q) (q-x q))
+     (* (q-y q) (q-y q))
+     (* (q-z q) (q-z q))))
+
+(defun q-invert (q)
+  (let ((norm (q-norm q)))
+    (if (> norm 0.0)
+        (let ((inorm (/ 1 norm)))
+          (make-q (* (q-w q) inorm)
+                  (- (* (q-x q) inorm))
+                  (- (* (q-y q) inorm))
+                  (- (* (q-z q) inorm))))
+        (error "~@<Attempted to invert a zero-norm quaternion.~:@>"))))
+
+(defun q-unit-invert (q)
+  (make-q (q-w q) (- (q-x q)) (- (q-y q)) (- (q-z q))))
+
+(defun q-exp (q)
+  "If q = A*(x*i+y*j+z*k) where (x,y,z) is unit length, then
+exp(q) = cos(A)+sin(A)*(x*i+y*j+z*k).  If sin(A) is near zero,
+use exp(q) = cos(A)+A*(x*i+y*j+z*k) since A/sin(A) has limit 1."
+  (let* ((angle (sqrt (+ (* (q-x q) (q-x q)) (* (q-y q) (q-y q)) (* (q-z q) (q-z q)))))
+         (sin (sin angle)))
+    (multiple-value-bind (x y z)
+        (if (> (abs sin) 0.0001)
+            (let ((coeff (/ sin angle)))
+              (values (* coeff (q-x q)) (* coeff (q-y q)) (* coeff (q-z q))))
+            (values (q-x q) (q-y q) (q-z q)))
+      (make-q (cos angle) x y z))))
+
+(defun q-log (q)
+  "If q = cos(A)+sin(A)*(x*i+y*j+z*k) where (x,y,z) is unit length, then
+log(q) = A*(x*i+y*j+z*k).  If sin(A) is near zero, use log(q) =
+sin(A)*(x*i+y*j+z*k) since sin(A)/A has limit 1."
+  (let (angle sin)
+    (multiple-value-bind (x y z)
+        (if (or (< (abs (q-w q)) 1.0)
+                (> (setf sin (sin (setf angle (acos (q-w q))))) 0.0001))
+            (let ((coeff (/ angle sin)))
+              (values (* coeff (q-x q)) (* coeff (q-y q)) (* coeff (q-z q))))
+            (values (q-x q) (q-y q) (q-z q)))
+      (make-q 0.0 x y z))))
+
+(defun v3<-q (q)
+  (make-v3 (q-x q) (q-y q) (q-z q)))
+
+(defmethod mult ((q quaternion) (v vector3))
+  "nVidia SDK implementation"
+  (let* ((qvec (v3<-q q))
+         (uv (v3-cross qvec v))
+         (uuv (v3-cross qvec uv))
+         (uv*2w (v3* uv (* 2.0 (q-w q))))
+         (uuv*2 (v3* uuv 2.0)))
+    (v3+ v (v3+ uv*2w uuv*2))))
+
+(defun q-equal-p (q1 q2 tolerance)
+  (let ((angle (acos (dot q1 q2))))
+    (or (< angle tolerance)
+        (real= angle pi tolerance))))
+
+(defun q-slerp (ct p q &optional shortest-path)
+  (let ((cos (dot q p)))
+    ;; Do we need to invert rotation?
+    (multiple-value-bind (cos tee) (if (and (< cos 0.0) shortest-path)
+                                       (values (- cos) (q-neg q))
+                                       (values cos q))
+      (if (< (abs cos) -0.0001)
+          ;; Standard case (slerp)
+          (let* ((sin (sqrt (- 1.0 (* cos cos))))
+                 (angle (atan sin cos))
+                 (isin (/ 1.0 sin))
+                 (coeff0 (* isin (sin (* (- 1.0 ct) angle))))
+                 (coeff1 (* isin (sin (* ct angle)))))
+            (q+ (mult coeff0 p) (mult coeff1 tee)))
+          ;; There are two situations:
+          ;; 1. "P" and "Q" are very close (fCos ~= +1), so we can do a linear
+          ;;    interpolation safely.
+          ;; 2. "P" and "Q" are almost inverse of each other (fCos ~= -1), there
+          ;;    are an infinite number of possibilities interpolation. but we haven't
+          ;;    have method to fix this case, so just use linear interpolation here.
+          ;; Also, taking the complement requires renormalisation
+          (q-normalise (q+ (mult (- 1.0 ct) p)
+                           (mult ct tee)))))))
+
+(defun q-slerp-extra-spins (ct p q extra-spins)
+  (let ((angle (acos (dot p q))))
+    (if (< (abs angle) 0.0001)
+        p
+        (let* ((isin (/ 1.0 (sin angle)))
+               (phase (* pi extra-spins ct))
+               (coeff0 (* isin (sin (- (* (- 1.0 ct) angle) phase))))
+               (coeff1 (* isin (sin (+ (* ct angle) phase)))))
+          (q+ (mult coeff0 p)
+              (mult coeff1 q))))))
+
+(defun q-intermediate (q0 q1 q2)
+  "q0, q1, q2 are unit quaternions"
+  (let ((iq0 (q-unit-invert q0))
+        (iq1 (q-unit-invert q1)))
+    (let ((p0 (mult iq0 q1))
+          (p1 (mult iq1 q2)))
+      (let ((arg (mult 0.25 (q- (q-log p0) (q-log p1)))))
+        (values (mult q1 (q-exp arg))
+                (mult q1 (q-exp (q-neg arg))))))))
+
+(defun q-squad (ct p a b q shortest-path)
+  (q-slerp (* 2.0 ct (- 1.0 ct))
+           (q-slerp ct p q shortest-path)
+           (q-slerp ct a b)))
+
+(defun q-normalise (q)
+  (let ((len (q-norm q)))
+    (values (mult q (/ 1.0 (sqrt len)))
+            len)))
+
+(defun q-normalisef (q)
+  (multiple-value-bind (newq len) (q-normalise q)
+    (setf q newq)
+    len))
+
+(defun q-roll (q reproject-axis)
+  "roll = atan2(localx.y, localx.x)"
+  (let ((2xy+2wz (* 2.0 (+ (* (q-x q) (q-y q)) (* (q-w q) (q-z q))))))
+    (if reproject-axis
+        (atan 2xy+2wz (- 1.0 (* 2.0 (q-y q) (q-y q)) (* 2.0 (q-z q) (q-z q))))
+        (atan 2xy+2wz (- (+ (* (q-w q) (q-w q)) (* (q-x q) (q-x q)))
+                         (* (q-y q) (q-y q)) (* (q-z q) (q-z q)))))))
+
+(defun q-pitch (q reproject-axis)
+  "pitch = atan2(localy.z, localy.y)"
+  (let ((2yz+2wx (* 2.0 (+ (* (q-y q) (q-z q)) (* (q-w q) (q-x q))))))
+    (if reproject-axis
+        (atan 2yz+2wx (- 1.0 (* 2.0 (q-x q) (q-x q)) (* 2.0 (q-z q) (q-z q))))
+        (atan 2yz+2wx (- (+ (* (q-w q) (q-w q)) (* (q-z q) (q-z q)))
+                         (* (q-x q) (q-x q)) (* (q-y q) (q-y q)))))))
+
+(defun q-yaw (q reproject-axis)
+  "pitch = atan2(localy.x, localy.z)"
+  (let ((2xz+2wy (* 2.0 (+ (* (q-x q) (q-z q)) (* (q-w q) (q-y q))))))
+    (if reproject-axis
+        (atan 2xz+2wy (- 1.0 (* 2.0 (q-x q) (q-x q)) (* 2.0 (q-y q) (q-y q))))
+        (asin (* 2.0 (- (* (q-w q) (q-y q)) (* (q-x q) (q-z q))))))))
+
+(defun q-nlerp (ct p q shortest-path)
+  (q-normalise (q+ p (mult ct (q- (if (and (< (dot p q) 0.0) shortest-path)
+                                      (q-neg q)
+                                      q)
+                                  p)))))
+
+;;; vectors
 (defmacro inst (form &rest repertoire-set)
   `(iter (repeat arity)
          (for acc in accs)
@@ -186,12 +397,12 @@
            (and ,@(inst `(< (,acc v1) (,acc v2)))))
          (defun ,(name "V~D>") (v1 v2)
            (and ,@(inst `(> (,acc v1) (,acc v2)))))
-         (defun ,(name "V~D-DOT") (v1 v2)
+         (defmethod dot ((v1 ,(name "VECTOR~D")) (v2 ,(name "VECTOR~D")))
            (+ ,@(inst `(* (,acc v1) (,acc v2)))))
          (defun ,(name "V~D-ABS-DOT") (v1 v2)
            (+ ,@(inst `(abs (* (,acc v1) (,acc v2))))))
          (defun ,(name "V~D-REFLECT") (v normal)
-           (,(name "V~D-") v (,(name "V~D*") (,(name "V~D*") (,(name "V~D-DOT") v normal) 2.0) normal)))
+           (,(name "V~D-") v (,(name "V~D*") (,(name "V~D*") (dot v normal) 2.0) normal)))
          (defun ,(name "V~D-ZEROP") (v)
            (< (,(name "V~D-LENGTH-SQUARED") v) epsilon-square))))))
 
@@ -231,11 +442,11 @@
          (new-up (q* q1 up))
          ;; Finally rotate v by given angle around randomised up
          (q2 (q<-angle-axis angle new-up)))
-    (q* q2 v)))
+    (mult q2 v)))
 
 (defun v3-angle-between (v1 v2)
   (let ((lenproduct (max (* (v3-length v1) (v3-length v2)) epsilon-square)))
-    (acos (clamp (/ (v3-dot v1 v2) lenproduct) -1.0 1.0))))
+    (acos (clamp (/ (dot v1 v2) lenproduct) -1.0 1.0))))
 
 (defun v3-rotation-to (v1 v2 &optional fallback-axis)
   "Gets the shortest arc quaternion to rotate this vector to the destination
@@ -247,7 +458,7 @@ ANY axis of rotation is valid.
 Based on Stan Melax's article in Game Programming Gems."
   (let* ((v1n (v3-normalise v1))
          (v2n (v3-normalise v2))
-         (ndot (v3-dot v1n v2n)))
+         (ndot (dot v1n v2n)))
     (when (>= ndot 1.0)
       (return-from v3-rotation-to *q-identity*))
     (if (< ndot (- epsilon 1.0))
@@ -257,11 +468,11 @@ Based on Stan Melax's article in Game Programming Gems."
               (let ((axis (if (v3-zerop axis) (v3-cross *v3-unit-y* v1))))
                 (q<-angle-axis pi (v3-normalise axis)))))
         (let* ((s (sqrt (* 2 (1+ ndot))))
-               (invs (/ 1 s))
+               (is (/ 1 s))
                (c (v3-cross v1n v2n)))
-          (q-normalise (make-q (* (v3-x c) invs)
-                               (* (v3-y c) invs)
-                               (* (v3-z c) invs)
+          (q-normalise (make-q (* (v3-x c) is)
+                               (* (v3-y c) is)
+                               (* (v3-z c) is)
                                (* s 0.5)))))))
 
 (defun v3-position-equalp (v1 v2 &optional (tolerance 0.001))
@@ -274,7 +485,7 @@ Based on Stan Melax's article in Game Programming Gems."
       (* tolerance (+ (v3-length-squared v1) (v3-length-squared v2)))))
 
 (defun v3-direction-equalp (v1 v2 tolerance)
-  (let ((angle (acos (v3-dot v1 v2))))
+  (let ((angle (acos (dot v1 v2))))
     (<= (abs angle) tolerance)))
 
 ;;;;
@@ -425,8 +636,8 @@ the Numerical Recipes code which uses Gaussian elimination."
                  (* (m3 m 0 1) (m3 inv 1 0))
                  (* (m3 m 0 2) (m3 inv 2 0)))))
     (when (> (abs det) tolerance)
-      (let ((invdet (/ 1 det)))
-        (map-into (m3-a inv) (lambda (x) (* x invdet)) (m3-a inv))
+      (let ((idet (/ 1 det)))
+        (map-into (m3-a inv) (lambda (x) (* x idet)) (m3-a inv))
         inv))))
 
 (defun m3-determinant (m)
@@ -444,9 +655,9 @@ the Numerical Recipes code which uses Gaussian elimination."
       (cond ((> length 0.0)
              (let* ((sign (if (> (m3 ka 0 0) 1.0) 1.0 -1.0))
                     (t1 (+ (m3 ka 0 0) (* sign length)))
-                    (invt1 (/ 1 t1))
-                    (v1 (* (m3 ka 1 0) invt1))
-                    (v2 (* (m3 ka 2 0) invt1))
+                    (it1 (/ 1 t1))
+                    (v1 (* (m3 ka 1 0) it1))
+                    (v2 (* (m3 ka 2 0) it1))
                     (t2 (/ -2.0 (+ 1.0 (* v1 v1) (* v2 v2))))
                     (w0 (* t2 (+ (m3 ka 0 0) (* (m3 ka 1 0) v1) (* (m3 ka 2 0) v2))))
                     (w1 (* t2 (+ (m3 ka 0 1) (* (m3 ka 1 1) v1) (* (m3 ka 2 1) v2))))
@@ -521,11 +732,6 @@ the Numerical Recipes code which uses Gaussian elimination."
                              (tmp1 (m3 kl row 2)))
                          (setf (m3 kl row 1) (+ (* a tmp0) (* b tmp1))
                                (m3 kl row 2) (+ (* b tmp0) (* c tmp1))))))))))))))
-
-(defun m3<-axes (a0 a1 a2)
-  (make-m3* (v3-x a0) (v3-y a0) (v3-z a0)
-            (v3-x a1) (v3-y a1) (v3-z a1)
-            (v3-x a2) (v3-y a2) (v3-z a2)))
 
 (defstruct (matrix4 (:conc-name m4-) (:constructor make-m4 (&optional a)))
   "Storage format is concatenated set of columns:
@@ -701,10 +907,10 @@ result back into w = 1.
 This means that the initial w is considered to be 1.0,
 and then all the tree elements of the resulting 3-D vector are
 divided by the resulting w."
-  (let ((invw (/ 1.0 (+ (* (m4 m 3 0) (v3-x v)) (* (m4 m 3 1) (v3-y v)) (* (m4 m 3 2) (v3-z v)) (m4 m 3 3)))))
-    (make-v3 (* invw (+ (* (m4 m 0 0) (v3-x v)) (* (m4 m 0 1) (v3-y v)) (* (m4 m 0 2) (v3-z v)) (m4 m 0 3)))
-             (* invw (+ (* (m4 m 1 0) (v3-x v)) (* (m4 m 1 1) (v3-y v)) (* (m4 m 1 2) (v3-z v)) (m4 m 1 3)))
-             (* invw (+ (* (m4 m 2 0) (v3-x v)) (* (m4 m 2 1) (v3-y v)) (* (m4 m 2 2) (v3-z v)) (m4 m 2 3))))))
+  (let ((iw (/ 1.0 (+ (* (m4 m 3 0) (v3-x v)) (* (m4 m 3 1) (v3-y v)) (* (m4 m 3 2) (v3-z v)) (m4 m 3 3)))))
+    (make-v3 (* iw (+ (* (m4 m 0 0) (v3-x v)) (* (m4 m 0 1) (v3-y v)) (* (m4 m 0 2) (v3-z v)) (m4 m 0 3)))
+             (* iw (+ (* (m4 m 1 0) (v3-x v)) (* (m4 m 1 1) (v3-y v)) (* (m4 m 1 2) (v3-z v)) (m4 m 1 3)))
+             (* iw (+ (* (m4 m 2 0) (v3-x v)) (* (m4 m 2 1) (v3-y v)) (* (m4 m 2 2) (v3-z v)) (m4 m 2 3))))))
 
 (defmethod mult ((m matrix4) (v vector4))
   (make-v4 (+ (* (m4 m 0 0) (v4-x v)) (* (m4 m 0 1) (v4-y v)) (* (m4 m 0 2) (v4-z v)) (* (m4 m 0 3) (v4-w v)))
@@ -773,35 +979,35 @@ divided by the resulting w."
             (t10 (- (+ (- (* v5 m10) (* v2 m12)) (* v1 m13))))
             (t20 (+ (+ (- (* v4 m10) (* v2 m11)) (* v0 m13))))
             (t30 (- (+ (- (* v3 m10) (* v1 m11)) (* v0 m12)))))
-        (let ((invdet (/ 1 (+ (* t00 m00) (* t10 m01) (* t20 m02) (* t30 m03)))))
-          (let ((d00 (* t00 invdet))
-                (d10 (* t10 invdet))
-                (d20 (* t20 invdet))
-                (d30 (* t30 invdet))
-                (d01 (* (- (+ (- (* v5 m01) (* v4 m02)) (* v3 m03))) invdet))
-                (d11 (* (+ (+ (- (* v5 m00) (* v2 m02)) (* v1 m03))) invdet))
-                (d21 (* (- (+ (- (* v4 m00) (* v2 m01)) (* v0 m03))) invdet))
-                (d31 (* (+ (+ (- (* v3 m00) (* v1 m01)) (* v0 m02))) invdet)))
+        (let ((idet (/ 1 (+ (* t00 m00) (* t10 m01) (* t20 m02) (* t30 m03)))))
+          (let ((d00 (* t00 idet))
+                (d10 (* t10 idet))
+                (d20 (* t20 idet))
+                (d30 (* t30 idet))
+                (d01 (* (- (+ (- (* v5 m01) (* v4 m02)) (* v3 m03))) idet))
+                (d11 (* (+ (+ (- (* v5 m00) (* v2 m02)) (* v1 m03))) idet))
+                (d21 (* (- (+ (- (* v4 m00) (* v2 m01)) (* v0 m03))) idet))
+                (d31 (* (+ (+ (- (* v3 m00) (* v1 m01)) (* v0 m02))) idet)))
             (let ((v0 (- (* m10 m31) (* m11 m30)))
                   (v1 (- (* m10 m32) (* m12 m30)))
                   (v2 (- (* m10 m33) (* m13 m30)))
                   (v3 (- (* m11 m32) (* m12 m31)))
                   (v4 (- (* m11 m33) (* m13 m31)))
                   (v5 (- (* m12 m33) (* m23 m32))))
-              (let ((d02 (* (+ (+ (- (* v5 m01) (* v4 m02)) (* v3 m03))) invdet))
-                    (d12 (* (- (+ (- (* v5 m00) (* v2 m02)) (* v1 m03))) invdet))
-                    (d22 (* (+ (+ (- (* v4 m00) (* v2 m01)) (* v0 m03))) invdet))
-                    (d32 (* (- (+ (- (* v3 m00) (* v1 m01)) (* v0 m02))) invdet)))
+              (let ((d02 (* (+ (+ (- (* v5 m01) (* v4 m02)) (* v3 m03))) idet))
+                    (d12 (* (- (+ (- (* v5 m00) (* v2 m02)) (* v1 m03))) idet))
+                    (d22 (* (+ (+ (- (* v4 m00) (* v2 m01)) (* v0 m03))) idet))
+                    (d32 (* (- (+ (- (* v3 m00) (* v1 m01)) (* v0 m02))) idet)))
                 (let ((v0 (- (* m10 m21) (* m11 m20)))
                       (v1 (- (* m10 m22) (* m12 m20)))
                       (v2 (- (* m10 m23) (* m13 m20)))
                       (v3 (- (* m11 m22) (* m12 m21)))
                       (v4 (- (* m11 m23) (* m13 m21)))
                       (v5 (- (* m12 m23) (* m23 m22))))
-                  (let ((d03 (* (- (+ (- (* v5 m01) (* v4 m02)) (* v3 m03))) invdet))
-                        (d13 (* (+ (+ (- (* v5 m00) (* v2 m02)) (* v1 m03))) invdet))
-                        (d23 (* (- (+ (- (* v4 m00) (* v2 m01)) (* v0 m03))) invdet))
-                        (d33 (* (+ (+ (- (* v3 m00) (* v1 m01)) (* v0 m02))) invdet)))
+                  (let ((d03 (* (- (+ (- (* v5 m01) (* v4 m02)) (* v3 m03))) idet))
+                        (d13 (* (+ (+ (- (* v5 m00) (* v2 m02)) (* v1 m03))) idet))
+                        (d23 (* (- (+ (- (* v4 m00) (* v2 m01)) (* v0 m03))) idet))
+                        (d33 (* (+ (+ (- (* v3 m00) (* v1 m01)) (* v0 m02))) idet)))
                     (make-m4* d00 d10 d20 d30
                               d01 d11 d21 d31
                               d02 d12 d22 d32
@@ -815,9 +1021,9 @@ divided by the resulting w."
     (let ((t00 (- (* m22 m11) (* m21 m12)))
           (t10 (- (* m20 m12) (* m22 m10)))
           (t20 (- (* m21 m10) (* m20 m11))))
-      (let ((invdet (/ 1 (+ (* m00 t00) (* m01 t10) (* m02 t20)))))
-        (let ((t00 (* t00 invdet)) (t10 (* t10 invdet)) (t20 (* t20 invdet))
-              (m00 (* m00 invdet)) (m01 (* m01 invdet)) (m02 (* m02 invdet)))
+      (let ((idet (/ 1 (+ (* m00 t00) (* m01 t10) (* m02 t20)))))
+        (let ((t00 (* t00 idet)) (t10 (* t10 idet)) (t20 (* t20 idet))
+              (m00 (* m00 idet)) (m01 (* m01 idet)) (m02 (* m02 idet)))
           (let ((r00 t00)
                 (r01 (- (* m02 m21) (* m01 m22)))
                 (r02 (- (* m01 m12) (* m02 m11)))
@@ -858,6 +1064,17 @@ divided by the resulting w."
 (defun m4-negative-scalep (m)
   (minusp (m4-determinant m)))
 
+(defun m3<-axes (a0 a1 a2)
+  (make-m3* (v3-x a0) (v3-y a0) (v3-z a0)
+            (v3-x a1) (v3-y a1) (v3-z a1)
+            (v3-x a2) (v3-y a2) (v3-z a2)))
+
+(defun axes<-m3 (m)
+  (let ((a (m3-a m)))
+    (values (make-v3 (aref a 0) (aref a 1) (aref a 2))
+            (make-v3 (aref a 3) (aref a 4) (aref a 5))
+            (make-v3 (aref a 6) (aref a 7) (aref a 8)))))
+
 (defun q<-m3 (m)
   ;; Algorithm in Ken Shoemake's article in 1987 SIGGRAPH course notes
   ;; article "Quaternion Calculus and Fast Animation".
@@ -889,6 +1106,47 @@ divided by the resulting w."
                   (qset k (* root (+ (m3 m k i) (m3 m i k))))
                   (make-q w x y z)))))))))
 
+(defun m3<-q (q)
+  (let ((x (* 2 (q-x q))) (y (* 2 (q-y q))) (z (* 2 (q-z q))))
+    (let ((wx (* x (q-w q))) (wy (* y (q-w q))) (wz (* z (q-w q)))
+          (xx (* x (q-x q))) (xy (* y (q-x q))) (xz (* z (q-x q)))
+          (yy (* y (q-y q))) (yz (* z (q-y q)))
+          (zz (* z (q-z q))))
+      (make-m3* (- 1 yy zz) (+ xy wz) (- xz wy)
+                (- xy wz) (- 1 xx zz) (+ yz wx)
+                (- yz wx) (+ xz wy) (- 1 xx yy)))))
+
+(defun q<-angle-axis (angle v)
+  "V is unit length.
+The quaternion representing the rotation is
+q = cos(A/2)+sin(A/2)*(x*i+y*j+z*k)"
+  (let* ((half-angle (* angle 0.5))
+         (sin (sin half-angle)))
+    (make-q (cos half-angle)
+            (* sin (v3-x v))
+            (* sin (v3-y v))
+            (* sin (v3-z v)))))
+
+(defun angle-axis<-q (q)
+  "The quaternion representing the rotation is
+q = cos(A/2)+sin(A/2)*(x*i+y*j+z*k)"
+  (let ((length-sq (+ (* (q-x q) (q-x q)) (* (q-y q) (q-y q)) (* (q-z q) (q-z q)))))
+    (if (> length-sq 0.0)
+        (let ((ilength (/ 1 (sqrt length-sq))))
+          (values (* 2 (acos (q-w q)))
+                  (make-v3 (* ilength (q-x q))
+                           (* ilength (q-y q))
+                           (* ilength (q-z q)))))
+        ;; angle is 0 (mod 2*pi), so any axis will do
+        (values 0.0
+                (copy-vector3 *v3-unit-x*)))))
+
+(defun q<-axes (a0 a1 a2)
+  (q<-m3 (m3<-axes a0 a1 a2)))
+
+(defun axes<-q (q)
+  (axes<-m3 (m3<-q q)))
+
 (defun q<-m4 (m)
   (let ((m3 (make-m3)))
     (setv m3 m)
@@ -914,14 +1172,14 @@ divided by the resulting w."
           (m4-projection m) *v4-unit-w*)))
 
 (defun m4-make-inverse-transform (translation scale orientation)
-  (let ((invtranslation (v3-neg translation))
-        (invscale (make-v3 (/ 1 (v3-x scale)) (/ 1 (v3-y scale)) (/ 1 (v3-z scale))))
-        (invorientation (q-invert orientation)))
+  (let ((itranslation (v3-neg translation))
+        (iscale (make-v3 (/ 1 (v3-x scale)) (/ 1 (v3-y scale)) (/ 1 (v3-z scale))))
+        (iorientation (q-invert orientation)))
     ;; Because we're inverting, order is translation, rotation, scale
     ;; So make translation relative to scale & rotation
-    (let ((invtranslation (mult invorientation (mult invtranslation invscale))))
-      (lret ((m (m4<-m3 (mult (m3-make-scale invscale) (m3<-q invorientation)))))
-        (setf (m4-trans m) invtranslation
+    (let ((itranslation (mult iorientation (mult itranslation iscale))))
+      (lret ((m (m4<-m3 (mult (m3-make-scale iscale) (m3<-q iorientation)))))
+        (setf (m4-trans m) itranslation
               (m4-projection m) *v4-unit-w*)))))
 ;;;;
 ;;;; Axis-aligned box

@@ -43,7 +43,20 @@
 ***** AutoParamDataSource
 *** AxisAlignedBox
 ***** AxisAlignedBox
-      actually, only one fifth of all methods is stolen so far..
+      progress: 20%
+*** Vector2
+***** Vector2
+*** Vector3
+***** Vector3
+*** Vector4
+***** Vector4
+*** Matrix3
+***** Matrix3
+      progress: 25%
+*** Matrix4
+***** Matrix4
+*** Quaternion
+***** Quaternion
 * Perceivably critical
 *** Bone
 *** Camera
