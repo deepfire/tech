@@ -491,8 +491,9 @@ Based on Stan Melax's article in Game Programming Gems."
 (defmacro with-v3-accessor ((accessor v3) &body body)
   (with-gensyms (i val)
     (once-only (v3)
-      `(flet ((,accessor (,i) (case ,i (0 (v3-x ,v3)) (1 (v3-y ,v3)) (2 (v3-z ,v3))))
+      `(flet ((,accessor (,i) (ecase ,i (0 (v3-x ,v3)) (1 (v3-y ,v3)) (2 (v3-z ,v3))))
               ((setf ,accessor) (,val ,i) (case ,i (0 (setf (v3-x ,v3) ,val)) (1 (setf (v3-y ,v3) ,val)) (2 (setf (v3-z ,v3) ,val)))))
+         (declare (ignorable (function ,accessor) (function (setf ,accessor))))
          ,@body))))
 
 ;;;;
@@ -884,6 +885,20 @@ the Numerical Recipes code which uses Gaussian elimination."
         (setf (v3v row) (- (v3v row)))
         (dotimes (col 3)
           (setf (m3 r row col) (- (m3 r row col))))))))
+
+(defun m3-singular-value-composition (a l s r)
+  (let ((mtemp (make-m3)))
+    ;; product S*R
+    (with-v3-accessor (v3v s)
+      (dotimes (row 3)
+        (dotimes (col 3)
+          (setf (m3 mtemp row col) (* (v3v row) (m3 r row col))))))
+    ;; product L*S*R
+    (dotimes (row 3)
+      (dotimes (col 3)
+        (setf (m3 a row col) 0.0)
+        (dotimes (mid 3)
+          (incf (m3 a row col) (* (m3 l row mid) (m3 mtemp mid col))))))))
 
 (defstruct (matrix4 (:conc-name m4-) (:constructor make-m4 (&optional a)))
   "Storage format is concatenated set of columns:
