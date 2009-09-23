@@ -45,11 +45,14 @@
 ;;;;
 ;;;; Quaternion
 ;;;;
-(defstruct (quaternion (:conc-name q-) (:constructor make-q (x y z w)))
-  (x 0 :type real)
-  (y 0 :type real)
-  (z 0 :type real)
-  (w 0 :type real))
+(defstruct (quaternion (:conc-name q-) (:constructor make-q (w x y z)))
+  (w 1.0 :type real)
+  (x 0.0 :type real)
+  (y 0.0 :type real)
+  (z 0.0 :type real))
+
+(defvar *q-zero* (make-q 0.0 0.0 0.0 0.0))
+(defvar *q-identity* (make-q 1.0 0.0 0.0 0.0))
 
 ;;;;
 ;;;; Vector
@@ -854,6 +857,37 @@ divided by the resulting w."
 
 (defun m4-negative-scalep (m)
   (minusp (m4-determinant m)))
+
+(defun q<-m3 (m)
+  ;; Algorithm in Ken Shoemake's article in 1987 SIGGRAPH course notes
+  ;; article "Quaternion Calculus and Fast Animation".
+  (let ((trace (+ (m3 m 0 0) (m3 m 1 1) (m3 m 2 2))))
+    (if (plusp trace)
+        ;; |w| > 1/2, may as well choose w > 1/2
+        (let* ((root (sqrt (1+ trace)))
+               (w (* 0.5 root))
+               (root (/ 0.5 root)))
+          (make-q w
+                  (* root (- (m3 m 2 1) (m3 m 1 2)))
+                  (* root (- (m3 m 0 2) (m3 m 2 0)))
+                  (* root (- (m3 m 1 0) (m3 m 0 1)))))
+        (let ((i 0) (inext #(1 2 0)))
+          (when (> (m3 m 1 1) (m3 m 0 0)) (setf i 1))
+          (when (> (m3 m 2 2) (m3 m i i)) (setf i 2))
+          (let* ((j (aref inext i))
+                 (k (aref inext j)))
+            (let ((root (sqrt (- (m3 m i i) (m3 m j j) (m3 m k k) -1.0)))
+                  x y z)
+              (flet ((qset (i val) (case i
+                                     (0 (setf x val))
+                                     (1 (setf y val))
+                                     (2 (setf z val)))))
+                (qset i (* 0.5 root))
+                (let* ((root (/ 0.5 root))
+                       (w (* root (- (m3 m k j) (m3 m j k)))))
+                  (qset j (* root (+ (m3 m j i) (m3 m i j))))
+                  (qset k (* root (+ (m3 m k i) (m3 m i k))))
+                  (make-q w x y z)))))))))
 
 (defun q<-m4 (m)
   (let ((m3 (make-m3)))
