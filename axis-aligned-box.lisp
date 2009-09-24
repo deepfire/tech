@@ -33,6 +33,9 @@
 (defun rad<-deg (deg) (/ (* pi deg) 180.0))
 (defun deg<-rad (rad) (/ (* 180.0 rad) pi))
 
+(defun symmetric-random ()
+  (- (random 2.0) 1.0))
+
 (defgeneric volume (object))
 (defgeneric scale (object v3))
 (defgeneric scalef (object v3))
@@ -415,21 +418,9 @@ sin(A)*(x*i+y*j+z*k) since sin(A)/A has limit 1."
 (defun v2-cross (v1 v2)
   (- (* (v2-x v1) (v2-y v2)) (* (v2-y v1) (v2-x v2))))
 
-(defun v3-cross (v1 v2)
-  (make-v3 (- (* (v3-y v1) (v3-z v2)) (* (v3-z v1) (v3-y v2)))
-           (- (* (v3-z v1) (v3-x v2)) (* (v3-x v1) (v3-z v2)))
-           (- (* (v3-x v1) (v3-y v2)) (* (v3-y v1) (v3-x v2)))))
-
 (defun v2-perpendicular (v)
   (make-v2 (- (v2-y v))
            (v2-x v)))
-
-(defun v3-perpendicular (v)
-  (let ((perp (v3-cross v *v3-unit-x*)))
-    (lret ((perp (if (< (v3-length-squared perp) epsilon-square)
-                     (v3-cross v *v3-unit-y*)
-                     perp)))
-      (v3-normalisef perp))))
 
 (defun v2-random-deviant (v angle)
   (let* ((angle (* 2 angle (random pi)))
@@ -437,6 +428,45 @@ sin(A)*(x*i+y*j+z*k) since sin(A)/A has limit 1."
          (cosa (cos angle)))
     (make-v2 (- (* cosa (v2-x v)) (* sina (v2-y v)))
              (+ (* sina (v2-x v)) (* cosa (v2-y v))))))
+
+(defun v2-in-tri-p (v a b c)
+  (let (dot0 dot1 dot2 dot0-zerop dot1-zerop dot2-zerop)
+    ;; Winding must be consistent from all edges for point to be inside
+    (let ((v1 (v2- b a))
+          (v2 (v2- v a)))
+      ;; Note we don't care about normalisation here since sign is all we need
+      ;; It means we don't have to worry about magnitude of cross products either
+      (setf dot0 (v2-cross v1 v2)
+            dot0-zerop (real= dot0 0.0 0.001)))
+    (let ((v1 (v2- c b))
+          (v2 (v2- v b)))
+      (setf dot1 (v2-cross v1 v2)
+            dot1-zerop (real= dot1 0.0 0.001)))
+    ;; Compare signs (ignore colinear / coincident points)
+    (if (and (not dot0-zerop) (not dot1-zerop)
+             (not (= (signum dot0) (signum dot1))))
+        nil
+        (let ((v1 (v2- a c))
+              (v2 (v2- v c)))
+          (setf dot2 (v2-cross v1 v2)
+                dot2-zerop (real= dot2 0.0 0.001))
+          ;; Compare signs (ignore colinear / coincident points)
+          (not (or (and (not dot0-zerop) (not dot2-zerop)
+                        (not (= (signum dot0) (signum dot2))))
+                   (and (not dot1-zerop) (not dot2-zerop)
+                        (not (= (signum dot1) (signum dot2))))))))))
+
+(defun v3-cross (v1 v2)
+  (make-v3 (- (* (v3-y v1) (v3-z v2)) (* (v3-z v1) (v3-y v2)))
+           (- (* (v3-z v1) (v3-x v2)) (* (v3-x v1) (v3-z v2)))
+           (- (* (v3-x v1) (v3-y v2)) (* (v3-y v1) (v3-x v2)))))
+
+(defun v3-perpendicular (v)
+  (let ((perp (v3-cross v *v3-unit-x*)))
+    (lret ((perp (if (< (v3-length-squared perp) epsilon-square)
+                     (v3-cross v *v3-unit-y*)
+                     perp)))
+      (v3-normalisef perp))))
 
 (defun v3-random-deviant (v angle &optional (up (v3-perpendicular v)))
   ;; Rotate up vector by random amount around v
