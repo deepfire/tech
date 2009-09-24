@@ -340,6 +340,8 @@ sin(A)*(x*i+y*j+z*k) since sin(A)/A has limit 1."
              (,maker ,@(inst `(* (,acc v) finv)))))
          (defun ,(name "V~D-NEG") (v)
            (,maker ,@(inst `(- (,acc v)))))
+         (defun ,(name "V~D-NEGF") (v)
+           (setf ,@(minst `(,acc v) `(- (,acc v)))))
          (defun ,(name "V~D-INCF") (v1 v2-or-real)
            (multiple-value-bind (,@(inst repvar dx dy dz dw)) (if (realp v2-or-real)
                                                                   (values ,@(inst `v2-or-real))
@@ -439,7 +441,7 @@ sin(A)*(x*i+y*j+z*k) since sin(A)/A has limit 1."
 (defun v3-random-deviant (v angle &optional (up (v3-perpendicular v)))
   ;; Rotate up vector by random amount around v
   (let* ((q1 (q<-angle-axis (* 2 pi (random 1.0)) v))
-         (new-up (q* q1 up))
+         (new-up (mult q1 up))
          ;; Finally rotate v by given angle around randomised up
          (q2 (q<-angle-axis angle new-up)))
     (mult q2 v)))
@@ -575,6 +577,9 @@ c0x c0y c0z c1x c1y c1z c2x c2y c2z."
 (defmethod setv ((dest matrix3) (src matrix3))
   (map-into (m3-a dest) #'identity (m3-a src)))
 
+(defmethod setv ((dest matrix3) (v vector))
+  (map-into (m3-a dest) #'identity v))
+
 (defun m3+ (m1 m2)
   (make-m3 (map '(simple-array real (9)) #'+ (m3-a m1) (m3-a m2))))
 
@@ -582,12 +587,23 @@ c0x c0y c0z c1x c1y c1z c2x c2y c2z."
   (make-m3 (map '(simple-array real (9)) #'- (m3-a m1) (m3-a m2))))
 
 (defun m3-column (m c)
-  (make-v3 (m3 m 0 c) (m3 m 1 c) (m3 m 2 c)))
+  (let ((a (m3-a m))
+        (coff (* 3 c)))
+    (make-v3 (aref a (+ 0 coff)) (aref a (+ 1 coff)) (aref a (+ 2 coff)))))
 
 (defun (setf m3-column) (v m c)
-  (setf (m3 m 0 c) (v3-x v)
-        (m3 m 1 c) (v3-y v)
-        (m3 m 2 c) (v3-z v)))
+  (let ((a (m3-a m))
+        (coff (* 3 c)))
+    (setf (aref a (+ 0 coff)) (v3-x v)
+          (aref a (+ 1 coff)) (v3-y v)
+          (aref a (+ 2 coff)) (v3-z v))))
+
+(defun m3-extract-column (m c v)
+  (let ((a (m3-a m))
+        (coff (* 3 c)))
+    (setf (v3-x v) (aref a (+ 0 coff))
+          (v3-y v) (aref a (+ 1 coff))
+          (v3-z v) (aref a (+ 2 coff)))))
 
 (defun m3-scale (m)
   (let ((a (m3-a m)))
@@ -841,50 +857,51 @@ the Numerical Recipes code which uses Gaussian elimination."
                 (m3-fudge-rowwise l 1 2 sin cos)))))))))
 
 ;;; Same problem with row/col nomenclature botchage as with Golub-Kahan
-(defun m3-singular-value-decomposition (a l s r &optional (max-iterations 32))
-  (m3-bidiagonalise a l r)
-  (iter (repeat max-iterations)
-        (let ((test1 (<= (abs (m3 a 0 1)) (+ (* 0.0001 (abs (m3 a 0 0))) (abs (m3 a 1 1)))))
-              (test2 (<= (abs (m3 a 1 2)) (+ (* 0.0001 (abs (m3 a 1 1))) (abs (m3 a 2 2))))))
-          (if test1
-              (if test2
-                  (progn
-                    (setf (v3-x s) (m3 a 0 0)
-                          (v3-y s) (m3 a 1 1)
-                          (v3-z s) (m3 a 2 2))
-                    (break))
-                  ;; 2x2 closed form factorisation
-                  (let* ((tmp (/ (+ (m3** a 1 1) (- (m3** a 2 2)) (m3** a 1 2))
-                                 (m3* a 1 2 2 2)))
-                         (tan0 (* 0.5 (+ tmp (sqrt (+ 4.0 (* tmp tmp))))))
-                         (cos0 (/ 1.0 (sqrt (+ 1.0 (* tan0 tan0)))))
-                         (sin0 (* tan0 cos0)))
-                    (m3-fudge-rowwise l 1 2 sin0 cos0)
-                    (let* ((tan1 (/ (- (m3 a 1 2) (* tan0 (m3 a 2 2))) (m3 a 1 1)))
-                           (cos1 (/ 1.0 (sqrt (+ 1.0 (* tan1 tan1)))))
-                           (sin1 (* -1.0 tan1 cos1)))
-                      (m3-fudge-columnwise r 1 2 sin1 cos1)
+(defun m3-singular-value-decomposition (m l s r &optional (max-iterations 32))
+  (let ((a (copy-m3 m)))
+    (m3-bidiagonalise a l r)
+    (iter (repeat max-iterations)
+          (let ((test1 (<= (abs (m3 a 0 1)) (+ (* 0.0001 (abs (m3 a 0 0))) (abs (m3 a 1 1)))))
+                (test2 (<= (abs (m3 a 1 2)) (+ (* 0.0001 (abs (m3 a 1 1))) (abs (m3 a 2 2))))))
+            (if test1
+                (if test2
+                    (progn
                       (setf (v3-x s) (m3 a 0 0)
-                            (v3-y s) (- (* cos0 cos1 (m3 a 1 1)) (* sin1 (prod0 cos0 sin0 (m3 a 1 2) (m3 a 2 2))))
-                            (v3-z s) (+ (* sin0 sin1 (m3 a 1 1)) (* cos1 (prod1 cos0 sin0 (m3 a 1 2) (m3 a 2 2)))))
-                      (break))))
-              (if test2
-                  ;; 2x2 closed form factorisation
-                  (let* ((tmp (/ (+ (m3** a 0 0) (- (m3** a 0 1)) (m3** a 1 1))
-                                 (m3* a 0 1 1 1)))
-                         (tan0 (* 0.5 (+ (- tmp) (sqrt (+ 4.0 (* tmp tmp))))))
-                         (cos0 (/ 1.0 (sqrt (+ 1.0 (* tan0 tan0)))))
-                         (sin0 (* tan0 cos0)))
-                    (m3-fudge-rowwise l 0 1 sin0 cos0)
-                    (let* ((tan1 (/ (- (m3 a 0 1) (* tan0 (m3 a 1 1))) (m3 a 0 0)))
-                           (cos1 (/ 1.0 (sqrt (+ 1.0 (* tan1 tan1)))))
-                           (sin1 (* -1.0 tan1 cos1)))
-                      (m3-fudge-columnwise r 0 1 sin1 cos1)
-                      (setf (v3-x s) (- (* cos0 cos1 (m3 a 0 0)) (* sin1 (prod0 cos0 sin0 (m3 a 0 1) (m3 a 1 1))))
-                            (v3-y s) (+ (* sin0 sin1 (m3 a 0 0)) (* cos1 (prod1 cos0 sin0 (m3 a 0 1) (m3 a 1 1))))
+                            (v3-y s) (m3 a 1 1)
                             (v3-z s) (m3 a 2 2))
-                      (break)))
-                  (m3-golub-kahan-step a l r)))))
+                      (break))
+                    ;; 2x2 closed form factorisation
+                    (let* ((tmp (/ (+ (m3** a 1 1) (- (m3** a 2 2)) (m3** a 1 2))
+                                   (m3* a 1 2 2 2)))
+                           (tan0 (* 0.5 (+ tmp (sqrt (+ 4.0 (* tmp tmp))))))
+                           (cos0 (/ 1.0 (sqrt (+ 1.0 (* tan0 tan0)))))
+                           (sin0 (* tan0 cos0)))
+                      (m3-fudge-rowwise l 1 2 sin0 cos0)
+                      (let* ((tan1 (/ (- (m3 a 1 2) (* tan0 (m3 a 2 2))) (m3 a 1 1)))
+                             (cos1 (/ 1.0 (sqrt (+ 1.0 (* tan1 tan1)))))
+                             (sin1 (* -1.0 tan1 cos1)))
+                        (m3-fudge-columnwise r 1 2 sin1 cos1)
+                        (setf (v3-x s) (m3 a 0 0)
+                              (v3-y s) (- (* cos0 cos1 (m3 a 1 1)) (* sin1 (prod0 cos0 sin0 (m3 a 1 2) (m3 a 2 2))))
+                              (v3-z s) (+ (* sin0 sin1 (m3 a 1 1)) (* cos1 (prod1 cos0 sin0 (m3 a 1 2) (m3 a 2 2)))))
+                        (break))))
+                (if test2
+                    ;; 2x2 closed form factorisation
+                    (let* ((tmp (/ (+ (m3** a 0 0) (- (m3** a 0 1)) (m3** a 1 1))
+                                   (m3* a 0 1 1 1)))
+                           (tan0 (* 0.5 (+ (- tmp) (sqrt (+ 4.0 (* tmp tmp))))))
+                           (cos0 (/ 1.0 (sqrt (+ 1.0 (* tan0 tan0)))))
+                           (sin0 (* tan0 cos0)))
+                      (m3-fudge-rowwise l 0 1 sin0 cos0)
+                      (let* ((tan1 (/ (- (m3 a 0 1) (* tan0 (m3 a 1 1))) (m3 a 0 0)))
+                             (cos1 (/ 1.0 (sqrt (+ 1.0 (* tan1 tan1)))))
+                             (sin1 (* -1.0 tan1 cos1)))
+                        (m3-fudge-columnwise r 0 1 sin1 cos1)
+                        (setf (v3-x s) (- (* cos0 cos1 (m3 a 0 0)) (* sin1 (prod0 cos0 sin0 (m3 a 0 1) (m3 a 1 1))))
+                              (v3-y s) (+ (* sin0 sin1 (m3 a 0 0)) (* cos1 (prod1 cos0 sin0 (m3 a 0 1) (m3 a 1 1))))
+                              (v3-z s) (m3 a 2 2))
+                        (break)))
+                    (m3-golub-kahan-step a l r))))))
   (with-v3-accessor (v3v s)
     (dotimes (row 3)
       (when (< (v3v row) 0.0)
@@ -1144,6 +1161,185 @@ it does not matter which sign you choose on the square roots."
     (make-m3* (+ cos (* x^2 1-cos)) (+ xym zsin) (- xzm ysin)
               (- xym zsin) (+ cos (* y^2 1-cos)) (+ yzm xsin)
               (+ xzm ysin) (- yzm xsin) (+ cos (* z^2 1-cos)))))
+
+(defmacro frob-angles<-m3 (angles psign pr pc y0sign y0r1 y0c1 y0r2 y0c2 rsign rr1 rc1 rr2 rc2 y1sign y1r1 y1c1 y1r2 y1c2)
+  `(defun ,(format-symbol t "ANGLES-~A<-M3" angles) (m)
+     (let ((p (asin (,psign (m3 m ,pr ,pc)))))
+       (if (< p (* pi 0.5))
+           (if (> p (* pi -0.5))
+               (values t
+                       (atan (,y0sign (m3 m ,y0r1 ,y0c1)) (m3 m ,y0r2 ,y0c2))
+                       p
+                       (atan (,rsign (m3 m ,rr1 ,rc1)) (m3 m ,rr2 ,rc2)))
+               ;; WARNING.  Not a unique solution.
+               (let ((r 0.0))           ; any angle works
+                 (values nil
+                         (- r (atan (atan (,y1sign (m3 m ,y1r1 ,y1c1)) (m3 m ,y1r2 ,y1c2))))
+                         p
+                         r)))
+           ;; WARNING.  Not a unique solution.
+           (let ((r 0.0))               ; any angle works
+             (values nil
+                     (- (atan (atan (,y1sign (m3 m ,y1r1 ,y1c1)) (m3 m ,y1r2 ,y1c2))) r)
+                     p
+                     r))))))
+
+;; rot =  cy*cz          -cy*sz           sy
+;;        cz*sx*sy+cx*sz  cx*cz-sx*sy*sz -cy*sx
+;;       -cx*cz*sy+sx*sz  cz*sx+cx*sy*sz  cx*cy
+(frob-angles<-m3 xyz + 0 2 - 1 2 2 2 - 0 1 0 0 + 1 0 0 0)
+;; rot =  cy*cz          -sz              cz*sy
+;;        sx*sy+cx*cy*sz  cx*cz          -cy*sx+cx*sy*sz
+;;       -cx*sy+cy*sx*sz  cz*sx           cx*cy+sx*sy*sz
+(frob-angles<-m3 xzy - 0 1 + 2 1 1 1 + 0 2 0 0 - 2 0 2 2)
+;; rot =  cy*cz+sx*sy*sz  cz*sx*sy-cy*sz  cx*sy
+;;        cx*sz           cx*cz          -sx
+;;       -cz*sy+cy*sx*sz  cy*cz*sx+sy*sz  cx*cy
+(frob-angles<-m3 yxz - 1 2 + 0 2 2 2 + 1 0 1 1 - 0 1 0 0)
+;; rot =  cy*cz           sx*sy-cx*cy*sz  cx*sy+cy*sx*sz
+;;        sz              cx*cz          -cz*sx
+;;       -cz*sy           cy*sx+cx*sy*sz  cx*cy-sx*sy*sz
+(frob-angles<-m3 yzx + 1 0 - 2 0 0 0 - 1 2 1 1 + 2 1 2 2)
+;; rot =  cy*cz-sx*sy*sz -cx*sz           cz*sy+cy*sx*sz
+;;        cz*sx*sy+cy*sz  cx*cz          -cy*cz*sx+sy*sz
+;;       -cx*sy           sx              cx*cy
+(frob-angles<-m3 zxy + 2 1 - 0 1 1 1 - 2 0 2 2 + 0 2 0 0)
+;; rot =  cy*cz           cz*sx*sy-cx*sz  cx*cz*sy+sx*sz
+;;        cy*sz           cx*cz+sx*sy*sz -cz*sx+cx*sy*sz
+;;       -sy              cy*sx           cx*cy
+(frob-angles<-m3 zyx - 2 0 + 1 0 0 0 + 2 1 2 2 - 0 1 0 2)
+
+(defun m3<-angle-x (x)
+  (let ((cos (cos x)) (sin (sin x)))
+    (make-m3 1.0 0.0 0.0 0.0 cos sin 0.0 (- sin) cos)))
+
+(defun m3<-angle-y (y)
+  (let ((cos (cos y)) (sin (sin y)))
+    (make-m3 cos 0.0 (- sin) 0.0 1.0 0.0 sin 0 cos)))
+
+(defun m3<-angle-z (z)
+  (let ((cos (cos z)) (sin (sin z)))
+    (make-m3 cos sin 0.0 (- sin) cos 0.0 0.0 0.0 1.0)))
+
+(defun m3<-angles-xyz (y p r) (mult (m3<-angle-x y) (mult (m3<-angle-y p) (m3<-angle-z r))))
+(defun m3<-angles-xzy (y p r) (mult (m3<-angle-x y) (mult (m3<-angle-z p) (m3<-angle-y r))))
+(defun m3<-angles-yxz (y p r) (mult (m3<-angle-y y) (mult (m3<-angle-x p) (m3<-angle-z r))))
+(defun m3<-angles-yzx (y p r) (mult (m3<-angle-y y) (mult (m3<-angle-z p) (m3<-angle-x r))))
+(defun m3<-angles-zxy (y p r) (mult (m3<-angle-z y) (mult (m3<-angle-x p) (m3<-angle-y r))))
+(defun m3<-angles-zyx (y p r) (mult (m3<-angle-z y) (mult (m3<-angle-y p) (m3<-angle-x r))))
+
+(defun m3-tridiagonal (m diag subdiag)
+  "Householder reduction T = Q^t M Q
+  Input:
+    m, symmetric 3x3 matrix M
+  Output:
+    m, orthogonal matrix Q
+    diag, diagonal entries of T
+    subd, subdiagonal entries of T (T is symmetric)"
+  (let ((a (m3 m 0 0)) (b (m3 m 0 1)) (c (m3 m 0 2))
+        (d (m3 m 1 1)) (e (m3 m 1 2)) (f (m3 m 2 2)))
+    (if (>= (abs c) epsilon)
+        (let* ((length (sqrt (+ (* b b) (* c c))))
+               (ilength (/ 1.0 length)))
+          (setf b (* b ilength)
+                c (* c ilength))
+          (let ((q (+ (* 2.0 b e) (* c (- f d)))))
+            (setv m #(1.0 0.0 0.0 0.0 b c 0 c (- b)))
+            (setf (v3-x diag) a
+                  (v3-y diag) (+ d (* c q))
+                  (v3-z diag) (- f (* c q))
+                  (v3-x subdiag) length
+                  (v3-y subdiag) (- e (* b q))
+                  (v3-z subdiag) 0.0)
+            (values diag subdiag)))
+        (progn
+          (setv m *m3-identity*)
+          (setf (v3-x diag) a
+                (v3-y diag) d
+                (v3-z diag) f
+                (v3-x subdiag) b
+                (v3-y subdiag) e
+                (v3-z subdiag) 0.0)
+          (values diag subdiag)))))
+
+;;;
+;;; the third loop is weird in the original
+;;; action: simplified with semantics retained
+;;;
+(defun m3-ql-algorithm (m diag subdiag)
+  "QL iteration with implicit shifting to reduce matrix from tridiagonal
+to diagonal."
+  (let ((successp t))
+    (with-v3-accessor (diag diag)
+      (with-v3-accessor (subdiag subdiag)
+        (iter (for i0 from 0 below 3)
+              (let ((maxiter 32))
+                (iter level-two
+                      (with i1)
+                      (for iter below maxiter)
+                      (iter (for si1 from i0 to 1)
+                            (when (and (zerop (subdiag si1))
+                                       (= si1 i0))
+                              (when (= iter (1- maxiter))
+                                (setf successp nil))
+                              (finally (setf i1 si1))
+                              (return-from level-two)))
+                      (let* ((tmp0 (/ (- (diag (1+ i0)) (diag i0)) 
+                                      (* 2.0 (subdiag i0))))
+                             (tmp1 (sqrt (+ 1.0 (* tmp0 tmp0))))
+                             (tmp0 (if (minusp tmp0)
+                                       (+ (diag i1) (- (diag i0)) (/ (subdiag i0) (- tmp0 tmp1)))
+                                       (+ (diag i1) (- (diag i0)) (/ (subdiag i0) (+ tmp0 tmp1))))))
+                        (let ((sin 1.0) (cos 1.0) (tmp2 0.0))
+                          (iter (for i2 from (1- i1) above (1- i0))
+                                (let ((tmp3 (* sin (subdiag i2)))
+                                      (tmp4 (* cos (subdiag i2))))
+                                  (if (>= (abs tmp3) (abs tmp0))
+                                      (setf cos (/ tmp0 tmp3)
+                                            tmp1 (sqrt (+ 1.0 (* cos cos)))
+                                            (subdiag (1+ i2)) (* tmp3 tmp1)
+                                            sin (/ 1.0 tmp1)
+                                            cos (* cos sin))
+                                      (setf sin (/ tmp3 tmp0)
+                                            tmp1 (sqrt (+ 1.0 (* sin sin)))
+                                            (subdiag (1+ i2)) (* tmp0 tmp1)
+                                            cos (/ 1.0 tmp1)
+                                            sin (* sin cos)))
+                                  (setf tmp0 (- (diag (1+ i2)) tmp2)
+                                        tmp1 (+ (* (- (diag i2) tmp0) sin) (* 2.0 tmp4 cos))
+                                        tmp2 (* sin tmp1)
+                                        (diag (1+ i2)) (+ tmp0 tmp2)
+                                        tmp0 (- (* cos tmp1) tmp4))
+                                  (dotimes (row 3)
+                                    (setf tmp3 (m3 m row (1+ i2))
+                                          (m3 m row (1+ i2)) (+ (* sin (m3 m row i2)) (* cos tmp3))
+                                          (m3 m row i2) (+ (* cos (m3 m row i2)) (* sin tmp3))))))
+                          (decf (diag i0) tmp2)
+                          (setf (subdiag i0) tmp0
+                                (subdiag i1) 0.0)))
+                      (when (= iter (1- maxiter))
+                        (setf successp nil)))))))
+    successp))
+
+(defun m3-eigensolve-symmetric (m eigenvalue eigenvectors)
+  (declare (matrix3 m) (vector3 eigenvalue) ((array vector3 (3)) eigenvectors))
+  (let ((k (copy-m3 m))
+        (subdiag (make-v3 0.0 0.0 0.0)))
+    (m3-tridiagonal k eigenvalue subdiag)
+    (m3-ql-algorithm m eigenvalue subdiag)
+    (dotimes (i 3)
+      (m3-extract-column k i (aref eigenvectors i)))
+    ;; make eigenvectors form a right-handed system
+    (let ((det (dot (aref eigenvectors 0) (v3-cross (aref eigenvectors 1) (aref eigenvectors 2)))))
+      (when (minusp det)
+        (v3-negf (aref eigenvectors 2))))))
+
+(defun m3-tensor-productf (m u v)
+  (with-v3-accessor (u u)
+    (with-v3-accessor (v v)
+      (dotimes (row 3)
+        (dotimes (col 3)
+          (setf (m3 m row col) (* (u row) (v col))))))))
 
 ;;; matrix4
 (defstruct (matrix4 (:conc-name m4-) (:constructor make-m4 (&optional a)))
