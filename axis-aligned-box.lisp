@@ -1128,6 +1128,23 @@ it does not matter which sign you choose on the square roots."
                 ;; work, so just use the x-axis.
                 (make-v3 1.0 0.0 0.0)))))
 
+(defun m3<-angle-axis (angle v)
+  (let* ((cos (cos angle))
+         (sin (sin angle))
+         (1-cos (- 1.0 cos))
+         (x^2 (* (v3-x v) (v3-x v)))
+         (y^2 (* (v3-y v) (v3-y v)))
+         (z^2 (* (v3-z v) (v3-z v)))
+         (xym (* (v3-x v) (v3-y v) 1-cos))
+         (xzm (* (v3-x v) (v3-z v) 1-cos))
+         (yzm (* (v3-y v) (v3-z v) 1-cos))
+         (xsin (* sin (v3-x v)))
+         (ysin (* sin (v3-y v)))
+         (zsin (* sin (v3-z v))))
+    (make-m3* (+ cos (* x^2 1-cos)) (+ xym zsin) (- xzm ysin)
+              (- xym zsin) (+ cos (* y^2 1-cos)) (+ yzm xsin)
+              (+ xzm ysin) (- yzm xsin) (+ cos (* z^2 1-cos)))))
+
 ;;; matrix4
 (defstruct (matrix4 (:conc-name m4-) (:constructor make-m4 (&optional a)))
   "Storage format is concatenated set of columns:
