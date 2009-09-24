@@ -558,6 +558,12 @@ c0x c0y c0z c1x c1y c1z c2x c2y c2z."
     (* (aref a (+ r1 (* 3 c1)))
        (aref a (+ r2 (* 3 c2))))))
 
+(defun m3*3 (m r1 c1 r2 c2 r3 c3)
+  (let ((a (m3-a m)))
+    (* (aref a (+ r1 (* 3 c1)))
+       (aref a (+ r2 (* 3 c2)))
+       (aref a (+ r3 (* 3 c3))))))
+
 (defun m3** (m r c)
   (let ((ref (aref (m3-a m) (+ r (* 3 c)))))
     (* ref ref)))
@@ -899,6 +905,173 @@ the Numerical Recipes code which uses Gaussian elimination."
         (setf (m3 a row col) 0.0)
         (dotimes (mid 3)
           (incf (m3 a row col) (* (m3 l row mid) (m3 mtemp mid col))))))))
+
+(defun m3-column-ilength (m col)
+  (/ 1.0 (sqrt (+ (m3** m 0 col) (m3** m 1 col) (m3** m 2 col)))))
+
+(defun m3-orthonormalise (m)
+  "Algorithm uses Gram-Schmidt orthogonalisation.  If M is
+M = [m0|m1|m2], then orthonormal output matrix is Q = [q0|q1|q2],
+
+  q0 = m0/|m0|
+  q1 = (m1-(q0*m1)q0)/|m1-(q0*m1)q0|
+  q2 = (m2-(q0*m2)q0-(q1*m2)q1)/|m2-(q0*m2)q0-(q1*m2)q1|
+
+where |V| indicates length of vector V and A*B indicates dot
+product of vectors A and B."
+  ;; compute q0
+  (let ((ilength (m3-column-ilength m 0)))
+    (setf (m3 m 0 0) (* ilength (m3 m 0 0))
+          (m3 m 1 0) (* ilength (m3 m 1 0))
+          (m3 m 2 0) (* ilength (m3 m 2 0))))
+  ;; compute q1
+  (let ((dot0 (+ (m3* m 0 0 0 1) (m3* m 1 0 1 1) (m3* m 2 0 2 1))))
+    (decf (m3 m 0 1) (* dot0 (m3 m 0 0)))
+    (decf (m3 m 1 1) (* dot0 (m3 m 1 0)))
+    (decf (m3 m 2 1) (* dot0 (m3 m 2 0))))
+  (let ((ilength (m3-column-ilength m 1)))
+    (setf (m3 m 0 1) (* ilength (m3 m 0 1))
+          (m3 m 1 1) (* ilength (m3 m 1 1))
+          (m3 m 2 1) (* ilength (m3 m 2 1))))
+  ;; compute q2
+  (let ((dot1 (+ (m3* m 0 1 0 2) (m3* m 1 1 1 2) (m3* m 2 1 2 2)))
+        (dot0 (+ (m3* m 0 0 0 2) (m3* m 1 0 1 2) (m3* m 2 0 2 2))))
+    (decf (m3 m 0 2) (+ (* dot0 (m3 m 0 0)) (* dot1 (m3 m 0 1))))
+    (decf (m3 m 1 2) (+ (* dot0 (m3 m 1 0)) (* dot1 (m3 m 1 1))))
+    (decf (m3 m 2 2) (+ (* dot0 (m3 m 2 0)) (* dot1 (m3 m 2 1)))))
+  (let ((ilength (m3-column-ilength m 2)))
+    (setf (m3 m 0 2) (* ilength (m3 m 0 2))
+          (m3 m 1 2) (* ilength (m3 m 1 2))
+          (m3 m 2 2) (* ilength (m3 m 2 2)))))
+
+(defun m3-qdu-decomposition (m q d u)
+  "Factor M = QR = QDU where Q is orthogonal, D is diagonal,
+and U is upper triangular with ones on its diagonal.  Algorithm uses
+Gram-Schmidt orthogonalization (the QR algorithm).
+
+If M = [ m0 | m1 | m2 ] and Q = [ q0 | q1 | q2 ], then
+
+  q0 = m0/|m0|
+  q1 = (m1-(q0*m1)q0)/|m1-(q0*m1)q0|
+  q2 = (m2-(q0*m2)q0-(q1*m2)q1)/|m2-(q0*m2)q0-(q1*m2)q1|
+
+where |V| indicates length of vector V and A*B indicates dot
+product of vectors A and B.  The matrix R has entries
+
+  r00 = q0*m0  r01 = q0*m1  r02 = q0*m2
+  r10 = 0      r11 = q1*m1  r12 = q1*m2
+  r20 = 0      r21 = 0      r22 = q2*m2
+
+so D = diag(r00,r11,r22) and U has entries u01 = r01/r00,
+u02 = r02/r00, and u12 = r12/r11.
+
+Q = rotation
+D = scaling
+U = shear
+
+D stores the three diagonal entries r00, r11, r22
+U stores the entries U[0] = u01, U[1] = u02, U[2] = u12"
+  ;; build orthogonal matrix Q
+  (let ((ilength (m3-column-ilength m 0)))
+    (setf (m3 q 0 0) (* ilength (m3 m 0 0))
+          (m3 q 1 0) (* ilength (m3 m 1 0))
+          (m3 q 2 0) (* ilength (m3 m 2 0))))
+  (let ((dot (+ (* (m3 q 0 0) (m3 m 0 1)) (* (m3 q 1 0) (m3 m 1 1)) (* (m3 q 2 0) (m3 m 2 1)))))
+    (setf (m3 q 0 1) (- (m3 m 0 1) (* dot (m3 q 0 0)))
+          (m3 q 1 1) (- (m3 m 1 1) (* dot (m3 q 1 0)))
+          (m3 q 2 1) (- (m3 m 2 1) (* dot (m3 q 2 0)))))
+  (let ((ilength (m3-column-ilength q 1)))
+    (setf (m3 q 0 1) (* ilength (m3 q 0 1))
+          (m3 q 1 1) (* ilength (m3 q 1 1))
+          (m3 q 2 1) (* ilength (m3 q 2 1))))
+  (let ((dot (+ (* (m3 q 0 0) (m3 m 0 2)) (* (m3 q 1 0) (m3 m 1 2)) (* (m3 q 2 0) (m3 m 2 2)))))
+    (setf (m3 q 0 2) (- (m3 m 0 2) (* dot (m3 q 0 0)))
+          (m3 q 1 2) (- (m3 m 1 2) (* dot (m3 q 1 0)))
+          (m3 q 2 2) (- (m3 m 2 2) (* dot (m3 q 2 0)))))
+  (let ((dot (+ (* (m3 q 0 1) (m3 m 0 2)) (* (m3 q 1 1) (m3 m 1 2)) (* (m3 q 2 1) (m3 m 2 2)))))
+    (decf (m3 q 0 2) (* dot (m3 q 0 1)))
+    (decf (m3 q 1 2) (* dot (m3 q 1 1)))
+    (decf (m3 q 2 2) (* dot (m3 q 2 1))))
+  (let ((ilength (m3-column-ilength q 2)))
+    (setf (m3 q 0 2) (* ilength (m3 q 0 2))
+          (m3 q 1 2) (* ilength (m3 q 1 2))
+          (m3 q 2 2) (* ilength (m3 q 2 2))))
+  ;; guarantee that orthogonal matrix has determinant 1 (no reflections)
+  (let ((det (+ (m3*3 q 0 0 1 1 2 2) (m3*3 q 0 1 1 2 2 0) (m3*3 q 0 2 1 0 2 1)
+                (- (m3*3 q 0 2 1 1 2 0)) (- (m3*3 q 0 1 1 0 2 2)) (- (m3*3 q 0 0 1 2 2 1)))))
+    (when (< det 0.0)
+      (dotimes (row 3)
+        (dotimes (col 3)
+          (setf (m3 q row col) (- (m3 q row col)))))))
+  ;; build "right" matrix R
+  (let ((r00 (+ (* (m3 q 0 0) (m3 m 0 0)) (* (m3 q 1 0) (m3 m 1 0)) (* (m3 q 2 0) (m3 m 2 0))))
+        (r01 (+ (* (m3 q 0 0) (m3 m 0 1)) (* (m3 q 1 0) (m3 m 1 1)) (* (m3 q 2 0) (m3 m 2 1))))
+        (r11 (+ (* (m3 q 0 1) (m3 m 0 1)) (* (m3 q 1 1) (m3 m 1 1)) (* (m3 q 2 1) (m3 m 2 1))))
+        (r02 (+ (* (m3 q 0 0) (m3 m 0 2)) (* (m3 q 1 0) (m3 m 1 2)) (* (m3 q 2 0) (m3 m 2 2))))
+        (r12 (+ (* (m3 q 0 1) (m3 m 0 2)) (* (m3 q 1 1) (m3 m 1 2)) (* (m3 q 2 1) (m3 m 2 2))))
+        (r22 (+ (* (m3 q 0 2) (m3 m 0 2)) (* (m3 q 1 2) (m3 m 1 2)) (* (m3 q 2 2) (m3 m 2 2)))))
+    ;; the scaling component
+    (setf (v3-x d) r00
+          (v3-y d) r11
+          (v3-z d) r22)
+    ;; the shear component
+    (let ((id0 (/ 1.0 (v3-x d))))
+      (setf (v3-x u) (* r01 id0)
+            (v3-y u) (* r02 id0)
+            (v3-z u) (/ r12 (v3-y d))))))
+
+(defun max-cubic-root (c0 c1 c2)
+  "Spectral norm is for A^T*A, so characteristic polynomial
+P(x) = c[0]+c[1]*x+c[2]*x^2+x^3 has three positive real roots.
+This yields the assertions c[0] < 0 and c[2]*c[2] >= 3*c[1]."
+  (flet ((poly (x) (+ c0 (* x (+ c1 (* x (+ c2 x)))))))
+    ;; quick out for uniform scale (triple root)
+    (let ((one-third (/ 1.0 3.0))
+          (discr (- (* c2 c2) (* 3.0 c1))))
+      (when (< discr epsilon)
+        (return-from max-cubic-root (- (* one-third c2)))))
+    ;; Compute an upper bound on roots of P(x).  This assumes that A^T*A
+    ;; has been scaled by its largest entry.
+    (let ((x 1.0))
+      (when (minusp (poly x))
+        ;; uses a matrix norm to find an upper bound on maximum root
+        (setf x (abs c0))
+        (let ((tmp (+ 1.0 (abs c1))))
+          (when (> tmp x)
+            (setf x tmp)))
+        (let ((tmp (+ 1.0 (abs c2))))
+          (when (> tmp x)
+            (setf x tmp))))
+      ;; Newton's method to find root
+      (let ((2c2 (* 2.0 c2)))
+        (iter (repeat 16)
+              (for poly = (poly x))
+              (when (< (abs poly) epsilon)
+                (return))
+              (let ((deriv (+ c1 (* x (+ 2c2 (* 3.0 x))))))
+                (decf x (/ poly deriv))))
+        x))))
+
+(defun m3-spectral-norm (m)
+  (let ((p (make-m3 (make-array 9 :element-type 'real :initial-element 0.0)))
+        (pmax 0.0))
+    (dotimes (row 3)
+      (dotimes (col 3)
+        (dotimes (mid 3)
+          (incf (m3 p row col) (m3* m mid row mid col)))
+        (maxf pmax (m3 p row col))))
+    (let ((ipmax (/ 1.0 pmax)))
+      (dotimes (row 3)
+        (dotimes (col 3)
+          (setf (m3 p row col) (* ipmax (m3 p row col))))))
+    (let ((c0 (- (+ (* (m3 p 0 0) (- (m3* p 1 1 2 2) (m3* p 1 2 2 1)))
+                    (* (m3 p 0 1) (- (m3* p 2 0 1 2) (m3* p 1 0 2 2)))
+                    (* (m3 p 0 2) (- (m3* p 1 0 2 1) (m3* p 2 0 1 1))))))
+          (c1 (+ (- (m3* p 0 0 1 1) (m3* p 0 1 1 0))
+                 (- (m3* p 0 0 2 2) (m3* p 0 2 2 0))
+                 (- (m3* p 1 1 2 2) (m3* p 1 2 2 1))))
+          (c2 (- (+ (m3 p 0 0) (m3 p 1 1) (m3 p 2 2)))))
+      (sqrt (* pmax (max-cubic-root c0 c1 c2))))))
 
 (defstruct (matrix4 (:conc-name m4-) (:constructor make-m4 (&optional a)))
   "Storage format is concatenated set of columns:
