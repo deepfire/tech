@@ -374,13 +374,13 @@ sin(A)*(x*i+y*j+z*k) since sin(A)/A has limit 1."
          (defun ,(name "V~D-DISTANCE") (v1 v2)
            (,(name "V~D-LENGTH") (,(name "V~D-") v1 v2)))
          (defun ,(name "V~D-NORMALISEF") (v)
-           (lret ((length ( ,(name "V~D-LENGTH") v)))
+           (let ((length ( ,(name "V~D-LENGTH") v)))
              (when (> length epsilon)
                (let ((finv (/ 1 length)))
-                 (setf ,@(minst `(,acc v) `(* (,acc v) finv)))))))
-         (defun ,(name "V~D-NORMALISE") (v2)
-           (lret ((ret (,(name "COPY-VECTOR~D") v2)))
-             (,(name "V~D-NORMALISEF") ret)))
+                 (setf ,@(minst `(,acc v) `(* (,acc v) finv))))
+               v)))
+         (defun ,(name "V~D-NORMALISE") (v)
+           (,(name "V~D-NORMALISEF") (,(name "COPY-VECTOR~D") v)))
          (defun ,(name "V~D-FLOOR") (v1 v2)
            (,maker ,@(inst `(min (,acc v1) (,acc v2)))))
          (defun ,(name "V~D-CEIL") (v1 v2)
@@ -508,7 +508,7 @@ Based on Stan Melax's article in Game Programming Gems."
   (d 0 :type real))
 
 ;;;;
-;;;; Matrix
+;;;; Matrices
 ;;;;
 ;; All matrix code adapted from Wild Magic 0.2 Matrix math (free source code)
 ;; http://www.geometrictools.com/
@@ -1073,6 +1073,62 @@ This yields the assertions c[0] < 0 and c[2]*c[2] >= 3*c[1]."
           (c2 (- (+ (m3 p 0 0) (m3 p 1 1) (m3 p 2 2)))))
       (sqrt (* pmax (max-cubic-root c0 c1 c2))))))
 
+(defun angle-axis<-m3 (m)
+  "Let (x,y,z) be the unit-length axis and let A be an angle of rotation.
+The rotation matrix is R = I + sin(A)*P + (1-cos(A))*P^2 where
+I is the identity and
+
+      +-        -+
+  P = |  0 -z +y |
+      | +z  0 -x |
+      | -y +x  0 |
+      +-        -+
+
+If A > 0, R represents a counterclockwise rotation about the axis in
+the sense of looking from the tip of the axis vector towards the
+origin.  Some algebra will show that
+
+  cos(A) = (trace(R)-1)/2  and  R - R^t = 2*sin(A)*P
+
+In the event that A = pi, R-R^t = 0 which prevents us from extracting
+the axis through P.  Instead note that R = I+2*P^2 when A = pi, so
+P^2 = (R-I)/2.  The diagonal entries of P^2 are x^2-1, y^2-1, and
+z^2-1.  We can solve these for axis (x,y,z).  Because the angle is pi,
+it does not matter which sign you choose on the square roots."
+  (let* ((trace (+ (m3 m 0 0) (m3 m 1 1) (m3 m 2 2)))
+         (cos (* 0.5 (- trace 1.0)))
+         (angle (acos cos)))
+    (values angle
+            (if (> angle 0.0)
+                (if (< angle pi)
+                    (v3-normalisef (make-v3 (- (m3 m 2 1) (m3 m 1 2))
+                                            (- (m3 m 0 2) (m3 m 2 0))
+                                            (- (m3 m 1 0) (m3 m 0 1))))
+                    ;; angle is pi
+                    (if (>= (m3 m 0 0) (m3 m 1 1))
+                        (if (>= (m3 m 0 0) (m3 m 2 2))
+                            ;; r00 is maximum diagonal term
+                            (let* ((x (* 0.5 (sqrt (- (m3 m 0 0) (m3 m 1 1) (m3 m 2 2) -1.0))))
+                                   (ihalf (/ 0.5 x)))
+                              (make-v3 x (* ihalf (m3 m 0 1)) (* ihalf (m3 m 0 2))))
+                            ;; r22 is maximum diagonal term
+                            (let* ((z (* 0.5 (sqrt (- (m3 m 2 2) (m3 m 0 0) (m3 m 1 1) -1.0))))
+                                   (ihalf (/ 0.5 z)))
+                              (make-v3 (* ihalf (m3 m 0 2)) (* ihalf (m3 m 1 2)) z)))
+                        (if (>= (m3 m 1 1) (m3 m 2 2))
+                            ;; r11 is maximum diagonal term
+                            (let* ((y (* 0.5 (sqrt (- (m3 m 1 1) (m3 m 0 0) (m3 m 2 2) -1.0))))
+                                   (ihalf (/ 0.5 y)))
+                              (make-v3 (* ihalf (m3 m 0 1)) y (* ihalf (m3 m 1 2))))
+                            ;; r22 is maximum diagonal term
+                            (let* ((z (* 0.5 (sqrt (- (m3 m 2 2) (m3 m 0 0) (m3 m 1 1) -1.0))))
+                                   (ihalf (/ 0.5 z)))
+                              (make-v3 (* ihalf (m3 m 0 2)) (* ihalf (m3 m 1 2)) z)))))
+                ;; The angle is 0 and the matrix is the identity.  Any axis will
+                ;; work, so just use the x-axis.
+                (make-v3 1.0 0.0 0.0)))))
+
+;;; matrix4
 (defstruct (matrix4 (:conc-name m4-) (:constructor make-m4 (&optional a)))
   "Storage format is concatenated set of columns:
 c0x c0y c0z c0w c1x c1y c1z c1w c2x c2y c2z c2w c3x c3y c3z c3w."
