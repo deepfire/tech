@@ -34,6 +34,9 @@
   #+sbcl sb-ext:single-float-negative-infinity
   #-sbcl (error "~@<Don't know how to represent infinite values.~:@>"))
 
+(defun ^2 (x)
+  (* x x))
+
 (defun real= (x1 x2 tolerance)
   (declare (type real x1 x2 tolerance))
   (< (abs (- x1 x2)) tolerance))
@@ -52,6 +55,11 @@
 (defun symmetric-random ()
   (- (random 2.0) 1.0))
 
+(defun gaussian-distribution (x offset scale)
+  (let ((nom (exp (- (/ (^2 (- x offset)) (* 2.0 (^2 scale))))))
+        (denom (* scale (sqrt (* 2.0 pi)))))
+    (/ nom denom)))
+
 (defgeneric volume (object))
 (defgeneric scale (object v3))
 (defgeneric scalef (object v3))
@@ -62,6 +70,7 @@
 (defgeneric mult (object-1 object-2))
 (defgeneric mult-affine (object-1 object-2))
 (defgeneric dot (object-1 object-2))
+(defgeneric distance (object-1 object-2))
 
 (defun ni () (error "~@<This function is not implemented.~:@>"))
 
@@ -396,6 +405,8 @@ sin(A)*(x*i+y*j+z*k) since sin(A)/A has limit 1."
            (sqrt (,(name "V~D-LENGTH-SQUARED") v)))
          (defun ,(name "V~D-DISTANCE") (v1 v2)
            (,(name "V~D-LENGTH") (,(name "V~D-") v1 v2)))
+         (defmethod distance ((v1 ,(name "VECTOR~D")) (v2 ,(name "VECTOR~D")))
+           (,(name "V~D-DISTANCE") v1 v2))
          (defun ,(name "V~D-NORMALISEF") (v)
            (let ((length ( ,(name "V~D-LENGTH") v)))
              (when (> length epsilon)
@@ -577,11 +588,45 @@ Based on Stan Melax's article in Game Programming Gems."
          (declare (ignorable (function ,accessor) (function (setf ,accessor))))
          ,@body))))
 
-(defun v3face-normal-cheap (v0 v1 v2)
+(defun v3face-basic-normal-notunit (v0 v1 v2)
   (v3-cross (v3- v1 v0) (v3- v2 v0)))
 
-(defun v3face-normal (v0 v1 v2)
+(defun v3face-basic-normal (v0 v1 v2)
   (v3-normalizef (v3-cross (v3- v1 v0) (v3- v2 v0))))
+
+(defun v3face-normal-notunit (v0 v1 v2)
+  (let ((n (v3face-basic-normal-notunit v0 v1 v2)))
+    (make-v4 (v3-x n) (v3-y n) (v3-z n) (- (dot n v0)))))
+
+(defun v3face-normal (v0 v1 v2)
+  (let ((n (v3face-basic-normal v0 v1 v2)))
+    (make-v4 (v3-x n) (v3-y n) (v3-z n) (- (dot n v0)))))
+
+(defun v3-calculate-tangent-space-vector (pos1 pos2 pos3 u1 v1 u2 v2 u3 v3)
+  ;; side0 is the vector along one side of the triangle of vertices passed in, 
+  ;; and side1 is the vector along another side. Taking the cross product of these returns the normal.
+  (let* ((side0 (v3- pos1 pos2))
+         (side1 (v3- pos3 pos1))
+         ;; Calculate face normal
+         (normal (v3-normalizef (v3-cross side1 side0))))
+    ;; Now we use a formula to calculate the tangent.
+    (let* ((deltav0 (- v1 v2))
+           (deltav1 (- v3 v1))
+           (tangent (v3-normalizef (v3- (v3* side0 deltav1) (v3* side1 deltav0))))
+           ;; Calculate binormal
+           (deltau0 (- u1 u2))
+           (deltau1 (- u3 u1))
+           (binormal (v3-normalizef (v3- (v3* side0 deltau1) (v3* side1 deltau0)))))
+      (let ((tangentcross (v3-cross tangent binormal)))
+        ;; Now, we take the cross product of the tangents to get a vector which 
+        ;; should point in the same direction as our normal calculated above. 
+        ;; If it points in the opposite direction (the dot product between the normals is less than zero), 
+        ;; then we need to reverse the s and t tangents. 
+        ;; This is because the triangle has been mirrored when going from tangent space to object space.
+        ;; reverse tangents if necessary
+        (if (minusp (dot tangentcross normal))
+            (- tangent)
+            tangent)))))
 
 ;;;;
 ;;;; Trivial geometrics
@@ -611,11 +656,13 @@ Based on Stan Melax's article in Game Programming Gems."
 (defun 3vec-plane-extend (p)
   (declare (type 3vec-plane p))
   (make-3vec-normal-plane (plane-a p) (plane-b p) (plane-c p)
-                          (v3face-normal-cheap (plane-a p) (plane-b p) (plane-c p))))
+                          (v3face-basic-normal-notunit (plane-a p) (plane-b p) (plane-c p))))
 
 (defun ray-point (r k)
   "Gets the position of a point k units along the ray."
   (v3+ (ray-orig r) (v3* (ray-dir r) k)))
+
+(defgeneric plane-side (plane object))
 
 (defmethod mult ((r ray) (k real))
   (ray-point r k))
@@ -1653,6 +1700,25 @@ c0x c0y c0z c0w c1x c1y c1z c1w c2x c2y c2z c2w c3x c3y c3z c3w."
 (defun m4-make-trans* (x y z)
   (make-m4* 1.0 0.0 0.0 0.0 0.0 1.0 0.0 0.0 0.0 0.0 1.0 0.0 x y z 1.0))
 
+(defun m4-column (m c)
+  (let ((a (m4-a m))
+        (coff (ash c 2)))
+    (make-v3 (aref a (+ 0 coff)) (aref a (+ 1 coff)) (aref a (+ 2 coff)))))
+
+(defun (setf m4-column) (v m c)
+  (let ((a (m4-a m))
+        (coff (ash c 2)))
+    (setf (aref a (+ 0 coff)) (v3-x v)
+          (aref a (+ 1 coff)) (v3-y v)
+          (aref a (+ 2 coff)) (v3-z v))))
+
+(defun m4-extract-column (m c v)
+  (let ((a (m4-a m))
+        (coff (ash c 2)))
+    (setf (v3-x v) (aref a (+ 0 coff))
+          (v3-y v) (aref a (+ 1 coff))
+          (v3-z v) (aref a (+ 2 coff)))))
+
 (defun m4-scale (m)
   (let ((a (m4-a m)))
     (make-v3 (aref a 0) (aref a 5) (aref a 10))))
@@ -2025,6 +2091,35 @@ q = cos(A/2)+sin(A/2)*(x*i+y*j+z*k)"
       (lret ((m (m4<-m3 (mult (m3-make-scale iscale) (m3<-q iorientation)))))
         (setf (m4-trans m) itranslation
               (m4-projection m) *v4-unit-w*)))))
+
+(defun plane-reflection-matrix (p &aux (n (plane-normal p)))
+  (let ((x (v3-x n)) (y (v3-y n)) (z (v3-z n)) (d (v3-x n)))
+    (make-m4* (+ 1.0 (* -2.0 x x)) (* -2.0 y x) (* -2.0 z x) 0.0
+              (* -2.0 x y) (+ 1.0 (* -2.0 y y)) (* -2.0 z y) 0.0
+              (* -2.0 x z) (* -2.0 y z) (+ 1.0 (* -2.0 z z)) 0.0
+              (* -2.0 x d) (* -2.0 y d) (* -2.0 z d) 1.0)))
+
+(defun make-view-matrix (pos orient &optional reflect-matrix)
+  "View matrix is:
+
+ [ Lx  Uy  Dz  Tx  ]
+ [ Lx  Uy  Dz  Ty  ]
+ [ Lx  Uy  Dz  Tz  ]
+ [ 0   0   0   1   ]
+
+Where T = -(Transposed(Rot) * Pos)"
+  ;; This is most efficiently done using 3x3 Matrices
+  ;; Make the translation relative to new axes
+  (let* ((rott (m3-transpose (m3<-q orient)))
+         (trans (v3-neg (mult rott pos))))
+    ;; Make final matrix
+    (lret ((result (copy-m4 *m4-identity*)))
+      (setv result rott) ; fills upper 3x3
+      (setf (m4-column result 3) trans)
+      ;; Deal with reflections
+      (when reflect-matrix
+        (setf result (mult result reflect-matrix))))))
+
 ;;;;
 ;;;; Axis-aligned box
 ;;;;
@@ -2330,9 +2425,28 @@ The matrix must be an affine matrix. m4-affine-p."
     (v3-multf (aab-max aab) v3)
     aab))
 
-(defmethod intersects-p ((aab axis-aligned-box) (s sphere) &key &allow-other-keys) (ni))
+(defmethod intersects-p ((aab axis-aligned-box) (s sphere) &key &allow-other-keys)
+  (ecase (aab-extent aab)
+    (:null nil)
+    (:infinite t)
+    (:finite
+     ;; Use splitting planes
+     (with-v3-accessor (c (sphere-orig s))
+       (with-v3-accessor (bmin (aab-min aab))
+         (with-v3-accessor (bmax (aab-max aab))
+           ;; Arvo's algorithm
+           (let ((d 0.0))
+             (dotimes (i 3)
+               (cond ((< (c i) (bmin i))
+                      (let ((s (- (c i) (bmin i))))
+                        (incf d (* s s))))
+                     ((> (c i) (bmax i))
+                      (let ((s (- (c i) (bmax i))))
+                        (incf d (* s s))))))
+             (<= d (* (sphere-rad s) (sphere-rad s))))))))))
 
-(defmethod intersects-p ((aab axis-aligned-box) (p plane) &key &allow-other-keys) (ni))
+(defmethod intersects-p ((aab axis-aligned-box) (p plane) &key &allow-other-keys)
+  (eq (plane-side p aab) :plane-both))
 
 (defmethod intersects-p ((aab axis-aligned-box) (v vector3) &key &allow-other-keys)
   (ecase (aab-extent aab)
@@ -2341,6 +2455,10 @@ The matrix must be an affine matrix. m4-affine-p."
     (:finite (and (>= (v3-x v) (v3-x (aab-min aab))) (<= (v3-x v) (v3-x (aab-max aab)))
                   (>= (v3-y v) (v3-y (aab-min aab))) (<= (v3-y v) (v3-y (aab-max aab)))
                   (>= (v3-z v) (v3-z (aab-min aab))) (<= (v3-z v) (v3-z (aab-max aab)))))))
+
+(defmethod intersects-p ((s sphere) (p plane) &key &allow-other-keys)
+  (<= (abs (distance p (sphere-orig s)))
+      (sphere-rad s)))
 
 (defun aab-centre (aab)
   (make-v3 (* (+ (v3-x (aab-min aab)) (v3-x (aab-max aab))) 0.5)
@@ -2374,3 +2492,8 @@ The matrix must be an affine matrix. m4-affine-p."
        (or (not (aab-finite-p aab1))
            (and (v3= (aab-min aab1) (aab-min aab2))
                 (v3= (aab-max aab1) (aab-max aab2))))))
+
+(defun aab-bounding-radius (aab)
+  (let ((min (aab-min aab))
+        (max (aab-max aab)))
+    (v3-length (v3-ceil (v3-ceil (v3-ceil max (v3-neg max)) min) (v3-neg min)))))
