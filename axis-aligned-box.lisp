@@ -26,9 +26,25 @@
 (defconstant epsilon 0.000001)
 (defconstant epsilon-square (* epsilon epsilon))
 
+(defun +infinity ()
+  #+sbcl sb-ext:single-float-positive-infinity
+  #-sbcl (error "~@<Don't know how to represent infinite values.~:@>"))
+
+(defun -infinity ()
+  #+sbcl sb-ext:single-float-negative-infinity
+  #-sbcl (error "~@<Don't know how to represent infinite values.~:@>"))
+
 (defun real= (x1 x2 tolerance)
   (declare (type real x1 x2 tolerance))
   (< (abs (- x1 x2)) tolerance))
+
+(defun iboundp (x a b)
+  "Check whether X is within inclusive bounds [A, B]."
+  (and (>= x a) (<= x b)))
+
+(defun eboundp (x a b)
+  "Check whether X is within exclusive bounds [A, B]."
+  (and (> x a) (< x b)))
 
 (defun rad<-deg (deg) (/ (* pi deg) 180.0))
 (defun deg<-rad (rad) (/ (* 180.0 rad) pi))
@@ -39,7 +55,7 @@
 (defgeneric volume (object))
 (defgeneric scale (object v3))
 (defgeneric scalef (object v3))
-(defgeneric intersects-p (object-1 object-2))
+(defgeneric intersects-p (object-1 object-2 &key &allow-other-keys))
 (defgeneric contains-p (object-1 object-2))
 (defgeneric equal-p (object-1 object-2))
 (defgeneric setv (object-1 object-2))
@@ -343,6 +359,8 @@ sin(A)*(x*i+y*j+z*k) since sin(A)/A has limit 1."
              (,maker ,@(inst `(* (,acc v) finv)))))
          (defun ,(name "V~D-NEG") (v)
            (,maker ,@(inst `(- (,acc v)))))
+         (defun ,(name "V~D-ABS") (v)
+           (,maker ,@(inst `(abs (,acc v)))))
          (defun ,(name "V~D-NEGF") (v)
            (setf ,@(minst `(,acc v) `(- (,acc v)))))
          (defun ,(name "V~D-INCF") (v1 v2-or-real)
@@ -402,6 +420,10 @@ sin(A)*(x*i+y*j+z*k) since sin(A)/A has limit 1."
            (and ,@(inst `(< (,acc v1) (,acc v2)))))
          (defun ,(name "V~D>") (v1 v2)
            (and ,@(inst `(> (,acc v1) (,acc v2)))))
+         (defun ,(name "V~D<=") (v1 v2)
+           (and ,@(inst `(<= (,acc v1) (,acc v2)))))
+         (defun ,(name "V~D>=") (v1 v2)
+           (and ,@(inst `(>= (,acc v1) (,acc v2)))))
          (defmethod dot ((v1 ,(name "VECTOR~D")) (v2 ,(name "VECTOR~D")))
            (+ ,@(inst `(* (,acc v1) (,acc v2)))))
          (defun ,(name "V~D-ABS-DOT") (v1 v2)
@@ -449,6 +471,33 @@ sin(A)*(x*i+y*j+z*k) since sin(A)/A has limit 1."
         (let ((v1 (v2- a c))
               (v2 (v2- v c)))
           (setf dot2 (v2-cross v1 v2)
+                dot2-zerop (real= dot2 0.0 0.001))
+          ;; Compare signs (ignore colinear / coincident points)
+          (not (or (and (not dot0-zerop) (not dot2-zerop)
+                        (not (= (signum dot0) (signum dot2))))
+                   (and (not dot1-zerop) (not dot2-zerop)
+                        (not (= (signum dot1) (signum dot2))))))))))
+
+(defun v3-in-tri-p (v a b c normal)
+  (let (dot0 dot1 dot2 dot0-zerop dot1-zerop dot2-zerop)
+    ;; Winding must be consistent from all edges for point to be inside
+    (let ((v1 (v2- b a))
+          (v2 (v2- v a)))
+      ;; Note we don't care about normalisation here since sign is all we need
+      ;; It means we don't have to worry about magnitude of cross products either
+      (setf dot0 (dot (v2-cross v1 v2) normal)
+            dot0-zerop (real= dot0 0.0 0.001)))
+    (let ((v1 (v2- c b))
+          (v2 (v2- v b)))
+      (setf dot1 (dot (v2-cross v1 v2) normal)
+            dot1-zerop (real= dot1 0.0 0.001)))
+    ;; Compare signs (ignore colinear / coincident points)
+    (if (and (not dot0-zerop) (not dot1-zerop)
+             (not (= (signum dot0) (signum dot1))))
+        nil
+        (let ((v1 (v2- a c))
+              (v2 (v2- v c)))
+          (setf dot2 (dot (v2-cross v1 v2) normal)
                 dot2-zerop (real= dot2 0.0 0.001))
           ;; Compare signs (ignore colinear / coincident points)
           (not (or (and (not dot0-zerop) (not dot2-zerop)
@@ -528,16 +577,163 @@ Based on Stan Melax's article in Game Programming Gems."
          (declare (ignorable (function ,accessor) (function (setf ,accessor))))
          ,@body))))
 
+(defun v3face-normal-cheap (v0 v1 v2)
+  (v3-cross (v3- v1 v0) (v3- v2 v0)))
+
+(defun v3face-normal (v0 v1 v2)
+  (v3-normalizef (v3-cross (v3- v1 v0) (v3- v2 v0))))
+
 ;;;;
 ;;;; Trivial geometrics
 ;;;;
-(defstruct (sphere (:constructor make-sphere (o r)))
-  (o (make-v3 0.0 0.0 0.0) :type vector3)
-  (r 0 :type real))
+(defstruct (ray (:constructor make-ray (orig dir)))
+  (orig (make-v3 0.0 0.0 0.0) :type vector3)
+  (dir (make-v3 1.0 0.0 0.0) :type vector3))
 
-(defstruct (plane (:constructor make-plane (normal d)))
+(defstruct (sphere (:constructor make-sphere (orig rad)))
+  (orig (make-v3 0.0 0.0 0.0) :type vector3)
+  (rad 0 :type real))
+
+(defstruct plane)
+(defstruct (normal-plane (:include plane) (:conc-name plane-) (:constructor make-normal-plane (normal d)))
   (normal (make-v3 0.0 1.0 0.0) :type vector3)
   (d 0 :type real))
+(defstruct (3vec-plane (:include plane) (:conc-name plane-) (:constructor make-3vec-plane (a b c)))
+  (a (make-v3 0.0 0.0 0.0) :type vector3)
+  (b (make-v3 1.0 0.0 0.0) :type vector3)
+  (c (make-v3 0.0 0.0 1.0) :type vector3))
+(defstruct (3vec-normal-plane (:include 3vec-plane) (:conc-name 3vec-plane-) (:constructor make-3vec-normal-plane (a b c normal)))
+  (normal (make-v3 0.0 1.0 0.0) :type vector3))
+
+(defstruct (planeset (:constructor make-planeset (set)))
+  (set nil :type list))
+
+(defun 3vec-plane-extend (p)
+  (declare (type 3vec-plane p))
+  (make-3vec-normal-plane (plane-a p) (plane-b p) (plane-c p)
+                          (v3face-normal-cheap (plane-a p) (plane-b p) (plane-c p))))
+
+(defun ray-point (r k)
+  "Gets the position of a point k units along the ray."
+  (v3+ (ray-orig r) (v3* (ray-dir r) k)))
+
+(defmethod mult ((r ray) (k real))
+  (ray-point r k))
+
+(defmethod intersects-p ((r ray) (p normal-plane) &key &allow-other-keys)
+  (let ((denom (dot (plane-normal p) (ray-dir r))))
+    (if (< (abs denom) epsilon)
+        ;; parallel
+        (values nil 0)
+        (let* ((nom (+ (dot (plane-normal p) (ray-orig r)) (plane-d p)))
+               (tee (- (/ nom denom))))
+          (values (plusp tee) t)))))
+
+(defmethod intersects-p ((r ray) (pset planeset) &key normal-outside-p &allow-other-keys)
+  ;; derive side
+  (let ((all-inside t)
+        (outside (if normal-outside-p :outside :inside))
+        intersectp (distance 0.0)
+        end-intersectp end-distance)
+    (dolist (p (planeset-set pset))
+      (multiple-value-bind (intersects dist) (intersects-p r p)
+        ;; is origin outside?
+        (if (eq outside (plane-side p (ray-orig r)))
+            ;; Test single plane
+            (progn
+              (setf all-inside nil)
+              (if intersects
+                  (setf intersectp t
+                        distance (max dist distance))
+                  (return-from intersects-p (values nil 0.0))))
+            (when intersects
+              (if end-intersectp
+                  (setf end-distance (min dist end-distance))
+                  (setf end-intersectp t
+                        end-distance distance))))))
+    (cond (all-inside
+           ;; Intersecting at 0 distance since inside the volume!
+           (values t 0.0))
+          ((and end-intersectp (< end-distance distance))
+           nil)
+          (t
+           (values intersectp distance)))))
+
+(defmethod intersects-p ((r ray) (s sphere) &key discard-inside-p &allow-other-keys)
+  ;; Adjust ray origin relative to sphere center
+  (let ((rayorig (v3- (ray-orig r) (sphere-orig s)))
+        (rad (sphere-rad s)))
+    ;; Check origin inside first
+    (if (and discard-inside-p (<= (v3-length-squared rayorig) (* rad rad)))
+        (values t 0.0)
+        ;; Mmm, quadratics
+        ;; Build coeffs which can be used with std quadratic solver
+        ;; ie t = (-b +/- sqrt(b*b + 4ac)) / 2a
+        (let ((a (dot (ray-dir r) (ray-dir r)))
+              (b (* 2.0 (dot (ray-orig r) (ray-dir r))))
+              (c (- (dot (ray-orig r) (ray-orig r)) (* rad rad))))
+          ;; determinant
+          (let ((det (- (* b b) (* 4.0 a c))))
+            (if (minusp det)
+                ;; no intersection
+                nil
+                ;; BTW, if d=0 there is one intersection, if d > 0 there are 2
+                ;; But we only want the closest one, so that's ok, just use the 
+                ;; '-' version of the solver
+                (let ((tee (/ (- (- b) (sqrt det)) (* 2.0 a))))
+                  (values t (if (minusp tee)
+                                (/ (+ (- b) (sqrt det)) (* 2.0 a))
+                                tee)))))))))
+
+(defmethod intersects-p ((r ray) (p 3vec-plane) &key &allow-other-keys)
+  (intersects-p r (3vec-plane-extend p)))
+
+(defmethod intersects-p ((r ray) (p 3vec-normal-plane) &key positive-side negative-side &allow-other-keys)
+  (let ((n (3vec-plane-normal p)))
+    ;; Calculate intersection with plane.
+    (let ((denom (dot n (ray-dir r))))
+      ;; Check intersect side
+      (cond ((> denom epsilon)
+             (unless negative-side
+               (return-from intersects-p (values nil 0.0))))
+            ((< denom (- epsilon))
+             (unless positive-side
+               (return-from intersects-p (values nil 0.0))))
+            (t
+             ;; Parallel or triangle area is close to zero when
+             ;; the plane normal not normalised.
+             (return-from intersects-p (values nil 0.0))))
+      (let ((tee (/ (dot n (v3- (plane-a p) (ray-orig r))) denom)))
+        (if (minusp tee)
+            (values nil 0.0)
+            ;; Calculate the largest area projection plane in X, Y or Z.
+            (let ((absn (v3-abs n)))
+              (multiple-value-bind (i0 i1) (if (> (v3-y absn) (v3-z absn))
+                                               (values (if (> (v3-y absn) (v3-x absn)) 0 1) 2)
+                                               (values 1 (if (> (v3-z absn) (v3-x absn)) 0 2)))
+                ;; Check the intersection point is inside the triangle.
+                (with-v3-accessor (a (plane-a p))
+                  (with-v3-accessor (b (plane-b p))
+                    (with-v3-accessor (c (plane-c p))
+                      (with-v3-accessor (orig (ray-orig r))
+                        (with-v3-accessor (dir (ray-dir r))
+                          (let ((u1 (- (b i0) (a i0)))
+                                (v1 (- (b i1) (a i1)))
+                                (u2 (- (c i0) (a i0)))
+                                (v2 (- (c i1) (a i1)))
+                                (u0 (+ (* tee (dir i0)) (orig i0) (- (a i0))))
+                                (v0 (+ (* tee (dir i1)) (orig i1) (- (a i1)))))
+                            (let ((alpha (- (* u0 v2) (* u2 v0)))
+                                  (beta (- (* u1 v0) (* u0 v1)))
+                                  (area (- (* u1 v2) (* u2 v1)))) ; epsilon to avoid float precision error
+                              (let ((tolerance (* -0.000001 area)))
+                                (if (plusp area)
+                                    (if (or (< alpha tolerance) (< beta tolerance) (> (+ alpha beta) (- area tolerance)))
+                                        (values nil 0.0)
+                                        (values t tee))
+                                    (if (or (> alpha tolerance) (> beta tolerance) (< (+ alpha beta) (- area tolerance)))
+                                        (values nil 0.0)
+                                        (values t tee))))))))))))))))))
 
 ;;;;
 ;;;; Matrices
@@ -1689,7 +1885,7 @@ divided by the resulting w."
                         r02 r12 r22 0.0
                         r03 r13 r23 1.0))))))))
 
-(defmethod mult ((m matrix4) (p plane))
+(defmethod mult ((m matrix4) (p normal-plane))
   (let* ((n (plane-normal p))
          (v (mult (m4-transpose (m4-invert m))
                   (make-v4 (v3-x n) (v3-y n) (v3-z n) (plane-d p))))
@@ -2015,7 +2211,7 @@ The matrix must be an affine matrix. m4-affine-p."
                                      (* (abs (m4 m 2 2)) (v3-z halfsize))))))
       (aab-set-extents aab (v3- new-centre new-halfsize) (v3+ new-centre new-halfsize)))))
 
-(defun aab-intersects (aab1 aab2)
+(defmethod intersects-p ((aab1 axis-aligned-box) (aab2 axis-aligned-box) &key &allow-other-keys)
   (cond ((or (aab-null-p aab1) (aab-null-p aab2)) nil)
         ((or (aab-infinite-p aab1) (aab-infinite-p aab2)) t)
         ((or (< (v3-x (aab-max aab1)) (v3-x (aab-min aab2)))
@@ -2026,6 +2222,78 @@ The matrix must be an affine matrix. m4-affine-p."
              (> (v3-z (aab-min aab1)) (v3-z (aab-max aab2))))
          nil)
         (t t)))
+
+(defmethod intersects-p ((r ray) (aab axis-aligned-box) &key full &allow-other-keys)
+  "This method looks crappy to my untrained eye."
+  (cond ((aab-null-p aab) nil)
+        ((aab-infinite-p aab) (values t 0.0 (+infinity)))
+        ((and (not full) (v3<= (ray-orig r) (aab-max aab)) (v3>= (ray-orig r) (aab-min aab)))
+         (values t 0.0))
+        (t (let ((min (aab-min aab)) (max (aab-max aab))
+                 (orig (ray-orig r)) (dir (ray-dir r)))
+             (with-v3-accessor (vmin min)
+               (with-v3-accessor (vmax max)
+                 (with-v3-accessor (orig orig)
+                   (with-v3-accessor (dir dir)
+                     (if full
+                         ;; Full, two-point intersection
+                         (with-v3-accessor (absdir (v3-abs dir))
+                           ;; Sort the axis, ensure check minimise floating error axis first
+                           (let ((imax 0) (imid 1) (imin 2))
+                             (when (< (absdir 0) (absdir 2))
+                               (setf imax 2 imin 0))
+                             (if (< (absdir 1) (absdir imin))
+                                 (setf imid imin imin 1)
+                                 (when (> (absdir 1) (absdir imax))
+                                   (setf imid imax imax 1)))
+                             (let ((start 0) (end (+infinity)))
+                               (flet ((calc-axis (i)
+                                        (let* ((denom (/ 1.0 (dir i)))
+                                               (newstart (* denom (- (vmin i) (orig i))))
+                                               (newend (* denom (- (vmax i) (orig i)))))
+                                          (when (> newstart newend)
+                                            (rotatef newstart newend))
+                                          (when (or (> newstart end) (< newend start))
+                                            (return-from intersects-p nil))
+                                          (maxf start newstart)
+                                          (minf end newend))))
+                                 ;; Check each axis in turn
+                                 (calc-axis imax)
+                                 (if (< (absdir imid) epsilon)
+                                     ;; Parallel with middle and minimise axis, check bounds only
+                                     (when (or (not (iboundp (orig imid) (vmin imid) (vmax imid)))
+                                               (not (iboundp (orig imin) (vmin imin) (vmax imin))))
+                                       (return-from intersects-p nil))
+                                     (progn
+                                       (calc-axis imid)
+                                       (if (< (absdir imin) epsilon)
+                                           ;; Parallel with minimise axis, check bounds only
+                                           (when (not (iboundp (orig imin) (vmin imin) (vmax imin)))
+                                             (return-from intersects-p nil))
+                                           (calc-axis imin))))
+                                 (values t start end)))))
+                         ;; Simple, one-point intersection: check each face in turn, only check closest 3
+                         (let ((hit nil) (lowt 0.0))
+                           (flet ((check-plane (minp axis ax1 ax2)
+                                    (let ((minmax (if minp (vmin axis) (vmax axis)))
+                                          (orig (orig axis)) (dir (dir axis)))
+                                      (cond ((and (<= orig minmax) (if minp (plusp dir) (minusp dir)))
+                                             (let ((tee (/ (- minmax orig) dir)))
+                                               (when (>= tee 0)
+                                                 ;; Substitute t back into ray and check bounds and dist
+                                                 (let ((hitpoint (v3+ orig (v3* dir tee))))
+                                                   (with-v3-accessor (hit hitpoint)
+                                                     (when (and (iboundp (hit ax1) (vmin ax1) (vmax ax1))
+                                                                (iboundp (hit ax2) (vmin ax2) (vmax ax2))
+                                                                (or (not hit) (< tee lowt)))
+                                                       (setf hit t lowt tee)))))))))))
+                             (check-plane t   0 1 2)
+                             (check-plane nil 0 1 2)
+                             (check-plane t   1 0 2)
+                             (check-plane nil 1 0 2)
+                             (check-plane t   2 1 0)
+                             (check-plane nil 2 1 0)
+                             (values hit lowt))))))))))))
 
 (defun aab-intersection (aab1 aab2)
   (cond ((or (aab-null-p aab1) (aab-null-p aab2)) (make-aab))
@@ -2044,8 +2312,7 @@ The matrix must be an affine matrix. m4-affine-p."
     (:null 0.0)
     (:finite (let ((d (v3- (aab-max aab) (aab-min aab))))
                (* (v3-x d) (v3-y d) (v3-z d))))
-    (:infinite #+sbcl sb-ext:single-float-positive-infinity
-               #-sbcl (error "~@<Don't know how to represent infinite values.~:@>"))))
+    (:infinite (+infinity))))
 
 (defmethod scale ((aab axis-aligned-box) (v3 vector3))
   (ecase (aab-extent aab)
@@ -2063,11 +2330,11 @@ The matrix must be an affine matrix. m4-affine-p."
     (v3-multf (aab-max aab) v3)
     aab))
 
-(defmethod intersects-p ((aab axis-aligned-box) (s sphere)) (ni))
+(defmethod intersects-p ((aab axis-aligned-box) (s sphere) &key &allow-other-keys) (ni))
 
-(defmethod intersects-p ((aab axis-aligned-box) (p plane)) (ni))
+(defmethod intersects-p ((aab axis-aligned-box) (p plane) &key &allow-other-keys) (ni))
 
-(defmethod intersects-p ((aab axis-aligned-box) (v vector3))
+(defmethod intersects-p ((aab axis-aligned-box) (v vector3) &key &allow-other-keys)
   (ecase (aab-extent aab)
     (:null nil)
     (:infinite t)
@@ -2083,19 +2350,13 @@ The matrix must be an affine matrix. m4-affine-p."
 (defun aab-size (aab)
   (ecase (aab-extent aab)
     (:null *v3-zero*)
-    (:infinite #+sbcl (make-v3 sb-ext:single-float-positive-infinity
-                               sb-ext:single-float-positive-infinity
-                               sb-ext:single-float-positive-infinity)
-               #-sbcl (error "~@<Don't know how to represent infinite values.~:@>"))
+    (:infinite (make-v3 (+infinity) (+infinity) (+infinity)))
     (:finite (v3- (aab-max aab) (aab-min aab)))))
 
 (defun aab-halfsize (aab)
   (ecase (aab-extent aab)
     (:null *v3-zero*)
-    (:infinite #+sbcl (make-v3 sb-ext:single-float-positive-infinity
-                               sb-ext:single-float-positive-infinity
-                               sb-ext:single-float-positive-infinity)
-               #-sbcl (error "~@<Don't know how to represent infinite values.~:@>"))
+    (:infinite (make-v3 (+infinity) (+infinity) (+infinity)))
     (:finite (v3* (v3- (aab-max aab) (aab-min aab)) 0.5))))
 
 (defmethod contains-p ((aab axis-aligned-box) (v vector3))

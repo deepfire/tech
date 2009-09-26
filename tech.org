@@ -24,6 +24,11 @@
     QL has a weird trivialty in the third subloop
 *** Matrix4
     - Ogre source likely has a bug in the * method for (matrix4 plane), see the implementation..
+*** Math
+    - std::pair<bool, Real> Math::intersects(const Ray& ray, const Vector3& a, const Vector3& b, const Vector3& c, const Vector3& normal,
+                                             bool positiveSide, bool negativeSide)
+      what is this?
+      comments say "Calculate intersection with plane"
 * Done
 *** Animable
 ***** AnimableValue
@@ -72,8 +77,6 @@
 *** Light
 *** Material
 *** Math
-*** Matrix3
-*** Matrix4
 *** Mesh
 *** MovableObject
 *** Node
@@ -100,9 +103,6 @@
 *** Texture
 *** TextureManager
 *** Timer
-*** Vector2
-*** Vector3
-*** Vector4
 *** Viewport
 *** VertexIndexData
 *** WindowEventUtilities
@@ -197,8 +197,6 @@
 *** MaterialManager
 *** MaterialSerializer
 *** Math
-*** Matrix3
-*** Matrix4
 *** MemoryAllocatedObject
 *** MemoryAllocatorConfig
 *** MemoryNedAlloc
@@ -252,7 +250,6 @@
 *** ProgressiveMesh
 *** Quaternion
 *** RadixSort
-*** Ray
 *** Rectangle
 *** Rectangle2D
 *** RenderObjectListener
@@ -330,9 +327,6 @@
 *** UTFString
 *** UnifiedHighLevelGpuProgram
 *** UserDefinedObject
-*** Vector2
-*** Vector3
-*** Vector4
 *** VertexBoneAssignment
 *** VertexIndexData
 *** Viewport
