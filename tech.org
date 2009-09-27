@@ -19,6 +19,10 @@
       - vertex data
     - can optimise tracks (calls out to track)
 *** AnimationState
+*** Compiler2Pass
+    ...is raving mad
+*** ColourValue
+    Should make it compat with vector4, as it shares many of it
 *** Matrix3
     Golub-Kahan stepper and SVD has row/column nomenclature problems
     QL has a weird trivialty in the third subloop
