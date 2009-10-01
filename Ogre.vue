@@ -1,7 +1,7 @@
 <!-- Tufts VUE 3.0 beta2b3 concept-map (Ogre.vue) 2009-10-01 -->
 <!-- Tufts VUE: http://vue.tufts.edu/ -->
 <!-- Do Not Remove: VUE mapping @version(1.1) jar:file:/home/deepfire/VUE.jar!/tufts/vue/resources/lw_mapping_1_1.xml -->
-<!-- Do Not Remove: Saved date Thu Oct 01 05:38:32 MSD 2009 by deepfire on platform Linux 2.6.26-2-amd64 in JVM 1.6.0_0-b16 -->
+<!-- Do Not Remove: Saved date Thu Oct 01 05:44:35 MSD 2009 by deepfire on platform Linux 2.6.26-2-amd64 in JVM 1.6.0_0-b16 -->
 <!-- Do Not Remove: Saving version @(#)VUE: built September 4 2009 at 0400 by vue on Linux 2.4.21-57.EL i386 JVM 1.5.0_06-b05 -->
 <?xml version="1.0" encoding="US-ASCII"?>
 <LW-MAP xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -9,7 +9,7 @@
     created="1254012613236" x="0.0" y="0.0" width="1477.5"
     height="1325.5" strokeWidth="0.0" autoSized="false">
     <notes>Ogre abstraction map.%nl;author: Samium Gromoff%nl;_deepfire-at-feelingofgreen-ru</notes>
-    <resource referenceCreated="1254361112404" size="897893"
+    <resource referenceCreated="1254361475536" size="816388"
         spec="/home/deepfire/source/tech/Ogre.vue" type="1" xsi:type="URLResource">
         <title>Ogre.vue</title>
         <property key="File" value="/home/deepfire/source/tech/Ogre.vue"/>
@@ -3770,25 +3770,6 @@
         <ID1 xsi:type="node">246</ID1>
         <ID2 xsi:type="node">208</ID2>
     </child>
-    <child ID="255" label="SceneManager" layerID="1"
-        created="1254019907216" x="371.6666" y="1012.73804"
-        width="105.0" height="22.0" strokeWidth="1.0" autoSized="true" xsi:type="node">
-        <fillColor>#F2AE45</fillColor>
-        <strokeColor>#776D6D</strokeColor>
-        <textColor>#000000</textColor>
-        <font>Arial-plain-12</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/f969d1c70a80000101d1d2b894b52ccb</URIString>
-        <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
-    </child>
     <child ID="256" label="SceneNode" layerID="1"
         created="1254019914631" x="292.6666" y="1100.738" width="83.0"
         height="22.0" strokeWidth="1.0" autoSized="true" xsi:type="node">
@@ -3807,28 +3788,6 @@
         </metadata-list>
         <URIString>http://vue.tufts.edu/rdf/resource/f969d1c70a80000101d1d2b871bb7bf5</URIString>
         <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
-    </child>
-    <child ID="257" layerID="1" created="1254019924525" x="241.4824"
-        y="1034.238" width="165.76749" height="105.06372"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/f969d1c80a80000101d1d2b80c963b18</URIString>
-        <point1 x="406.74988" y="1034.738"/>
-        <point2 x="241.98239" y="1138.8018"/>
-        <ID1 xsi:type="node">255</ID1>
-        <ID2 xsi:type="node">246</ID2>
     </child>
     <child ID="258" layerID="1" created="1254019973219" x="247.96106"
         y="1122.2129" width="55.080612" height="19.7677"
@@ -4037,28 +3996,6 @@
         <point2 x="230.27264" y="1138.738"/>
         <ID1 xsi:type="node">267</ID1>
         <ID2 xsi:type="node">246</ID2>
-    </child>
-    <child ID="269" layerID="1" created="1254020461611" x="476.11548"
-        y="1024.491" width="188.10696" height="5.470093"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="3" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/f971bd210a80000101d1d2b81cf56805</URIString>
-        <point1 x="476.61545" y="1024.9911"/>
-        <point2 x="663.7224" y="1029.4612"/>
-        <ID1 xsi:type="node">255</ID1>
-        <ID2 xsi:type="node">208</ID2>
     </child>
     <child ID="272" label="SubMeshGeometryLookup" layerID="1"
         created="1254020555986" x="748.851" y="955.73804" width="173.0"
@@ -4573,27 +4510,6 @@
         <point1 x="994.8453" y="549.73804"/>
         <point2 x="708.30554" y="876.73804"/>
         <ID1 xsi:type="node">127</ID1>
-        <ID2 xsi:type="node">55</ID2>
-    </child>
-    <child ID="307" layerID="1" created="1254021661979" x="445.86884"
-        y="898.23804" width="231.09561" height="115.0" strokeWidth="1.0"
-        autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/f98431750a80000101d1d2b83b12481c</URIString>
-        <point1 x="446.3688" y="1012.73804"/>
-        <point2 x="676.4644" y="898.73804"/>
-        <ID1 xsi:type="node">255</ID1>
         <ID2 xsi:type="node">55</ID2>
     </child>
     <child ID="308" layerID="1" created="1254021667666" x="700.376"
@@ -6687,27 +6603,6 @@
         <ID1 xsi:type="node">8</ID1>
         <ID2 xsi:type="node">256</ID2>
     </child>
-    <child ID="467" layerID="1" created="1254027907167" x="344.91666"
-        y="1034.238" width="68.5" height="67.0" strokeWidth="1.0"
-        autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/f9e35aa40a80000101d1d2b824dea460</URIString>
-        <point1 x="412.91666" y="1034.738"/>
-        <point2 x="345.41666" y="1100.738"/>
-        <ID1 xsi:type="node">255</ID1>
-        <ID2 xsi:type="node">256</ID2>
-    </child>
     <child ID="468" label="SceneManagerEnumerator" layerID="1"
         created="1254028039997" x="805.83655" y="332.73798"
         width="179.0" height="22.0" strokeWidth="1.0" autoSized="true" xsi:type="node">
@@ -7067,28 +6962,6 @@
         <ID1 xsi:type="node">132</ID1>
         <ID2 xsi:type="node">486</ID2>
     </child>
-    <child ID="490" layerID="1" created="1254028912395" x="348.62292"
-        y="1023.7864" width="23.54367" height="1.2354736"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="3" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/f9f4c47e0a80000101d1d2b8acc322eb</URIString>
-        <point1 x="371.6666" y="1024.2864"/>
-        <point2 x="349.12292" y="1024.5219"/>
-        <ID1 xsi:type="node">255</ID1>
-        <ID2 xsi:type="node">486</ID2>
-    </child>
     <child ID="491" label="ColourValue" layerID="1"
         created="1254029140861" x="708.1666" y="232.73798" width="86.0"
         height="22.0" strokeWidth="1.0" autoSized="true" xsi:type="node">
@@ -7107,50 +6980,6 @@
         </metadata-list>
         <URIString>http://vue.tufts.edu/rdf/resource/f9f64b370a80000101d1d2b8a73d12d4</URIString>
         <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
-    </child>
-    <child ID="493" layerID="1" created="1254029187914" x="428.27814"
-        y="254.23807" width="318.77698" height="758.99994"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/f9f73ada0a80000101d1d2b898f463cc</URIString>
-        <point1 x="746.5551" y="254.73804"/>
-        <point2 x="428.77814" y="1012.738"/>
-        <ID1 xsi:type="node">491</ID1>
-        <ID2 xsi:type="node">255</ID2>
-    </child>
-    <child ID="494" layerID="1" created="1254029196066" x="430.0792"
-        y="327.79907" width="399.99982" height="685.43896"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/f9f73adb0a80000101d1d2b8eef5e639</URIString>
-        <point1 x="829.579" y="328.29907"/>
-        <point2 x="430.57916" y="1012.73804"/>
-        <ID1 xsi:type="node">471</ID1>
-        <ID2 xsi:type="node">255</ID2>
     </child>
     <child ID="495" label="RenderQueue" layerID="1"
         created="1254029201171" x="1058.1666" y="648.5" width="97.0"
@@ -7171,48 +7000,6 @@
         <URIString>http://vue.tufts.edu/rdf/resource/f9f73adb0a80000101d1d2b87fe84a5e</URIString>
         <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
     </child>
-    <child ID="496" layerID="1" created="1254029209560" x="444.27808"
-        y="670.0" width="642.277" height="343.23804" strokeWidth="1.0"
-        autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/f9f73adc0a80000101d1d2b86ccbbdfa</URIString>
-        <point1 x="1086.055" y="670.5"/>
-        <point2 x="444.77805" y="1012.73804"/>
-        <ID1 xsi:type="node">495</ID1>
-        <ID2 xsi:type="node">255</ID2>
-    </child>
-    <child ID="497" layerID="1" created="1254029224057" x="429.22855"
-        y="223.23804" width="399.94305" height="790.0" strokeWidth="1.0"
-        autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/f9f772950a80000101d1d2b877e56808</URIString>
-        <point1 x="828.67163" y="223.73804"/>
-        <point2 x="429.72858" y="1012.73804"/>
-        <ID1 xsi:type="node">67</ID1>
-        <ID2 xsi:type="node">255</ID2>
-    </child>
     <child ID="498" label="InstancedGeometry" layerID="1"
         created="1254029355990" x="522.1666" y="1068.738" width="133.0"
         height="22.0" strokeWidth="1.0" autoSized="true" xsi:type="node">
@@ -7232,27 +7019,6 @@
         <URIString>http://vue.tufts.edu/rdf/resource/f9fa312e0a80000101d1d2b8ada8ec67</URIString>
         <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
     </child>
-    <child ID="499" layerID="1" created="1254029374564" x="455.97906"
-        y="1034.238" width="100.875" height="35.0" strokeWidth="1.0"
-        autoSized="false" controlCount="0" arrowState="3" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/f9fa312f0a80000101d1d2b85d44c54e</URIString>
-        <point1 x="456.47906" y="1034.738"/>
-        <point2 x="556.35406" y="1068.738"/>
-        <ID1 xsi:type="node">255</ID1>
-        <ID2 xsi:type="node">498</ID2>
-    </child>
     <child ID="500" label="ManualObject" layerID="1"
         created="1254029467145" x="1001.1665" y="684.63226" width="96.0"
         height="22.0" strokeWidth="1.0" autoSized="true" xsi:type="node">
@@ -7271,158 +7037,6 @@
         </metadata-list>
         <URIString>http://vue.tufts.edu/rdf/resource/f9fcefa20a80000101d1d2b816554aab</URIString>
         <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
-    </child>
-    <child ID="501" layerID="1" created="1254029480955" x="444.62024"
-        y="706.1323" width="584.0928" height="307.10577"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/f9fcefa30a80000101d1d2b87cd51e8f</URIString>
-        <point1 x="1028.213" y="706.63226"/>
-        <point2 x="445.12027" y="1012.73804"/>
-        <ID1 xsi:type="node">500</ID1>
-        <ID2 xsi:type="node">255</ID2>
-    </child>
-    <child ID="502" layerID="1" created="1254029515607" x="429.4496"
-        y="254.23804" width="399.50095" height="759.0" strokeWidth="1.0"
-        autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/f9fcefa30a80000101d1d2b876f7cb1e</URIString>
-        <point1 x="828.45056" y="254.73804"/>
-        <point2 x="429.94962" y="1012.73804"/>
-        <ID1 xsi:type="node">65</ID1>
-        <ID2 xsi:type="node">255</ID2>
-    </child>
-    <child ID="503" layerID="1" created="1254029555857" x="351.04364"
-        y="745.61835" width="70.745514" height="267.61975"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/f9fcefa40a80000101d1d2b88f7f4c10</URIString>
-        <point1 x="351.5436" y="746.11835"/>
-        <point2 x="421.28912" y="1012.7381"/>
-        <ID1 xsi:type="node">189</ID1>
-        <ID2 xsi:type="node">255</ID2>
-    </child>
-    <child ID="505" layerID="1" created="1254029577786" x="390.5334"
-        y="351.2378" width="33.59085" height="662.0005"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/f9fcefa40a80000101d1d2b8470836f1</URIString>
-        <point1 x="391.0334" y="351.7378"/>
-        <point2 x="423.62424" y="1012.7383"/>
-        <ID1 xsi:type="node">479</ID1>
-        <ID2 xsi:type="node">255</ID2>
-    </child>
-    <child ID="506" layerID="1" created="1254029580997" x="425.87744"
-        y="351.23804" width="133.85132" height="662.0" strokeWidth="1.0"
-        autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/f9fcefa50a80000101d1d2b879c04cb0</URIString>
-        <point1 x="559.22876" y="351.73804"/>
-        <point2 x="426.37744" y="1012.73804"/>
-        <ID1 xsi:type="node">480</ID1>
-        <ID2 xsi:type="node">255</ID2>
-    </child>
-    <child ID="507" layerID="1" created="1254029583731" x="428.51788"
-        y="351.23807" width="292.5188" height="661.99994"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/f9fcefa50a80000101d1d2b80c33057e</URIString>
-        <point1 x="720.5367" y="351.73804"/>
-        <point2 x="429.01788" y="1012.738"/>
-        <ID1 xsi:type="node">481</ID1>
-        <ID2 xsi:type="node">255</ID2>
-    </child>
-    <child ID="508" layerID="1" created="1254029672418" x="352.04156"
-        y="833.23804" width="68.47833" height="180.00006"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/f9fee68e0a80000101d1d2b8e0ca417f</URIString>
-        <point1 x="352.54156" y="833.73804"/>
-        <point2 x="420.0199" y="1012.7381"/>
-        <ID1 xsi:type="node">265</ID1>
-        <ID2 xsi:type="node">255</ID2>
     </child>
     <child ID="509" label="LightInfo" layerID="1"
         created="1254029687283" x="277.1666" y="842.73804" width="64.0"
@@ -7464,49 +7078,6 @@
         <point2 x="323.08627" y="842.73804"/>
         <ID1 xsi:type="node">265</ID1>
         <ID2 xsi:type="node">509</ID2>
-    </child>
-    <child ID="513" layerID="1" created="1254029747566" x="392.32883"
-        y="802.73804" width="30.774414" height="210.5" strokeWidth="1.0"
-        autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/f9ff7e4e0a80000101d1d2b81938f696</URIString>
-        <point1 x="392.82883" y="803.23804"/>
-        <point2 x="422.60324" y="1012.73804"/>
-        <ID1 xsi:type="node">163</ID1>
-        <ID2 xsi:type="node">255</ID2>
-    </child>
-    <child ID="514" layerID="1" created="1254029750382" x="316.10776"
-        y="864.23804" width="101.117676" height="149.0"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/f9ff7e4f0a80000101d1d2b8c2f7cb16</URIString>
-        <point1 x="316.60776" y="864.73804"/>
-        <point2 x="416.72543" y="1012.73804"/>
-        <ID1 xsi:type="node">509</ID1>
-        <ID2 xsi:type="node">255</ID2>
     </child>
     <child ID="515" label="MovableObjectCollection" layerID="1"
         created="1254029841686" x="-185.83347" y="786.5403"
@@ -7615,28 +7186,6 @@
         <ID1 xsi:type="node">161</ID1>
         <ID2 xsi:type="node">286</ID2>
     </child>
-    <child ID="527" layerID="1" created="1254061679785" x="432.7768"
-        y="556.23804" width="378.65665" height="457.00006"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fbe7131c0a80000173a0a5f3e6609e18</URIString>
-        <point1 x="810.9334" y="556.738"/>
-        <point2 x="433.27676" y="1012.73804"/>
-        <ID1 xsi:type="node">132</ID1>
-        <ID2 xsi:type="node">255</ID2>
-    </child>
     <child ID="528" label="AnimationState" layerID="1"
         created="1254061773306" x="-6.333374" y="510.10364"
         width="107.0" height="22.0" strokeWidth="1.0" autoSized="true" xsi:type="node">
@@ -7677,49 +7226,6 @@
         <ID1 xsi:type="node">296</ID1>
         <ID2 xsi:type="node">528</ID2>
     </child>
-    <child ID="530" layerID="1" created="1254061784990" x="54.917145"
-        y="531.60364" width="361.4989" height="481.6344"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fbe8865f0a80000173a0a5f3c5db0e13</URIString>
-        <point1 x="55.41715" y="532.10364"/>
-        <point2 x="415.91605" y="1012.73804"/>
-        <ID1 xsi:type="node">528</ID1>
-        <ID2 xsi:type="node">255</ID2>
-    </child>
-    <child ID="531" layerID="1" created="1254061787826" x="54.43254"
-        y="500.23804" width="362.46817" height="513.0" strokeWidth="1.0"
-        autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fbe8865f0a80000173a0a5f33fb07fe0</URIString>
-        <point1 x="54.932537" y="500.73804"/>
-        <point2 x="416.4007" y="1012.73804"/>
-        <ID1 xsi:type="node">296</ID1>
-        <ID2 xsi:type="node">255</ID2>
-    </child>
     <child ID="532" label="RenderQueueListener" layerID="1"
         created="1254061884994" x="455.34045" y="902.73804"
         width="147.0" height="22.0" strokeWidth="1.0" autoSized="true" xsi:type="node">
@@ -7757,69 +7263,6 @@
         </metadata-list>
         <URIString>http://vue.tufts.edu/rdf/resource/fbeb41920a80000173a0a5f39ec86c5e</URIString>
         <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
-    </child>
-    <child ID="534" layerID="1" created="1254061907826" x="259.217"
-        y="701.0" width="159.83588" height="312.23804" strokeWidth="1.0"
-        autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fbeb41920a80000173a0a5f3e4bd7d58</URIString>
-        <point1 x="259.717" y="701.5"/>
-        <point2 x="418.5529" y="1012.73804"/>
-        <ID1 xsi:type="node">533</ID1>
-        <ID2 xsi:type="node">255</ID2>
-    </child>
-    <child ID="535" layerID="1" created="1254061910724" x="434.13397"
-        y="924.23804" width="84.739075" height="89.0" strokeWidth="1.0"
-        autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fbeb41920a80000173a0a5f398084fdd</URIString>
-        <point1 x="518.37305" y="924.73804"/>
-        <point2 x="434.63397" y="1012.73804"/>
-        <ID1 xsi:type="node">532</ID1>
-        <ID2 xsi:type="node">255</ID2>
-    </child>
-    <child ID="536" layerID="1" created="1254061914225" x="455.97913"
-        y="994.23804" width="53.875" height="19.0" strokeWidth="1.0"
-        autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fbeb41930a80000173a0a5f374c90d53</URIString>
-        <point1 x="509.35413" y="994.73804"/>
-        <point2 x="456.47913" y="1012.73804"/>
-        <ID1 xsi:type="node">482</ID1>
-        <ID2 xsi:type="node">255</ID2>
     </child>
     <child ID="537" label="AnimationStateSet" layerID="1"
         created="1254062023567" x="-16.833374" y="540.78174"
@@ -7861,28 +7304,6 @@
         <ID1 xsi:type="node">528</ID1>
         <ID2 xsi:type="node">537</ID2>
     </child>
-    <child ID="539" layerID="1" created="1254062033989" x="55.45346"
-        y="562.28174" width="360.42627" height="450.9563"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fbec38ff0a80000173a0a5f3903620f0</URIString>
-        <point1 x="55.95346" y="562.78174"/>
-        <point2 x="415.37973" y="1012.73804"/>
-        <ID1 xsi:type="node">537</ID1>
-        <ID2 xsi:type="node">255</ID2>
-    </child>
     <child ID="540" label="AutoParamDataSource" layerID="1"
         created="1254062125044" x="470.66663" y="868.5" width="154.0"
         height="22.0" strokeWidth="1.0" autoSized="true" xsi:type="node">
@@ -7901,27 +7322,6 @@
         </metadata-list>
         <URIString>http://vue.tufts.edu/rdf/resource/fbeda5200a80000173a0a5f36aac92c7</URIString>
         <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
-    </child>
-    <child ID="541" layerID="1" created="1254062135823" x="433.08502"
-        y="890.0" width="105.66324" height="123.23804" strokeWidth="1.0"
-        autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fbeda5210a80000173a0a5f3ea5f570f</URIString>
-        <point1 x="538.2482" y="890.5"/>
-        <point2 x="433.585" y="1012.73804"/>
-        <ID1 xsi:type="node">540</ID1>
-        <ID2 xsi:type="node">255</ID2>
     </child>
     <child ID="542" label="ShadowTechnique" layerID="1"
         created="1254062179290" x="703.04004" y="684.63226"
@@ -7942,50 +7342,6 @@
         <URIString>http://vue.tufts.edu/rdf/resource/fbf2b0b20a80000173a0a5f335f19aa0</URIString>
         <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
     </child>
-    <child ID="543" layerID="1" created="1254062194000" x="435.1115"
-        y="706.1323" width="319.4838" height="307.10577"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fbf2b0b30a80000173a0a5f34f8feb51</URIString>
-        <point1 x="754.0953" y="706.63226"/>
-        <point2 x="435.61148" y="1012.73804"/>
-        <ID1 xsi:type="node">542</ID1>
-        <ID2 xsi:type="node">255</ID2>
-    </child>
-    <child ID="544" layerID="1" created="1254062537603" x="435.30115"
-        y="232.47876" width="825.73083" height="780.7593"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fbf3c5c40a80000173a0a5f3f528d359</URIString>
-        <point1 x="1260.532" y="232.97876"/>
-        <point2 x="435.80112" y="1012.73804"/>
-        <ID1 xsi:type="node">96</ID1>
-        <ID2 xsi:type="node">255</ID2>
-    </child>
     <child ID="545" label="Rectangle2D" layerID="1"
         created="1254062573885" x="532.55176" y="438.738" width="91.0"
         height="22.0" strokeWidth="1.0" autoSized="true" xsi:type="node">
@@ -8004,27 +7360,6 @@
         </metadata-list>
         <URIString>http://vue.tufts.edu/rdf/resource/fbf4cf4a0a80000173a0a5f333339ecc</URIString>
         <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
-    </child>
-    <child ID="546" layerID="1" created="1254062605338" x="426.6156"
-        y="460.23804" width="148.98712" height="553.0" strokeWidth="1.0"
-        autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fbf4cf4a0a80000173a0a5f39b4c2564</URIString>
-        <point1 x="575.1027" y="460.73804"/>
-        <point2 x="427.1156" y="1012.73804"/>
-        <ID1 xsi:type="node">545</ID1>
-        <ID2 xsi:type="node">255</ID2>
     </child>
     <child ID="547" label="IlluminationRenderStage" layerID="1"
         created="1254062640686" x="485.66663" y="837.5" width="164.0"
@@ -8045,91 +7380,6 @@
         <URIString>http://vue.tufts.edu/rdf/resource/fbf661d80a80000173a0a5f3260764ae</URIString>
         <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
     </child>
-    <child ID="548" layerID="1" created="1254062656774" x="432.67438"
-        y="859.0" width="126.48453" height="154.23804" strokeWidth="1.0"
-        autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fbf661d90a80000173a0a5f3a14bb00e</URIString>
-        <point1 x="558.6589" y="859.5"/>
-        <point2 x="433.17435" y="1012.73804"/>
-        <ID1 xsi:type="node">547</ID1>
-        <ID2 xsi:type="node">255</ID2>
-    </child>
-    <child ID="549" layerID="1" created="1254062704776" x="395.1585"
-        y="707.07666" width="28.516266" height="306.16162"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fbf661d90a80000173a0a5f38d79017c</URIString>
-        <point1 x="395.6585" y="707.57666"/>
-        <point2 x="423.17477" y="1012.7383"/>
-        <ID1 xsi:type="node">314</ID1>
-        <ID2 xsi:type="node">255</ID2>
-    </child>
-    <child ID="550" layerID="1" created="1254062708220" x="390.69974"
-        y="672.23804" width="32.933716" height="341.0" strokeWidth="1.0"
-        autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fbf661d90a80000173a0a5f34315b014</URIString>
-        <point1 x="391.19974" y="672.73804"/>
-        <point2 x="423.13345" y="1012.73804"/>
-        <ID1 xsi:type="node">312</ID1>
-        <ID2 xsi:type="node">255</ID2>
-    </child>
-    <child ID="551" layerID="1" created="1254062736982" x="411.60193"
-        y="590.2383" width="12.758179" height="423.0" strokeWidth="1.0"
-        autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fbfa833b0a80000173a0a5f3ade81c0e</URIString>
-        <point1 x="412.10193" y="590.7383"/>
-        <point2 x="423.8601" y="1012.7383"/>
-        <ID1 xsi:type="node">119</ID1>
-        <ID2 xsi:type="node">255</ID2>
-    </child>
     <child ID="552" label="ShadowTextureCamera" layerID="1"
         created="1254063000071" x="-27.333405" y="684.5" width="155.0"
         height="22.0" strokeWidth="1.0" autoSized="true" xsi:type="node">
@@ -8149,27 +7399,6 @@
         <URIString>http://vue.tufts.edu/rdf/resource/fbfc82140a80000173a0a5f358bc704a</URIString>
         <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
     </child>
-    <child ID="553" layerID="1" created="1254063012320" x="62.200195"
-        y="706.0" width="349.9328" height="307.23804" strokeWidth="1.0"
-        autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fbfc82140a80000173a0a5f3c88b00fe</URIString>
-        <point1 x="62.700203" y="706.5"/>
-        <point2 x="411.633" y="1012.73804"/>
-        <ID1 xsi:type="node">552</ID1>
-        <ID2 xsi:type="node">255</ID2>
-    </child>
     <child ID="554" label="LightClippingInfo" layerID="1"
         created="1254063064341" x="385.6666" y="410.5" width="113.0"
         height="22.0" strokeWidth="1.0" autoSized="true" xsi:type="node">
@@ -8188,69 +7417,6 @@
         </metadata-list>
         <URIString>http://vue.tufts.edu/rdf/resource/fbfc82150a80000173a0a5f3b553b4b0</URIString>
         <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
-    </child>
-    <child ID="555" layerID="1" created="1254063076582" x="423.99536"
-        y="432.0" width="18.342468" height="581.2383" strokeWidth="1.0"
-        autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fbfc82150a80000173a0a5f32fc44ff7</URIString>
-        <point1 x="441.83783" y="432.5"/>
-        <point2 x="424.49536" y="1012.7383"/>
-        <ID1 xsi:type="node">554</ID1>
-        <ID2 xsi:type="node">255</ID2>
-    </child>
-    <child ID="556" layerID="1" created="1254063107698" x="-93.087845"
-        y="749.23804" width="497.00882" height="264.0" strokeWidth="1.0"
-        autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fbfc82150a80000173a0a5f3f20c4d5d</URIString>
-        <point1 x="-92.58784" y="749.73804"/>
-        <point2 x="403.421" y="1012.73804"/>
-        <ID1 xsi:type="node">321</ID1>
-        <ID2 xsi:type="node">255</ID2>
-    </child>
-    <child ID="559" layerID="1" created="1254063261692" x="425.88556"
-        y="744.23804" width="55.062164" height="269.0" strokeWidth="1.0"
-        autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fc0044340a80000173a0a5f32cea482f</URIString>
-        <point1 x="480.4477" y="744.73804"/>
-        <point2 x="426.38553" y="1012.73804"/>
-        <ID1 xsi:type="node">319</ID1>
-        <ID2 xsi:type="node">255</ID2>
     </child>
     <child ID="563" label="GPUProgramParameters" layerID="1"
         created="1254067023474" x="1168.6666" y="81.71208" width="163.0"
@@ -8289,28 +7455,6 @@
         </metadata-list>
         <URIString>http://vue.tufts.edu/rdf/resource/fc3a63200a80000173a0a5f312085af2</URIString>
         <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
-    </child>
-    <child ID="566" layerID="1" created="1254067101739" x="474.41754"
-        y="1029.5591" width="253.43228" height="32.440796"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="3" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fc3a63200a80000173a0a5f352a1b6dc</URIString>
-        <point1 x="474.9175" y="1030.0592"/>
-        <point2 x="727.3498" y="1061.5"/>
-        <ID1 xsi:type="node">255</ID1>
-        <ID2 xsi:type="node">565</ID2>
     </child>
     <child ID="567" layerID="1" created="1254067106884" x="492.9796"
         y="744.23804" width="312.37418" height="317.76196"
@@ -8459,27 +7603,6 @@
         <ID1 xsi:type="node">574</ID1>
         <ID2 xsi:type="node">573</ID2>
     </child>
-    <child ID="576" layerID="1" created="1254067455004" x="439.17807"
-        y="840.23804" width="243.544" height="173.0" strokeWidth="1.0"
-        autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fc3f4ec10a80000173a0a5f39fbb002c</URIString>
-        <point1 x="682.2221" y="840.73804"/>
-        <point2 x="439.6781" y="1012.73804"/>
-        <ID1 xsi:type="node">573</ID1>
-        <ID2 xsi:type="node">255</ID2>
-    </child>
     <child ID="577" label="MovableObjectLODChangedEvent" layerID="1"
         created="1254067535479" x="60.666595" y="761.3375" width="217.0"
         height="22.0" strokeWidth="1.0" autoSized="true" xsi:type="node">
@@ -8498,28 +7621,6 @@
         </metadata-list>
         <URIString>http://vue.tufts.edu/rdf/resource/fc7cdacc0a80000173a0a5f3b811aafa</URIString>
         <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
-    </child>
-    <child ID="578" layerID="1" created="1254067572061" x="179.8241"
-        y="782.8375" width="233.68501" height="230.40051"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fc7cdacc0a80000173a0a5f39c799f3d</URIString>
-        <point1 x="180.32408" y="783.3375"/>
-        <point2 x="413.0091" y="1012.73804"/>
-        <ID1 xsi:type="node">577</ID1>
-        <ID2 xsi:type="node">255</ID2>
     </child>
     <child ID="579" label="EntityMeshLODCHangedEvent" layerID="1"
         created="1254071443607" x="60.666595" y="784.17505"
@@ -8558,50 +7659,6 @@
         </metadata-list>
         <URIString>http://vue.tufts.edu/rdf/resource/fc7cdacd0a80000173a0a5f3c80ff447</URIString>
         <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
-    </child>
-    <child ID="581" layerID="1" created="1254071503113" x="439.31134"
-        y="1034.238" width="310.7106" height="218.76196"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fc7cdacd0a80000173a0a5f36ee369b9</URIString>
-        <point1 x="749.5219" y="1252.5"/>
-        <point2 x="439.8113" y="1034.738"/>
-        <ID1 xsi:type="node">580</ID1>
-        <ID2 xsi:type="node">255</ID2>
-    </child>
-    <child ID="583" layerID="1" created="1254071520746" x="170.46832"
-        y="805.67505" width="241.39655" height="207.56299"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fc7cdace0a80000173a0a5f372ff174d</URIString>
-        <point1 x="170.96832" y="806.17505"/>
-        <point2 x="411.36487" y="1012.73804"/>
-        <ID1 xsi:type="node">579</ID1>
-        <ID2 xsi:type="node">255</ID2>
     </child>
     <child ID="584" label="RotationalSpline" layerID="1"
         created="1254076347232" x="1023.4166" y="-405.5" width="113.0"
@@ -8644,47 +7701,6 @@
         <ID1 xsi:type="node">5</ID1>
         <ID2 xsi:type="node">584</ID2>
     </child>
-    <child ID="586" label="Root" layerID="1" created="1254076424164"
-        x="-162.58339" y="351.5" width="40.0" height="22.0"
-        strokeWidth="1.0" autoSized="true" xsi:type="node">
-        <fillColor>#F2AE45</fillColor>
-        <strokeColor>#776D6D</strokeColor>
-        <textColor>#000000</textColor>
-        <font>Arial-plain-12</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fcc7f40c0a8000017dabdb8a2e2fedc5</URIString>
-        <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
-    </child>
-    <child ID="587" layerID="1" created="1254076431342" x="-123.15039"
-        y="300.1086" width="907.38403" height="61.55957"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fcc7f40c0a8000017dabdb8a19c83830</URIString>
-        <point1 x="783.73364" y="300.6086"/>
-        <point2 x="-122.65038" y="361.16818"/>
-        <ID1 xsi:type="node">471</ID1>
-        <ID2 xsi:type="node">586</ID2>
-    </child>
     <child ID="588" label="LogManager" layerID="1"
         created="1254076473626" x="308.41663" y="-53.5" width="88.0"
         height="22.0" strokeWidth="1.0" autoSized="true" xsi:type="node">
@@ -8722,49 +7738,6 @@
         </metadata-list>
         <URIString>http://vue.tufts.edu/rdf/resource/fcc8d3450a8000017dabdb8aba0ad008</URIString>
         <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
-    </child>
-    <child ID="590" layerID="1" created="1254076496509" x="-130.32065"
-        y="-32.0" width="469.79285" height="384.55777" strokeWidth="1.0"
-        autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fcc8d3450a8000017dabdb8ad2d6d7d9</URIString>
-        <point1 x="338.9722" y="-31.5"/>
-        <point2 x="-129.82066" y="352.05777"/>
-        <ID1 xsi:type="node">588</ID1>
-        <ID2 xsi:type="node">586</ID2>
-    </child>
-    <child ID="591" layerID="1" created="1254076499281" x="-126.37393"
-        y="116.97772" width="476.68506" height="237.7074"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fcc8d3460a8000017dabdb8a758350e8</URIString>
-        <point1 x="349.81113" y="117.47772"/>
-        <point2 x="-125.873924" y="354.18512"/>
-        <ID1 xsi:type="node">589</ID1>
-        <ID2 xsi:type="node">586</ID2>
     </child>
     <child ID="592" label="DynlibManager" layerID="1"
         created="1254076547264" x="308.41663" y="10.347599"
@@ -8880,138 +7853,6 @@
         <URIString>http://vue.tufts.edu/rdf/resource/fccc88c50a8000017dabdb8a06f66269</URIString>
         <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
     </child>
-    <child ID="599" layerID="1" created="1254076718217" x="-128.6127"
-        y="31.847595" width="472.8269" height="321.3281"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fccc88c50a8000017dabdb8a5ad0d484</URIString>
-        <point1 x="343.7142" y="32.347595"/>
-        <point2 x="-128.1127" y="352.6757"/>
-        <ID1 xsi:type="node">592</ID1>
-        <ID2 xsi:type="node">586</ID2>
-    </child>
-    <child ID="600" layerID="1" created="1254076728665" x="-128.08762"
-        y="53.130127" width="475.0862" height="300.3996"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fccc88c50a8000017dabdb8a83074c4b</URIString>
-        <point1 x="346.4986" y="53.630127"/>
-        <point2 x="-127.58761" y="353.02972"/>
-        <ID1 xsi:type="node">593</ID1>
-        <ID2 xsi:type="node">586</ID2>
-    </child>
-    <child ID="601" layerID="1" created="1254076732162" x="-123.13214"
-        y="363.2414" width="910.5689" height="57.594788"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fccc88c60a8000017dabdb8afbc7fe86</URIString>
-        <point1 x="786.93677" y="420.33618"/>
-        <point2 x="-122.63213" y="363.7414"/>
-        <ID1 xsi:type="node">594</ID1>
-        <ID2 xsi:type="node">586</ID2>
-    </child>
-    <child ID="602" layerID="1" created="1254076735485" x="-123.400894"
-        y="364.57257" width="175.01712" height="23.74472"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fccc88c60a8000017dabdb8af9676c17</URIString>
-        <point1 x="51.116226" y="387.81732"/>
-        <point2 x="-122.90089" y="365.0726"/>
-        <ID1 xsi:type="node">595</ID1>
-        <ID2 xsi:type="node">586</ID2>
-    </child>
-    <child ID="603" layerID="1" created="1254076738706" x="-124.17023"
-        y="223.39038" width="473.1187" height="134.27074"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fccc88c60a8000017dabdb8a5c20b2d1</URIString>
-        <point1 x="348.4485" y="223.8904"/>
-        <point2 x="-123.67023" y="357.16113"/>
-        <ID1 xsi:type="node">596</ID1>
-        <ID2 xsi:type="node">586</ID2>
-    </child>
-    <child ID="604" layerID="1" created="1254076742120" x="-125.89044"
-        y="138.26025" width="471.33798" height="216.84949"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fccc88c70a8000017dabdb8a9432d08f</URIString>
-        <point1 x="344.94754" y="138.76025"/>
-        <point2 x="-125.390434" y="354.60974"/>
-        <ID1 xsi:type="node">597</ID1>
-        <ID2 xsi:type="node">586</ID2>
-    </child>
     <child ID="605" label="OverlayManager" layerID="1"
         created="1254076764385" x="1144.9841" y="846.1952" width="111.0"
         height="22.0" strokeWidth="1.0" autoSized="true" xsi:type="node">
@@ -9069,94 +7910,6 @@
         <URIString>http://vue.tufts.edu/rdf/resource/fcd33a8a0a8000017dabdb8aaa110753</URIString>
         <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
     </child>
-    <child ID="609" layerID="1" created="1254077023424" x="-141.05461"
-        y="-153.88367" width="94.11755" height="505.88367"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fcd33a8a0a8000017dabdb8a742655ef</URIString>
-        <point1 x="-47.437057" y="-153.38367"/>
-        <point2 x="-140.55461" y="351.5"/>
-        <ID1 xsi:type="node">608</ID1>
-        <ID2 xsi:type="node">586</ID2>
-    </child>
-    <child ID="610" layerID="1" created="1254077027020" x="-125.049194"
-        y="368.64258" width="1296.1691" height="478.05264"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fcd33a8b0a8000017dabdb8a2d50de14</URIString>
-        <point1 x="1170.6199" y="846.1952"/>
-        <point2 x="-124.54918" y="369.14255"/>
-        <ID1 xsi:type="node">605</ID1>
-        <ID2 xsi:type="node">586</ID2>
-    </child>
-    <child ID="611" layerID="1" created="1254077029455" x="-129.69507"
-        y="-10.717468" width="471.33557" height="363.40155"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fcd33a8b0a8000017dabdb8a74387e11</URIString>
-        <point1 x="341.1405" y="-10.217468"/>
-        <point2 x="-129.19507" y="352.18408"/>
-        <ID1 xsi:type="node">606</ID1>
-        <ID2 xsi:type="node">586</ID2>
-    </child>
-    <child ID="612" layerID="1" created="1254077032813" x="-123.67441"
-        y="265.95544" width="456.2306" height="93.117096"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fcd33a8b0a8000017dabdb8a6cd57687</URIString>
-        <point1 x="332.05618" y="266.45544"/>
-        <point2 x="-123.17442" y="358.57254"/>
-        <ID1 xsi:type="node">391</ID1>
-        <ID2 xsi:type="node">586</ID2>
-    </child>
     <child ID="613" label="ShadowTextureManager" layerID="1"
         created="1254077073350" x="308.41663" y="159.60786"
         width="162.0" height="22.0" strokeWidth="1.0" autoSized="true" xsi:type="node">
@@ -9194,50 +7947,6 @@
         </metadata-list>
         <URIString>http://vue.tufts.edu/rdf/resource/fcd33a8c0a8000017dabdb8aa109ffda</URIString>
         <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
-    </child>
-    <child ID="616" layerID="1" created="1254077173049" x="-124.97455"
-        y="181.10788" width="484.3949" height="175.3603"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fcd33a8c0a8000017dabdb8a4d6ab197</URIString>
-        <point1 x="358.92035" y="181.60786"/>
-        <point2 x="-124.47456" y="355.96817"/>
-        <ID1 xsi:type="node">613</ID1>
-        <ID2 xsi:type="node">586</ID2>
-    </child>
-    <child ID="617" layerID="1" created="1254077178190" x="-124.80545"
-        y="368.28107" width="619.21185" height="213.44266"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fcd33a8c0a8000017dabdb8ab5a3b6a2</URIString>
-        <point1 x="493.9064" y="581.2237"/>
-        <point2 x="-124.30545" y="368.78104"/>
-        <ID1 xsi:type="node">615</ID1>
-        <ID2 xsi:type="node">586</ID2>
     </child>
     <child ID="284" layerID="1" created="1254020898345" x="418.07904"
         y="27.238003" width="402.9149" height="90.022255"
@@ -9320,49 +8029,6 @@
         <URIString>http://vue.tufts.edu/rdf/resource/f9bb96c70a80000101d1d2b891241f86</URIString>
         <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
     </child>
-    <child ID="620" layerID="1" created="1254077953760" x="-123.48218"
-        y="287.23798" width="473.93088" height="72.78671"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fcdf02c80a8000017dabdb8a5cfc9b42</URIString>
-        <point1 x="349.9487" y="287.738"/>
-        <point2 x="-122.982185" y="359.52472"/>
-        <ID1 xsi:type="node">614</ID1>
-        <ID2 xsi:type="node">586</ID2>
-    </child>
-    <child ID="622" layerID="1" created="1254078164520" x="-133.65524"
-        y="373.0" width="548.89374" height="640.23804" strokeWidth="1.0"
-        autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fce270c70a8000017dabdb8a6d00a00f</URIString>
-        <point1 x="414.7385" y="1012.73804"/>
-        <point2 x="-133.15523" y="373.5"/>
-        <ID1 xsi:type="node">255</ID1>
-        <ID2 xsi:type="node">586</ID2>
-    </child>
     <child ID="623" label="RenderWindow" layerID="1"
         created="1254078216794" x="933.73364" y="267.29907"
         width="103.0" height="22.0" strokeWidth="1.0" autoSized="true" xsi:type="node">
@@ -9381,28 +8047,6 @@
         </metadata-list>
         <URIString>http://vue.tufts.edu/rdf/resource/fce439b10a8000017dabdb8a386bf31a</URIString>
         <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
-    </child>
-    <child ID="625" layerID="1" created="1254078237575" x="-123.18146"
-        y="281.60175" width="1057.981" height="79.912415"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fce439b20a8000017dabdb8a70f32832</URIString>
-        <point1 x="934.2995" y="282.10175"/>
-        <point2 x="-122.68147" y="361.01416"/>
-        <ID1 xsi:type="node">623</ID1>
-        <ID2 xsi:type="node">586</ID2>
     </child>
     <child ID="626" label="Timer" layerID="1" created="1254078243231"
         x="868.2527" y="201.73798" width="45.0" height="22.0"
@@ -9423,28 +8067,6 @@
         <URIString>http://vue.tufts.edu/rdf/resource/fce439b20a8000017dabdb8a0fc4815b</URIString>
         <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
     </child>
-    <child ID="627" layerID="1" created="1254078253460" x="-123.45581"
-        y="215.43463" width="992.6519" height="144.72075"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fce439b20a8000017dabdb8aed9d64bc</URIString>
-        <point1 x="868.6961" y="215.93465"/>
-        <point2 x="-122.955795" y="359.6554"/>
-        <ID1 xsi:type="node">626</ID1>
-        <ID2 xsi:type="node">586</ID2>
-    </child>
     <child ID="628" label="Profiler" layerID="1" created="1254078285093"
         x="1208.4166" y="1173.238" width="55.0" height="22.0"
         strokeWidth="1.0" autoSized="true" xsi:type="node">
@@ -9464,28 +8086,6 @@
         <URIString>http://vue.tufts.edu/rdf/resource/fce439b30a8000017dabdb8a4ddae8dd</URIString>
         <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
     </child>
-    <child ID="629" layerID="1" created="1254078293554" x="-127.66943"
-        y="371.18835" width="1345.8741" height="802.69336"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fce439b30a8000017dabdb8a87d331b5</URIString>
-        <point1 x="1217.7047" y="1173.3817"/>
-        <point2 x="-127.16949" y="371.6884"/>
-        <ID1 xsi:type="node">628</ID1>
-        <ID2 xsi:type="node">586</ID2>
-    </child>
     <child ID="630" label="HighLevelGPUProgramManager" layerID="1"
         created="1254078362907" x="455.16663" y="34.738014"
         width="204.0" height="22.0" strokeWidth="1.0" autoSized="true" xsi:type="node">
@@ -9504,28 +8104,6 @@
         </metadata-list>
         <URIString>http://vue.tufts.edu/rdf/resource/fce83f160a8000017dabdb8ae68df235</URIString>
         <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
-    </child>
-    <child ID="631" layerID="1" created="1254078381271" x="-125.83496"
-        y="56.23799" width="659.20184" height="298.95404"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fce83f160a8000017dabdb8a3b486841</URIString>
-        <point1 x="532.8669" y="56.73799"/>
-        <point2 x="-125.334946" y="354.69205"/>
-        <ID1 xsi:type="node">630</ID1>
-        <ID2 xsi:type="node">586</ID2>
     </child>
     <child ID="632" label="ExternalTextureSourceManager" layerID="1"
         created="1254078394722" x="455.16663" y="54.738018"
@@ -9565,50 +8143,6 @@
         <URIString>http://vue.tufts.edu/rdf/resource/fce83f170a8000017dabdb8a4ee8b610</URIString>
         <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
     </child>
-    <child ID="634" layerID="1" created="1254078424244" x="-125.56537"
-        y="76.23804" width="659.2204" height="279.3538"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fce83f170a8000017dabdb8a6fc894ea</URIString>
-        <point1 x="533.155" y="76.73804"/>
-        <point2 x="-125.06539" y="355.09183"/>
-        <ID1 xsi:type="node">632</ID1>
-        <ID2 xsi:type="node">586</ID2>
-    </child>
-    <child ID="635" layerID="1" created="1254078426355" x="-124.922"
-        y="136.23804" width="618.1345" height="220.30807"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fce83f180a8000017dabdb8a7c13e937</URIString>
-        <point1 x="492.71252" y="136.73804"/>
-        <point2 x="-124.42201" y="356.0461"/>
-        <ID1 xsi:type="node">633</ID1>
-        <ID2 xsi:type="node">586</ID2>
-    </child>
     <child ID="636" label="Dynlib" layerID="1" created="1254078430449"
         x="-12.595535" y="162.238" width="48.0" height="22.0"
         strokeWidth="1.0" autoSized="true" xsi:type="node">
@@ -9646,50 +8180,6 @@
         </metadata-list>
         <URIString>http://vue.tufts.edu/rdf/resource/fce83f180a8000017dabdb8acd8c82dd</URIString>
         <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
-    </child>
-    <child ID="638" layerID="1" created="1254078442349" x="-134.13351"
-        y="183.73802" width="137.08813" height="168.262"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fce83f190a8000017dabdb8a9d7eeac4</URIString>
-        <point1 x="2.4546115" y="184.238"/>
-        <point2 x="-133.63353" y="351.5"/>
-        <ID1 xsi:type="node">636</ID1>
-        <ID2 xsi:type="node">586</ID2>
-    </child>
-    <child ID="639" layerID="1" created="1254078445594" x="-136.95438"
-        y="183.73802" width="94.195816" height="168.262"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fce83f190a8000017dabdb8a7f2319cb</URIString>
-        <point1 x="-43.25855" y="184.238"/>
-        <point2 x="-136.45436" y="351.5"/>
-        <ID1 xsi:type="node">637</ID1>
-        <ID2 xsi:type="node">586</ID2>
     </child>
     <child ID="608" label="ResourceBackgroundQueue" layerID="1"
         created="1254077012944" x="-150.3334" y="-197.88367"
@@ -9767,50 +8257,6 @@
         <URIString>http://vue.tufts.edu/rdf/resource/fcec00250a8000017dabdb8aba9748cc</URIString>
         <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
     </child>
-    <child ID="642" layerID="1" created="1254078858415" x="-123.59027"
-        y="223.23799" width="751.981" height="136.25131"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fcecec000a8000017dabdb8a2d667505</URIString>
-        <point1 x="627.89075" y="223.73798"/>
-        <point2 x="-123.09028" y="358.9893"/>
-        <ID1 xsi:type="node">69</ID1>
-        <ID2 xsi:type="node">586</ID2>
-    </child>
-    <child ID="643" layerID="1" created="1254078865745" x="-141.1762"
-        y="-242.98161" width="103.98506" height="594.9816"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fcecec000a8000017dabdb8a6e6be084</URIString>
-        <point1 x="-37.69113" y="-242.48161"/>
-        <point2 x="-140.6762" y="351.5"/>
-        <ID1 xsi:type="node">42</ID1>
-        <ID2 xsi:type="node">586</ID2>
-    </child>
     <child ID="644" label="EventTimesQueue" layerID="1"
         created="1254078893825" x="-151.3334" y="47.238007"
         width="123.0" height="22.0" strokeWidth="1.0" autoSized="true" xsi:type="node">
@@ -9830,28 +8276,6 @@
         <URIString>http://vue.tufts.edu/rdf/resource/fced93880a8000017dabdb8a567942c8</URIString>
         <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
     </child>
-    <child ID="645" layerID="1" created="1254078903010" x="-141.17633"
-        y="68.73801" width="49.935852" height="283.26202"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fced93890a8000017dabdb8ae0fa26d6</URIString>
-        <point1 x="-91.74048" y="69.23801"/>
-        <point2 x="-140.67633" y="351.50003"/>
-        <ID1 xsi:type="node">644</ID1>
-        <ID2 xsi:type="node">586</ID2>
-    </child>
     <child ID="646" label="FrameListener" layerID="1"
         created="1254078920529" x="775.6666" y="91.23801" width="100.0"
         height="22.0" strokeWidth="1.0" autoSized="true" xsi:type="node">
@@ -9870,28 +8294,6 @@
         </metadata-list>
         <URIString>http://vue.tufts.edu/rdf/resource/fcee28020a8000017dabdb8a9977fcb2</URIString>
         <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
-    </child>
-    <child ID="647" layerID="1" created="1254078946685" x="-124.02466"
-        y="112.63157" width="909.6641" height="245.24553"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fcee28020a8000017dabdb8a0a213a0f</URIString>
-        <point1 x="785.13947" y="113.13158"/>
-        <point2 x="-123.524635" y="357.3771"/>
-        <ID1 xsi:type="node">646</ID1>
-        <ID2 xsi:type="node">586</ID2>
     </child>
     <child ID="649" label="BillboardChain" layerID="1"
         created="1254079366953" x="110.666626" y="811.23804"
@@ -10611,27 +9013,6 @@
         <point1 x="726.3466" y="-6.261963"/>
         <point2 x="729.2702" y="5.738037"/>
         <ID1 xsi:type="node">670</ID1>
-        <ID2 xsi:type="node">683</ID2>
-    </child>
-    <child ID="685" layerID="1" created="1254080856537" x="427.0287"
-        y="27.238037" width="302.05933" height="986.0" strokeWidth="1.0"
-        autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fd0c455f0a8000017dabdb8a1c419050</URIString>
-        <point1 x="427.5287" y="1012.73804"/>
-        <point2 x="728.588" y="27.738037"/>
-        <ID1 xsi:type="node">255</ID1>
         <ID2 xsi:type="node">683</ID2>
     </child>
     <child ID="686" label="Location" layerID="1" created="1254080881334"
@@ -12378,885 +10759,6 @@
         <ID1 xsi:type="node">90</ID1>
         <ID2 xsi:type="node">127</ID2>
     </child>
-    <child ID="789" layerID="1" created="1254102813203" x="174.1666"
-        y="1286.0231" width="606.75024" height="186.18701"
-        strokeWidth="0.0" autoSized="false" xsi:type="group">
-        <notes>Only user so far is scene manager.</notes>
-        <strokeColor>#404040</strokeColor>
-        <textColor>#000000</textColor>
-        <font>SansSerif-plain-14</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fe5ef57e0a8000012fb212f0dd058994</URIString>
-        <child ID="419" label="SceneQuery" created="1254025431272"
-            x="334.6861" y="0.5" width="86.0" height="22.0"
-            strokeWidth="1.0" autoSized="true" xsi:type="node">
-            <fillColor>#F2AE45</fillColor>
-            <strokeColor>#776D6D</strokeColor>
-            <textColor>#000000</textColor>
-            <font>Arial-plain-12</font>
-            <metadata-list category-list-size="1" other-list-size="0"
-                ontology-list-size="0" RCategoryListSize="0">
-                <ontology-list-string></ontology-list-string>
-                <metadata xsi:type="vue-metadata-element">
-                    <value></value>
-                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                    <type>1</type>
-                </metadata>
-            </metadata-list>
-            <URIString>http://vue.tufts.edu/rdf/resource/f9bfb62f0a80000101d1d2b8e8e9e8a1</URIString>
-            <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
-        </child>
-        <child ID="424" label="SceneQueryResult" created="1254025638817"
-            x="204.687" y="0.5" width="125.0" height="22.0"
-            strokeWidth="1.0" autoSized="true" xsi:type="node">
-            <fillColor>#F2AE45</fillColor>
-            <strokeColor>#776D6D</strokeColor>
-            <textColor>#000000</textColor>
-            <font>Arial-plain-12</font>
-            <metadata-list category-list-size="1" other-list-size="0"
-                ontology-list-size="0" RCategoryListSize="0">
-                <ontology-list-string></ontology-list-string>
-                <metadata xsi:type="vue-metadata-element">
-                    <value></value>
-                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                    <type>1</type>
-                </metadata>
-            </metadata-list>
-            <URIString>http://vue.tufts.edu/rdf/resource/f9c154d80a80000101d1d2b896716847</URIString>
-            <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
-        </child>
-        <child ID="427" label="RegionSceneQuery" created="1254025749599"
-            x="241.45155" y="35.714966" width="129.0" height="22.0"
-            strokeWidth="1.0" autoSized="true" xsi:type="node">
-            <fillColor>#F2AE45</fillColor>
-            <strokeColor>#776D6D</strokeColor>
-            <textColor>#000000</textColor>
-            <font>Arial-plain-12</font>
-            <metadata-list category-list-size="1" other-list-size="0"
-                ontology-list-size="0" RCategoryListSize="0">
-                <ontology-list-string></ontology-list-string>
-                <metadata xsi:type="vue-metadata-element">
-                    <value></value>
-                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                    <type>1</type>
-                </metadata>
-            </metadata-list>
-            <URIString>http://vue.tufts.edu/rdf/resource/f9c2d1280a80000101d1d2b83d84ed1e</URIString>
-            <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
-        </child>
-        <child ID="431" label="AxisAlignedBoxSceneQuery"
-            created="1254026513556" x="247.94337" y="69.714966"
-            width="178.0" height="22.0" strokeWidth="1.0"
-            autoSized="true" xsi:type="node">
-            <fillColor>#F2AE45</fillColor>
-            <strokeColor>#776D6D</strokeColor>
-            <textColor>#000000</textColor>
-            <font>Arial-plain-12</font>
-            <metadata-list category-list-size="1" other-list-size="0"
-                ontology-list-size="0" RCategoryListSize="0">
-                <ontology-list-string></ontology-list-string>
-                <metadata xsi:type="vue-metadata-element">
-                    <value></value>
-                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                    <type>1</type>
-                </metadata>
-            </metadata-list>
-            <URIString>http://vue.tufts.edu/rdf/resource/f9cff34e0a80000101d1d2b868e764c0</URIString>
-            <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
-        </child>
-        <child ID="434" label="SphereSceneQuery" created="1254026656859"
-            x="423.38776" y="69.714966" width="131.0" height="22.0"
-            strokeWidth="1.0" autoSized="true" xsi:type="node">
-            <fillColor>#F2AE45</fillColor>
-            <strokeColor>#776D6D</strokeColor>
-            <textColor>#000000</textColor>
-            <font>Arial-plain-12</font>
-            <metadata-list category-list-size="1" other-list-size="0"
-                ontology-list-size="0" RCategoryListSize="0">
-                <ontology-list-string></ontology-list-string>
-                <metadata xsi:type="vue-metadata-element">
-                    <value></value>
-                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                    <type>1</type>
-                </metadata>
-            </metadata-list>
-            <URIString>http://vue.tufts.edu/rdf/resource/f9d0c2ec0a80000101d1d2b89e472b9f</URIString>
-            <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
-        </child>
-        <child ID="437" label="PlaneBoundedVolumeListSceneQuery"
-            created="1254026730045" x="3.1338806" y="69.714966"
-            width="244.0" height="22.0" strokeWidth="1.0"
-            autoSized="true" xsi:type="node">
-            <fillColor>#F2AE45</fillColor>
-            <strokeColor>#776D6D</strokeColor>
-            <textColor>#000000</textColor>
-            <font>Arial-plain-12</font>
-            <metadata-list category-list-size="1" other-list-size="0"
-                ontology-list-size="0" RCategoryListSize="0">
-                <ontology-list-string></ontology-list-string>
-                <metadata xsi:type="vue-metadata-element">
-                    <value></value>
-                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                    <type>1</type>
-                </metadata>
-            </metadata-list>
-            <URIString>http://vue.tufts.edu/rdf/resource/f9d2bcb30a80000101d1d2b82662ba49</URIString>
-            <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
-        </child>
-        <child ID="442" label="RaySceneQueryResultEntry"
-            created="1254026890792" x="427.25027" y="0.5" width="179.0"
-            height="22.0" strokeWidth="1.0" autoSized="true" xsi:type="node">
-            <fillColor>#F2AE45</fillColor>
-            <strokeColor>#776D6D</strokeColor>
-            <textColor>#000000</textColor>
-            <font>Arial-plain-12</font>
-            <metadata-list category-list-size="1" other-list-size="0"
-                ontology-list-size="0" RCategoryListSize="0">
-                <ontology-list-string></ontology-list-string>
-                <metadata xsi:type="vue-metadata-element">
-                    <value></value>
-                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                    <type>1</type>
-                </metadata>
-            </metadata-list>
-            <URIString>http://vue.tufts.edu/rdf/resource/f9d6c7a40a80000101d1d2b844fc45dd</URIString>
-            <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
-        </child>
-        <child ID="445" label="RaySceneQuery" created="1254027073738"
-            x="380.0" y="36.714966" width="108.0" height="22.0"
-            strokeWidth="1.0" autoSized="true" xsi:type="node">
-            <fillColor>#F2AE45</fillColor>
-            <strokeColor>#776D6D</strokeColor>
-            <textColor>#000000</textColor>
-            <font>Arial-plain-12</font>
-            <metadata-list category-list-size="1" other-list-size="0"
-                ontology-list-size="0" RCategoryListSize="0">
-                <ontology-list-string></ontology-list-string>
-                <metadata xsi:type="vue-metadata-element">
-                    <value></value>
-                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                    <type>1</type>
-                </metadata>
-            </metadata-list>
-            <URIString>http://vue.tufts.edu/rdf/resource/f9d6c7a40a80000101d1d2b8d6f28fad</URIString>
-            <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
-        </child>
-        <child ID="452" label="IntersectionSceneQueryResult"
-            created="1254027403631" x="2.6976624" y="0.5" width="200.0"
-            height="22.0" strokeWidth="1.0" autoSized="true" xsi:type="node">
-            <fillColor>#F2AE45</fillColor>
-            <strokeColor>#776D6D</strokeColor>
-            <textColor>#000000</textColor>
-            <font>Arial-plain-12</font>
-            <metadata-list category-list-size="1" other-list-size="0"
-                ontology-list-size="0" RCategoryListSize="0">
-                <ontology-list-string></ontology-list-string>
-                <metadata xsi:type="vue-metadata-element">
-                    <value></value>
-                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                    <type>1</type>
-                </metadata>
-            </metadata-list>
-            <URIString>http://vue.tufts.edu/rdf/resource/f9ddcaca0a80000101d1d2b845bae491</URIString>
-            <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
-        </child>
-        <child ID="455" label="IntersectionSceneQuery"
-            created="1254027478100" x="71.0" y="36.714966" width="161.0"
-            height="22.0" strokeWidth="1.0" autoSized="true" xsi:type="node">
-            <fillColor>#F2AE45</fillColor>
-            <strokeColor>#776D6D</strokeColor>
-            <textColor>#000000</textColor>
-            <font>Arial-plain-12</font>
-            <metadata-list category-list-size="1" other-list-size="0"
-                ontology-list-size="0" RCategoryListSize="0">
-                <ontology-list-string></ontology-list-string>
-                <metadata xsi:type="vue-metadata-element">
-                    <value></value>
-                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                    <type>1</type>
-                </metadata>
-            </metadata-list>
-            <URIString>http://vue.tufts.edu/rdf/resource/f9ddcacc0a80000101d1d2b85de32346</URIString>
-            <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
-        </child>
-        <child ID="518" label="DefaultIntersectionSceneQuery"
-            created="1254061359352" x="0.5" y="98.47693" width="206.0"
-            height="22.0" strokeWidth="1.0" autoSized="true" xsi:type="node">
-            <fillColor>#F2AE45</fillColor>
-            <strokeColor>#776D6D</strokeColor>
-            <textColor>#000000</textColor>
-            <font>Arial-plain-12</font>
-            <metadata-list category-list-size="0" other-list-size="0"
-                ontology-list-size="0" RCategoryListSize="0">
-                <ontology-list-string></ontology-list-string>
-            </metadata-list>
-            <URIString>http://vue.tufts.edu/rdf/resource/fbe331e70a80000173a0a5f3b3eb0525</URIString>
-            <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
-        </child>
-        <child ID="520" label="DefaultAxisAlignedBoxSceneQuery"
-            created="1254061371626" x="0.5" y="120.21362" width="223.0"
-            height="22.0" strokeWidth="1.0" autoSized="true" xsi:type="node">
-            <fillColor>#F2AE45</fillColor>
-            <strokeColor>#776D6D</strokeColor>
-            <textColor>#000000</textColor>
-            <font>Arial-plain-12</font>
-            <metadata-list category-list-size="0" other-list-size="0"
-                ontology-list-size="0" RCategoryListSize="0">
-                <ontology-list-string></ontology-list-string>
-            </metadata-list>
-            <URIString>http://vue.tufts.edu/rdf/resource/fbe331e80a80000173a0a5f300856af2</URIString>
-            <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
-        </child>
-        <child ID="522" label="DefaultRaySceneQuery"
-            created="1254061392638" x="0.5" y="141.95032" width="153.0"
-            height="22.0" strokeWidth="1.0" autoSized="true" xsi:type="node">
-            <fillColor>#F2AE45</fillColor>
-            <strokeColor>#776D6D</strokeColor>
-            <textColor>#000000</textColor>
-            <font>Arial-plain-12</font>
-            <metadata-list category-list-size="0" other-list-size="0"
-                ontology-list-size="0" RCategoryListSize="0">
-                <ontology-list-string></ontology-list-string>
-            </metadata-list>
-            <URIString>http://vue.tufts.edu/rdf/resource/fbe331e90a80000173a0a5f3d336810d</URIString>
-            <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
-        </child>
-        <child ID="524" label="DefaultSpehereSceneQuery"
-            created="1254061403946" x="0.5" y="163.68701" width="184.0"
-            height="22.0" strokeWidth="1.0" autoSized="true" xsi:type="node">
-            <fillColor>#F2AE45</fillColor>
-            <strokeColor>#776D6D</strokeColor>
-            <textColor>#000000</textColor>
-            <font>Arial-plain-12</font>
-            <metadata-list category-list-size="1" other-list-size="0"
-                ontology-list-size="0" RCategoryListSize="0">
-                <ontology-list-string></ontology-list-string>
-                <metadata xsi:type="vue-metadata-element">
-                    <value></value>
-                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                    <type>1</type>
-                </metadata>
-            </metadata-list>
-            <URIString>http://vue.tufts.edu/rdf/resource/fbe331e90a80000173a0a5f3921d9ada</URIString>
-            <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
-        </child>
-        <child ID="429" created="1254025775456" x="327.85907" y="22.0"
-            width="27.919495" height="14.214966" strokeWidth="1.0"
-            autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
-            <strokeColor>#404040</strokeColor>
-            <textColor>#404040</textColor>
-            <font>Arial-plain-11</font>
-            <metadata-list category-list-size="1" other-list-size="0"
-                ontology-list-size="0" RCategoryListSize="0">
-                <ontology-list-string></ontology-list-string>
-                <metadata xsi:type="vue-metadata-element">
-                    <value></value>
-                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                    <type>1</type>
-                </metadata>
-            </metadata-list>
-            <URIString>http://vue.tufts.edu/rdf/resource/f9c2d1290a80000101d1d2b8118f8965</URIString>
-            <point1 x="355.27856" y="22.5"/>
-            <point2 x="328.35907" y="35.714966"/>
-            <ID1 xsi:type="node">419</ID1>
-            <ID2 xsi:type="node">427</ID2>
-        </child>
-        <child ID="449" created="1254027213020" x="394.291" y="22.0"
-            width="23.104126" height="15.214966" strokeWidth="1.0"
-            autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
-            <strokeColor>#404040</strokeColor>
-            <textColor>#404040</textColor>
-            <font>Arial-plain-11</font>
-            <metadata-list category-list-size="1" other-list-size="0"
-                ontology-list-size="0" RCategoryListSize="0">
-                <ontology-list-string></ontology-list-string>
-                <metadata xsi:type="vue-metadata-element">
-                    <value></value>
-                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                    <type>1</type>
-                </metadata>
-            </metadata-list>
-            <URIString>http://vue.tufts.edu/rdf/resource/f9d98d540a80000101d1d2b8de002939</URIString>
-            <point1 x="394.791" y="22.5"/>
-            <point2 x="416.8951" y="36.714966"/>
-            <ID1 xsi:type="node">419</ID1>
-            <ID2 xsi:type="node">445</ID2>
-        </child>
-        <child ID="457" created="1254027532577" x="219.70221"
-            y="17.57711" width="117.40553" height="19.637856"
-            strokeWidth="1.0" autoSized="false" controlCount="0"
-            arrowState="2" xsi:type="link">
-            <strokeColor>#404040</strokeColor>
-            <textColor>#404040</textColor>
-            <font>Arial-plain-11</font>
-            <metadata-list category-list-size="1" other-list-size="0"
-                ontology-list-size="0" RCategoryListSize="0">
-                <ontology-list-string></ontology-list-string>
-                <metadata xsi:type="vue-metadata-element">
-                    <value></value>
-                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                    <type>1</type>
-                </metadata>
-            </metadata-list>
-            <URIString>http://vue.tufts.edu/rdf/resource/f9ddcacd0a80000101d1d2b8ecb15917</URIString>
-            <point1 x="336.60773" y="18.07711"/>
-            <point2 x="220.2022" y="36.714966"/>
-            <ID1 xsi:type="node">419</ID1>
-            <ID2 xsi:type="node">455</ID2>
-        </child>
-        <child ID="430" created="1254025835733" x="278.79578" y="22.0"
-            width="15.546997" height="14.214981" strokeWidth="1.0"
-            autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
-            <strokeColor>#404040</strokeColor>
-            <textColor>#404040</textColor>
-            <font>Arial-plain-11</font>
-            <metadata-list category-list-size="1" other-list-size="0"
-                ontology-list-size="0" RCategoryListSize="0">
-                <ontology-list-string></ontology-list-string>
-                <metadata xsi:type="vue-metadata-element">
-                    <value></value>
-                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                    <type>1</type>
-                </metadata>
-            </metadata-list>
-            <URIString>http://vue.tufts.edu/rdf/resource/f9c3bcff0a80000101d1d2b86e85312f</URIString>
-            <point1 x="279.29578" y="22.5"/>
-            <point2 x="293.84277" y="35.71498"/>
-            <ID1 xsi:type="node">424</ID1>
-            <ID2 xsi:type="node">427</ID2>
-        </child>
-        <child ID="432" created="1254026596948" x="315.4783"
-            y="57.214966" width="11.938293" height="13.0"
-            strokeWidth="1.0" autoSized="false" controlCount="0"
-            arrowState="2" xsi:type="link">
-            <strokeColor>#404040</strokeColor>
-            <textColor>#404040</textColor>
-            <font>Arial-plain-11</font>
-            <metadata-list category-list-size="1" other-list-size="0"
-                ontology-list-size="0" RCategoryListSize="0">
-                <ontology-list-string></ontology-list-string>
-                <metadata xsi:type="vue-metadata-element">
-                    <value></value>
-                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                    <type>1</type>
-                </metadata>
-            </metadata-list>
-            <URIString>http://vue.tufts.edu/rdf/resource/f9cff34e0a80000101d1d2b8d1c1c61b</URIString>
-            <point1 x="315.9783" y="57.714966"/>
-            <point2 x="326.9166" y="69.714966"/>
-            <ID1 xsi:type="node">427</ID1>
-            <ID2 xsi:type="node">431</ID2>
-        </child>
-        <child ID="435" created="1254026684328" x="362.1973"
-            y="56.761574" width="69.92401" height="13.810013"
-            strokeWidth="1.0" autoSized="false" controlCount="0"
-            arrowState="2" xsi:type="link">
-            <strokeColor>#404040</strokeColor>
-            <textColor>#404040</textColor>
-            <font>Arial-plain-11</font>
-            <metadata-list category-list-size="1" other-list-size="0"
-                ontology-list-size="0" RCategoryListSize="0">
-                <ontology-list-string></ontology-list-string>
-                <metadata xsi:type="vue-metadata-element">
-                    <value></value>
-                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                    <type>1</type>
-                </metadata>
-            </metadata-list>
-            <URIString>http://vue.tufts.edu/rdf/resource/f9d0c2ec0a80000101d1d2b8091d7acc</URIString>
-            <point1 x="362.6973" y="57.261574"/>
-            <point2 x="431.6213" y="70.07159"/>
-            <ID1 xsi:type="node">427</ID1>
-            <ID2 xsi:type="node">434</ID2>
-        </child>
-        <child ID="438" created="1254026789057" x="183.1337"
-            y="56.825546" width="66.88896" height="13.38942"
-            strokeWidth="1.0" autoSized="false" controlCount="0"
-            arrowState="2" xsi:type="link">
-            <strokeColor>#404040</strokeColor>
-            <textColor>#404040</textColor>
-            <font>Arial-plain-11</font>
-            <metadata-list category-list-size="1" other-list-size="0"
-                ontology-list-size="0" RCategoryListSize="0">
-                <ontology-list-string></ontology-list-string>
-                <metadata xsi:type="vue-metadata-element">
-                    <value></value>
-                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                    <type>1</type>
-                </metadata>
-            </metadata-list>
-            <URIString>http://vue.tufts.edu/rdf/resource/f9d2bcb30a80000101d1d2b855ebebfa</URIString>
-            <point1 x="249.52267" y="57.325546"/>
-            <point2 x="183.63371" y="69.714966"/>
-            <ID1 xsi:type="node">427</ID1>
-            <ID2 xsi:type="node">437</ID2>
-        </child>
-        <child ID="521" created="1254061371681" x="160.49887"
-            y="91.214966" width="127.94559" height="29.498657"
-            strokeWidth="1.0" autoSized="false" controlCount="0"
-            arrowState="2" xsi:type="link">
-            <strokeColor>#404040</strokeColor>
-            <textColor>#404040</textColor>
-            <font>Arial-plain-11</font>
-            <metadata-list category-list-size="1" other-list-size="0"
-                ontology-list-size="0" RCategoryListSize="0">
-                <ontology-list-string></ontology-list-string>
-                <metadata xsi:type="vue-metadata-element">
-                    <value></value>
-                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                    <type>1</type>
-                </metadata>
-            </metadata-list>
-            <URIString>http://vue.tufts.edu/rdf/resource/fbe331e80a80000173a0a5f339e55325</URIString>
-            <point1 x="287.94446" y="91.714966"/>
-            <point2 x="160.99887" y="120.21362"/>
-            <ID1 xsi:type="node">431</ID1>
-            <ID2 xsi:type="node">520</ID2>
-        </child>
-        <child ID="525" created="1254061403950" x="138.39963"
-            y="91.214966" width="304.58856" height="72.972046"
-            strokeWidth="1.0" autoSized="false" controlCount="0"
-            arrowState="2" xsi:type="link">
-            <strokeColor>#404040</strokeColor>
-            <textColor>#404040</textColor>
-            <font>Arial-plain-11</font>
-            <metadata-list category-list-size="1" other-list-size="0"
-                ontology-list-size="0" RCategoryListSize="0">
-                <ontology-list-string></ontology-list-string>
-                <metadata xsi:type="vue-metadata-element">
-                    <value></value>
-                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                    <type>1</type>
-                </metadata>
-            </metadata-list>
-            <URIString>http://vue.tufts.edu/rdf/resource/fbe331ea0a80000173a0a5f3a53b70e7</URIString>
-            <point1 x="442.4882" y="91.714966"/>
-            <point2 x="138.89964" y="163.68701"/>
-            <ID1 xsi:type="node">434</ID1>
-            <ID2 xsi:type="node">524</ID2>
-        </child>
-        <child ID="450" created="1254027259548" x="458.6347" y="22.0"
-            width="33.480835" height="15.214966" strokeWidth="1.0"
-            autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
-            <strokeColor>#404040</strokeColor>
-            <textColor>#404040</textColor>
-            <font>Arial-plain-11</font>
-            <metadata-list category-list-size="1" other-list-size="0"
-                ontology-list-size="0" RCategoryListSize="0">
-                <ontology-list-string></ontology-list-string>
-                <metadata xsi:type="vue-metadata-element">
-                    <value></value>
-                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                    <type>1</type>
-                </metadata>
-            </metadata-list>
-            <URIString>http://vue.tufts.edu/rdf/resource/f9d98d550a80000101d1d2b835e18d51</URIString>
-            <point1 x="491.61554" y="22.5"/>
-            <point2 x="459.1347" y="36.714966"/>
-            <ID1 xsi:type="node">442</ID1>
-            <ID2 xsi:type="node">445</ID2>
-        </child>
-        <child ID="523" created="1254061392642" x="113.816315"
-            y="58.214966" width="283.3673" height="84.23535"
-            strokeWidth="1.0" autoSized="false" controlCount="0"
-            arrowState="2" xsi:type="link">
-            <strokeColor>#404040</strokeColor>
-            <textColor>#404040</textColor>
-            <font>Arial-plain-11</font>
-            <metadata-list category-list-size="1" other-list-size="0"
-                ontology-list-size="0" RCategoryListSize="0">
-                <ontology-list-string></ontology-list-string>
-                <metadata xsi:type="vue-metadata-element">
-                    <value></value>
-                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                    <type>1</type>
-                </metadata>
-            </metadata-list>
-            <URIString>http://vue.tufts.edu/rdf/resource/fbe331e90a80000173a0a5f3b13cbbab</URIString>
-            <point1 x="396.68362" y="58.714966"/>
-            <point2 x="114.31633" y="141.95032"/>
-            <ID1 xsi:type="node">445</ID1>
-            <ID2 xsi:type="node">522</ID2>
-        </child>
-        <child ID="458" created="1254027542683" x="117.02098" y="22.0"
-            width="20.155716" height="15.214973" strokeWidth="1.0"
-            autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
-            <strokeColor>#404040</strokeColor>
-            <textColor>#404040</textColor>
-            <font>Arial-plain-11</font>
-            <metadata-list category-list-size="1" other-list-size="0"
-                ontology-list-size="0" RCategoryListSize="0">
-                <ontology-list-string></ontology-list-string>
-                <metadata xsi:type="vue-metadata-element">
-                    <value></value>
-                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                    <type>1</type>
-                </metadata>
-            </metadata-list>
-            <URIString>http://vue.tufts.edu/rdf/resource/f9ddcacd0a80000101d1d2b8a42722d3</URIString>
-            <point1 x="117.52098" y="22.5"/>
-            <point2 x="136.6767" y="36.714973"/>
-            <ID1 xsi:type="node">452</ID1>
-            <ID2 xsi:type="node">455</ID2>
-        </child>
-        <child ID="519" created="1254061359359" x="111.54895"
-            y="58.214966" width="31.9021" height="40.761963"
-            strokeWidth="1.0" autoSized="false" controlCount="0"
-            arrowState="2" xsi:type="link">
-            <strokeColor>#404040</strokeColor>
-            <textColor>#404040</textColor>
-            <font>Arial-plain-11</font>
-            <metadata-list category-list-size="1" other-list-size="0"
-                ontology-list-size="0" RCategoryListSize="0">
-                <ontology-list-string></ontology-list-string>
-                <metadata xsi:type="vue-metadata-element">
-                    <value></value>
-                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                    <type>1</type>
-                </metadata>
-            </metadata-list>
-            <URIString>http://vue.tufts.edu/rdf/resource/fbe331e80a80000173a0a5f31663b376</URIString>
-            <point1 x="142.95105" y="58.714966"/>
-            <point2 x="112.04895" y="98.47693"/>
-            <ID1 xsi:type="node">455</ID1>
-            <ID2 xsi:type="node">518</ID2>
-        </child>
-    </child>
-    <child ID="456" layerID="1" created="1254027521762" x="-63.019012"
-        y="657.0" width="382.87122" height="666.23804" strokeWidth="1.0"
-        autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/f9ddcacd0a80000101d1d2b851feb6f2</URIString>
-        <point1 x="-62.51901" y="657.5"/>
-        <point2 x="319.3522" y="1322.738"/>
-        <ID1 xsi:type="node">451</ID1>
-        <ID2 xsi:type="node">455</ID2>
-    </child>
-    <child ID="454" layerID="1" created="1254027456331" x="278.76648"
-        y="802.7381" width="106.54114" height="484.28503"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/f9ddcacb0a80000101d1d2b80fd329af</URIString>
-        <point1 x="384.80762" y="803.23804"/>
-        <point2 x="279.26648" y="1286.5231"/>
-        <ID1 xsi:type="node">163</ID1>
-        <ID2 xsi:type="node">452</ID2>
-    </child>
-    <child ID="453" layerID="1" created="1254027451148" x="245.51743"
-        y="898.23804" width="30.995956" height="388.78516"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/f9ddcacb0a80000101d1d2b8202be895</URIString>
-        <point1 x="246.01744" y="898.73804"/>
-        <point2 x="276.0134" y="1286.5232"/>
-        <ID1 xsi:type="node">420</ID1>
-        <ID2 xsi:type="node">452</ID2>
-    </child>
-    <child ID="446" layerID="1" created="1254027073742" x="-88.8136"
-        y="604.9636" width="686.96045" height="718.2744"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/f9d6c7a40a80000101d1d2b893efe499</URIString>
-        <point1 x="-88.3136" y="605.4636"/>
-        <point2 x="597.64685" y="1322.738"/>
-        <ID1 xsi:type="node">441</ID1>
-        <ID2 xsi:type="node">445</ID2>
-    </child>
-    <child ID="444" layerID="1" created="1254026948217" x="402.14313"
-        y="802.73804" width="282.8584" height="484.28522"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/f9d6c7a40a80000101d1d2b8cfed3f6d</URIString>
-        <point1 x="402.64313" y="803.238"/>
-        <point2 x="684.5015" y="1286.5232"/>
-        <ID1 xsi:type="node">163</ID1>
-        <ID2 xsi:type="node">442</ID2>
-    </child>
-    <child ID="443" layerID="1" created="1254026925163" x="256.63202"
-        y="898.2381" width="422.8194" height="388.78503"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/f9d6c7a40a80000101d1d2b82df23149</URIString>
-        <point1 x="257.13202" y="898.73804"/>
-        <point2 x="678.9514" y="1286.5231"/>
-        <ID1 xsi:type="node">420</ID1>
-        <ID2 xsi:type="node">442</ID2>
-    </child>
-    <child ID="440" layerID="1" created="1254026813048" x="301.83514"
-        y="160.23804" width="330.67316" height="1196.0"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/f9d2bcb40a80000101d1d2b820361354</URIString>
-        <point1 x="632.0083" y="160.73804"/>
-        <point2 x="302.33514" y="1355.738"/>
-        <ID1 xsi:type="node">439</ID1>
-        <ID2 xsi:type="node">437</ID2>
-    </child>
-    <child ID="562" layerID="1" created="1254065238346" x="431.32776"
-        y="1034.238" width="224.56546" height="322.0" strokeWidth="1.0"
-        autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fc1d03ed0a80000173a0a5f336cb4819</URIString>
-        <point1 x="655.3932" y="1355.738"/>
-        <point2 x="431.82773" y="1034.738"/>
-        <ID1 xsi:type="node">434</ID1>
-        <ID2 xsi:type="node">255</ID2>
-    </child>
-    <child ID="436" layerID="1" created="1254026689245" x="499.18146"
-        y="463.23804" width="162.38272" height="892.99976"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/f9d0c2ed0a80000101d1d2b87463de30</URIString>
-        <point1 x="499.68143" y="463.73804"/>
-        <point2 x="661.06415" y="1355.7378"/>
-        <ID1 xsi:type="node">14</ID1>
-        <ID2 xsi:type="node">434</ID2>
-    </child>
-    <child ID="561" layerID="1" created="1254065221514" x="426.4549"
-        y="1034.238" width="82.36685" height="322.0" strokeWidth="1.0"
-        autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fc1d03ec0a80000173a0a5f3b0cf30a7</URIString>
-        <point1 x="508.32172" y="1355.738"/>
-        <point2 x="426.95486" y="1034.738"/>
-        <ID1 xsi:type="node">431</ID1>
-        <ID2 xsi:type="node">255</ID2>
-    </child>
-    <child ID="433" layerID="1" created="1254026629261" x="511.3007"
-        y="376.13184" width="62.47699" height="980.10645"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/f9cff34f0a80000101d1d2b8daaaf8f3</URIString>
-        <point1 x="573.27765" y="376.63184"/>
-        <point2 x="511.80066" y="1355.7383"/>
-        <ID1 xsi:type="node">8</ID1>
-        <ID2 xsi:type="node">431</ID2>
-    </child>
-    <child ID="428" layerID="1" created="1254025749603" x="-101.218414"
-        y="631.2822" width="572.72156" height="690.9558"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/f9c2d1280a80000101d1d2b8264e89b9</URIString>
-        <point1 x="-100.71841" y="631.7822"/>
-        <point2 x="471.00314" y="1321.738"/>
-        <ID1 xsi:type="node">418</ID1>
-        <ID2 xsi:type="node">427</ID2>
-    </child>
-    <child ID="426" layerID="1" created="1254025671822" x="249.93289"
-        y="898.23804" width="186.65436" height="388.7849"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/f9c154d80a80000101d1d2b80c597d16</URIString>
-        <point1 x="250.43289" y="898.73804"/>
-        <point2 x="436.08725" y="1286.523"/>
-        <ID1 xsi:type="node">420</ID1>
-        <ID2 xsi:type="node">424</ID2>
-    </child>
-    <child ID="425" layerID="1" created="1254025654618" x="391.39307"
-        y="802.73804" width="49.359833" height="484.28516"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/f9c154d80a80000101d1d2b8493d4dea</URIString>
-        <point1 x="391.89307" y="803.23804"/>
-        <point2 x="440.2529" y="1286.5232"/>
-        <ID1 xsi:type="node">163</ID1>
-        <ID2 xsi:type="node">424</ID2>
-    </child>
-    <child ID="423" layerID="1" created="1254025534987" x="428.7967"
-        y="1034.238" width="118.42584" height="252.78516"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/f9bfb6310a80000101d1d2b822858d44</URIString>
-        <point1 x="429.2967" y="1034.738"/>
-        <point2 x="546.72253" y="1286.5232"/>
-        <ID1 xsi:type="node">255</ID1>
-        <ID2 xsi:type="node">419</ID2>
-    </child>
     <child ID="790" label="Rectangle2D" layerID="1"
         created="1254103318796" x="644.73364" y="910.73804" width="91.0"
         height="22.0" strokeWidth="1.0" autoSized="true" xsi:type="node">
@@ -14872,28 +12374,6 @@
         <point2 x="1242.305" y="104.70337"/>
         <ID1 xsi:type="node">107</ID1>
         <ID2 xsi:type="node">105</ID2>
-    </child>
-    <child ID="564" layerID="1" created="1254067038046" x="433.42578"
-        y="103.212036" width="807.4817" height="910.026"
-        strokeWidth="1.0" autoSized="false" controlCount="0"
-        arrowState="2" xsi:type="link">
-        <strokeColor>#404040</strokeColor>
-        <textColor>#404040</textColor>
-        <font>Arial-plain-11</font>
-        <metadata-list category-list-size="1" other-list-size="0"
-            ontology-list-size="0" RCategoryListSize="0">
-            <ontology-list-string></ontology-list-string>
-            <metadata xsi:type="vue-metadata-element">
-                <value></value>
-                <key>http://vue.tufts.edu/vue.rdfs#none</key>
-                <type>1</type>
-            </metadata>
-        </metadata-list>
-        <URIString>http://vue.tufts.edu/rdf/resource/fc38982e0a80000173a0a5f3ef9e74fb</URIString>
-        <point1 x="1240.4075" y="103.712036"/>
-        <point2 x="433.92575" y="1012.73804"/>
-        <ID1 xsi:type="node">563</ID1>
-        <ID2 xsi:type="node">255</ID2>
     </child>
     <child ID="106" layerID="1" created="1254015290100" x="1238.5955"
         y="57.229736" width="15.642334" height="47.973633"
@@ -18289,6 +15769,821 @@
         <ID1 xsi:type="node">90</ID1>
         <ID2 xsi:type="node">212</ID2>
     </child>
+    <child ID="1053" layerID="1" created="1254361417838" x="184.1666"
+        y="1347.0231" width="606.75024" height="186.18701"
+        strokeWidth="0.0" autoSized="false" xsi:type="group">
+        <strokeColor>#404040</strokeColor>
+        <textColor>#000000</textColor>
+        <font>SansSerif-plain-14</font>
+        <metadata-list category-list-size="1" other-list-size="0"
+            ontology-list-size="0" RCategoryListSize="0">
+            <ontology-list-string></ontology-list-string>
+            <metadata xsi:type="vue-metadata-element">
+                <value></value>
+                <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                <type>1</type>
+            </metadata>
+        </metadata-list>
+        <URIString>http://vue.tufts.edu/rdf/resource/0dc4d1fa0a800001443ad5452dcaf8e0</URIString>
+        <child ID="419" label="SceneQuery" created="1254025431272"
+            x="334.68607" y="0.5" width="86.0" height="22.0"
+            strokeWidth="1.0" autoSized="true" xsi:type="node">
+            <fillColor>#F2AE45</fillColor>
+            <strokeColor>#776D6D</strokeColor>
+            <textColor>#000000</textColor>
+            <font>Arial-plain-12</font>
+            <metadata-list category-list-size="1" other-list-size="0"
+                ontology-list-size="0" RCategoryListSize="0">
+                <ontology-list-string></ontology-list-string>
+                <metadata xsi:type="vue-metadata-element">
+                    <value></value>
+                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                    <type>1</type>
+                </metadata>
+            </metadata-list>
+            <URIString>http://vue.tufts.edu/rdf/resource/f9bfb62f0a80000101d1d2b8e8e9e8a1</URIString>
+            <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
+        </child>
+        <child ID="424" label="SceneQueryResult" created="1254025638817"
+            x="204.68698" y="0.5" width="125.0" height="22.0"
+            strokeWidth="1.0" autoSized="true" xsi:type="node">
+            <fillColor>#F2AE45</fillColor>
+            <strokeColor>#776D6D</strokeColor>
+            <textColor>#000000</textColor>
+            <font>Arial-plain-12</font>
+            <metadata-list category-list-size="1" other-list-size="0"
+                ontology-list-size="0" RCategoryListSize="0">
+                <ontology-list-string></ontology-list-string>
+                <metadata xsi:type="vue-metadata-element">
+                    <value></value>
+                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                    <type>1</type>
+                </metadata>
+            </metadata-list>
+            <URIString>http://vue.tufts.edu/rdf/resource/f9c154d80a80000101d1d2b896716847</URIString>
+            <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
+        </child>
+        <child ID="427" label="RegionSceneQuery" created="1254025749599"
+            x="241.45157" y="35.714966" width="129.0" height="22.0"
+            strokeWidth="1.0" autoSized="true" xsi:type="node">
+            <fillColor>#F2AE45</fillColor>
+            <strokeColor>#776D6D</strokeColor>
+            <textColor>#000000</textColor>
+            <font>Arial-plain-12</font>
+            <metadata-list category-list-size="1" other-list-size="0"
+                ontology-list-size="0" RCategoryListSize="0">
+                <ontology-list-string></ontology-list-string>
+                <metadata xsi:type="vue-metadata-element">
+                    <value></value>
+                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                    <type>1</type>
+                </metadata>
+            </metadata-list>
+            <URIString>http://vue.tufts.edu/rdf/resource/f9c2d1280a80000101d1d2b83d84ed1e</URIString>
+            <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
+        </child>
+        <child ID="431" label="AxisAlignedBoxSceneQuery"
+            created="1254026513556" x="247.94339" y="69.714966"
+            width="178.0" height="22.0" strokeWidth="1.0"
+            autoSized="true" xsi:type="node">
+            <fillColor>#F2AE45</fillColor>
+            <strokeColor>#776D6D</strokeColor>
+            <textColor>#000000</textColor>
+            <font>Arial-plain-12</font>
+            <metadata-list category-list-size="1" other-list-size="0"
+                ontology-list-size="0" RCategoryListSize="0">
+                <ontology-list-string></ontology-list-string>
+                <metadata xsi:type="vue-metadata-element">
+                    <value></value>
+                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                    <type>1</type>
+                </metadata>
+            </metadata-list>
+            <URIString>http://vue.tufts.edu/rdf/resource/f9cff34e0a80000101d1d2b868e764c0</URIString>
+            <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
+        </child>
+        <child ID="434" label="SphereSceneQuery" created="1254026656859"
+            x="423.38773" y="69.714966" width="131.0" height="22.0"
+            strokeWidth="1.0" autoSized="true" xsi:type="node">
+            <fillColor>#F2AE45</fillColor>
+            <strokeColor>#776D6D</strokeColor>
+            <textColor>#000000</textColor>
+            <font>Arial-plain-12</font>
+            <metadata-list category-list-size="1" other-list-size="0"
+                ontology-list-size="0" RCategoryListSize="0">
+                <ontology-list-string></ontology-list-string>
+                <metadata xsi:type="vue-metadata-element">
+                    <value></value>
+                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                    <type>1</type>
+                </metadata>
+            </metadata-list>
+            <URIString>http://vue.tufts.edu/rdf/resource/f9d0c2ec0a80000101d1d2b89e472b9f</URIString>
+            <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
+        </child>
+        <child ID="437" label="PlaneBoundedVolumeListSceneQuery"
+            created="1254026730045" x="3.1338806" y="69.714966"
+            width="244.0" height="22.0" strokeWidth="1.0"
+            autoSized="true" xsi:type="node">
+            <fillColor>#F2AE45</fillColor>
+            <strokeColor>#776D6D</strokeColor>
+            <textColor>#000000</textColor>
+            <font>Arial-plain-12</font>
+            <metadata-list category-list-size="1" other-list-size="0"
+                ontology-list-size="0" RCategoryListSize="0">
+                <ontology-list-string></ontology-list-string>
+                <metadata xsi:type="vue-metadata-element">
+                    <value></value>
+                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                    <type>1</type>
+                </metadata>
+            </metadata-list>
+            <URIString>http://vue.tufts.edu/rdf/resource/f9d2bcb30a80000101d1d2b82662ba49</URIString>
+            <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
+        </child>
+        <child ID="442" label="RaySceneQueryResultEntry"
+            created="1254026890792" x="427.25027" y="0.5" width="179.0"
+            height="22.0" strokeWidth="1.0" autoSized="true" xsi:type="node">
+            <fillColor>#F2AE45</fillColor>
+            <strokeColor>#776D6D</strokeColor>
+            <textColor>#000000</textColor>
+            <font>Arial-plain-12</font>
+            <metadata-list category-list-size="1" other-list-size="0"
+                ontology-list-size="0" RCategoryListSize="0">
+                <ontology-list-string></ontology-list-string>
+                <metadata xsi:type="vue-metadata-element">
+                    <value></value>
+                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                    <type>1</type>
+                </metadata>
+            </metadata-list>
+            <URIString>http://vue.tufts.edu/rdf/resource/f9d6c7a40a80000101d1d2b844fc45dd</URIString>
+            <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
+        </child>
+        <child ID="445" label="RaySceneQuery" created="1254027073738"
+            x="380.00003" y="36.714966" width="108.0" height="22.0"
+            strokeWidth="1.0" autoSized="true" xsi:type="node">
+            <fillColor>#F2AE45</fillColor>
+            <strokeColor>#776D6D</strokeColor>
+            <textColor>#000000</textColor>
+            <font>Arial-plain-12</font>
+            <metadata-list category-list-size="1" other-list-size="0"
+                ontology-list-size="0" RCategoryListSize="0">
+                <ontology-list-string></ontology-list-string>
+                <metadata xsi:type="vue-metadata-element">
+                    <value></value>
+                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                    <type>1</type>
+                </metadata>
+            </metadata-list>
+            <URIString>http://vue.tufts.edu/rdf/resource/f9d6c7a40a80000101d1d2b8d6f28fad</URIString>
+            <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
+        </child>
+        <child ID="452" label="IntersectionSceneQueryResult"
+            created="1254027403631" x="2.6976624" y="0.5" width="200.0"
+            height="22.0" strokeWidth="1.0" autoSized="true" xsi:type="node">
+            <fillColor>#F2AE45</fillColor>
+            <strokeColor>#776D6D</strokeColor>
+            <textColor>#000000</textColor>
+            <font>Arial-plain-12</font>
+            <metadata-list category-list-size="1" other-list-size="0"
+                ontology-list-size="0" RCategoryListSize="0">
+                <ontology-list-string></ontology-list-string>
+                <metadata xsi:type="vue-metadata-element">
+                    <value></value>
+                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                    <type>1</type>
+                </metadata>
+            </metadata-list>
+            <URIString>http://vue.tufts.edu/rdf/resource/f9ddcaca0a80000101d1d2b845bae491</URIString>
+            <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
+        </child>
+        <child ID="455" label="IntersectionSceneQuery"
+            created="1254027478100" x="71.0" y="36.714966" width="161.0"
+            height="22.0" strokeWidth="1.0" autoSized="true" xsi:type="node">
+            <fillColor>#F2AE45</fillColor>
+            <strokeColor>#776D6D</strokeColor>
+            <textColor>#000000</textColor>
+            <font>Arial-plain-12</font>
+            <metadata-list category-list-size="1" other-list-size="0"
+                ontology-list-size="0" RCategoryListSize="0">
+                <ontology-list-string></ontology-list-string>
+                <metadata xsi:type="vue-metadata-element">
+                    <value></value>
+                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                    <type>1</type>
+                </metadata>
+            </metadata-list>
+            <URIString>http://vue.tufts.edu/rdf/resource/f9ddcacc0a80000101d1d2b85de32346</URIString>
+            <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
+        </child>
+        <child ID="518" label="DefaultIntersectionSceneQuery"
+            created="1254061359352" x="0.5" y="98.47693" width="206.0"
+            height="22.0" strokeWidth="1.0" autoSized="true" xsi:type="node">
+            <fillColor>#F2AE45</fillColor>
+            <strokeColor>#776D6D</strokeColor>
+            <textColor>#000000</textColor>
+            <font>Arial-plain-12</font>
+            <metadata-list category-list-size="0" other-list-size="0"
+                ontology-list-size="0" RCategoryListSize="0">
+                <ontology-list-string></ontology-list-string>
+            </metadata-list>
+            <URIString>http://vue.tufts.edu/rdf/resource/fbe331e70a80000173a0a5f3b3eb0525</URIString>
+            <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
+        </child>
+        <child ID="520" label="DefaultAxisAlignedBoxSceneQuery"
+            created="1254061371626" x="0.5" y="120.21362" width="223.0"
+            height="22.0" strokeWidth="1.0" autoSized="true" xsi:type="node">
+            <fillColor>#F2AE45</fillColor>
+            <strokeColor>#776D6D</strokeColor>
+            <textColor>#000000</textColor>
+            <font>Arial-plain-12</font>
+            <metadata-list category-list-size="0" other-list-size="0"
+                ontology-list-size="0" RCategoryListSize="0">
+                <ontology-list-string></ontology-list-string>
+            </metadata-list>
+            <URIString>http://vue.tufts.edu/rdf/resource/fbe331e80a80000173a0a5f300856af2</URIString>
+            <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
+        </child>
+        <child ID="522" label="DefaultRaySceneQuery"
+            created="1254061392638" x="0.5" y="141.95032" width="153.0"
+            height="22.0" strokeWidth="1.0" autoSized="true" xsi:type="node">
+            <fillColor>#F2AE45</fillColor>
+            <strokeColor>#776D6D</strokeColor>
+            <textColor>#000000</textColor>
+            <font>Arial-plain-12</font>
+            <metadata-list category-list-size="0" other-list-size="0"
+                ontology-list-size="0" RCategoryListSize="0">
+                <ontology-list-string></ontology-list-string>
+            </metadata-list>
+            <URIString>http://vue.tufts.edu/rdf/resource/fbe331e90a80000173a0a5f3d336810d</URIString>
+            <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
+        </child>
+        <child ID="524" label="DefaultSpehereSceneQuery"
+            created="1254061403946" x="0.5" y="163.68701" width="184.0"
+            height="22.0" strokeWidth="1.0" autoSized="true" xsi:type="node">
+            <fillColor>#F2AE45</fillColor>
+            <strokeColor>#776D6D</strokeColor>
+            <textColor>#000000</textColor>
+            <font>Arial-plain-12</font>
+            <metadata-list category-list-size="1" other-list-size="0"
+                ontology-list-size="0" RCategoryListSize="0">
+                <ontology-list-string></ontology-list-string>
+                <metadata xsi:type="vue-metadata-element">
+                    <value></value>
+                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                    <type>1</type>
+                </metadata>
+            </metadata-list>
+            <URIString>http://vue.tufts.edu/rdf/resource/fbe331e90a80000173a0a5f3921d9ada</URIString>
+            <shape arcwidth="20.0" archeight="20.0" xsi:type="roundRect"/>
+        </child>
+        <child ID="429" created="1254025775456" x="327.85907" y="22.0"
+            width="27.919495" height="14.214966" strokeWidth="1.0"
+            autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
+            <strokeColor>#404040</strokeColor>
+            <textColor>#404040</textColor>
+            <font>Arial-plain-11</font>
+            <metadata-list category-list-size="1" other-list-size="0"
+                ontology-list-size="0" RCategoryListSize="0">
+                <ontology-list-string></ontology-list-string>
+                <metadata xsi:type="vue-metadata-element">
+                    <value></value>
+                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                    <type>1</type>
+                </metadata>
+            </metadata-list>
+            <URIString>http://vue.tufts.edu/rdf/resource/f9c2d1290a80000101d1d2b8118f8965</URIString>
+            <point1 x="355.27856" y="22.5"/>
+            <point2 x="328.35907" y="35.714966"/>
+            <ID1 xsi:type="node">419</ID1>
+            <ID2 xsi:type="node">427</ID2>
+        </child>
+        <child ID="449" created="1254027213020" x="394.29095"
+            y="21.999985" width="23.104156" height="15.214981"
+            strokeWidth="1.0" autoSized="false" controlCount="0"
+            arrowState="2" xsi:type="link">
+            <strokeColor>#404040</strokeColor>
+            <textColor>#404040</textColor>
+            <font>Arial-plain-11</font>
+            <metadata-list category-list-size="1" other-list-size="0"
+                ontology-list-size="0" RCategoryListSize="0">
+                <ontology-list-string></ontology-list-string>
+                <metadata xsi:type="vue-metadata-element">
+                    <value></value>
+                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                    <type>1</type>
+                </metadata>
+            </metadata-list>
+            <URIString>http://vue.tufts.edu/rdf/resource/f9d98d540a80000101d1d2b8de002939</URIString>
+            <point1 x="394.79095" y="22.499985"/>
+            <point2 x="416.8951" y="36.714966"/>
+            <ID1 xsi:type="node">419</ID1>
+            <ID2 xsi:type="node">445</ID2>
+        </child>
+        <child ID="457" created="1254027532577" x="219.70215"
+            y="17.577114" width="117.40558" height="19.637852"
+            strokeWidth="1.0" autoSized="false" controlCount="0"
+            arrowState="2" xsi:type="link">
+            <strokeColor>#404040</strokeColor>
+            <textColor>#404040</textColor>
+            <font>Arial-plain-11</font>
+            <metadata-list category-list-size="1" other-list-size="0"
+                ontology-list-size="0" RCategoryListSize="0">
+                <ontology-list-string></ontology-list-string>
+                <metadata xsi:type="vue-metadata-element">
+                    <value></value>
+                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                    <type>1</type>
+                </metadata>
+            </metadata-list>
+            <URIString>http://vue.tufts.edu/rdf/resource/f9ddcacd0a80000101d1d2b8ecb15917</URIString>
+            <point1 x="336.60773" y="18.077114"/>
+            <point2 x="220.20215" y="36.714966"/>
+            <ID1 xsi:type="node">419</ID1>
+            <ID2 xsi:type="node">455</ID2>
+        </child>
+        <child ID="430" created="1254025835733" x="278.79578"
+            y="21.999985" width="15.547028" height="14.214981"
+            strokeWidth="1.0" autoSized="false" controlCount="0"
+            arrowState="2" xsi:type="link">
+            <strokeColor>#404040</strokeColor>
+            <textColor>#404040</textColor>
+            <font>Arial-plain-11</font>
+            <metadata-list category-list-size="1" other-list-size="0"
+                ontology-list-size="0" RCategoryListSize="0">
+                <ontology-list-string></ontology-list-string>
+                <metadata xsi:type="vue-metadata-element">
+                    <value></value>
+                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                    <type>1</type>
+                </metadata>
+            </metadata-list>
+            <URIString>http://vue.tufts.edu/rdf/resource/f9c3bcff0a80000101d1d2b86e85312f</URIString>
+            <point1 x="279.29575" y="22.499985"/>
+            <point2 x="293.84277" y="35.714966"/>
+            <ID1 xsi:type="node">424</ID1>
+            <ID2 xsi:type="node">427</ID2>
+        </child>
+        <child ID="432" created="1254026596948" x="315.47833"
+            y="57.214966" width="11.938293" height="13.0"
+            strokeWidth="1.0" autoSized="false" controlCount="0"
+            arrowState="2" xsi:type="link">
+            <strokeColor>#404040</strokeColor>
+            <textColor>#404040</textColor>
+            <font>Arial-plain-11</font>
+            <metadata-list category-list-size="1" other-list-size="0"
+                ontology-list-size="0" RCategoryListSize="0">
+                <ontology-list-string></ontology-list-string>
+                <metadata xsi:type="vue-metadata-element">
+                    <value></value>
+                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                    <type>1</type>
+                </metadata>
+            </metadata-list>
+            <URIString>http://vue.tufts.edu/rdf/resource/f9cff34e0a80000101d1d2b8d1c1c61b</URIString>
+            <point1 x="315.97833" y="57.714966"/>
+            <point2 x="326.91663" y="69.714966"/>
+            <ID1 xsi:type="node">427</ID1>
+            <ID2 xsi:type="node">431</ID2>
+        </child>
+        <child ID="435" created="1254026684328" x="362.19733"
+            y="56.761566" width="69.92398" height="13.810009"
+            strokeWidth="1.0" autoSized="false" controlCount="0"
+            arrowState="2" xsi:type="link">
+            <strokeColor>#404040</strokeColor>
+            <textColor>#404040</textColor>
+            <font>Arial-plain-11</font>
+            <metadata-list category-list-size="1" other-list-size="0"
+                ontology-list-size="0" RCategoryListSize="0">
+                <ontology-list-string></ontology-list-string>
+                <metadata xsi:type="vue-metadata-element">
+                    <value></value>
+                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                    <type>1</type>
+                </metadata>
+            </metadata-list>
+            <URIString>http://vue.tufts.edu/rdf/resource/f9d0c2ec0a80000101d1d2b8091d7acc</URIString>
+            <point1 x="362.6973" y="57.26157"/>
+            <point2 x="431.62128" y="70.07158"/>
+            <ID1 xsi:type="node">427</ID1>
+            <ID2 xsi:type="node">434</ID2>
+        </child>
+        <child ID="438" created="1254026789057" x="183.1337"
+            y="56.825546" width="66.88902" height="13.38942"
+            strokeWidth="1.0" autoSized="false" controlCount="0"
+            arrowState="2" xsi:type="link">
+            <strokeColor>#404040</strokeColor>
+            <textColor>#404040</textColor>
+            <font>Arial-plain-11</font>
+            <metadata-list category-list-size="1" other-list-size="0"
+                ontology-list-size="0" RCategoryListSize="0">
+                <ontology-list-string></ontology-list-string>
+                <metadata xsi:type="vue-metadata-element">
+                    <value></value>
+                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                    <type>1</type>
+                </metadata>
+            </metadata-list>
+            <URIString>http://vue.tufts.edu/rdf/resource/f9d2bcb30a80000101d1d2b855ebebfa</URIString>
+            <point1 x="249.52272" y="57.325546"/>
+            <point2 x="183.6337" y="69.714966"/>
+            <ID1 xsi:type="node">427</ID1>
+            <ID2 xsi:type="node">437</ID2>
+        </child>
+        <child ID="521" created="1254061371681" x="160.49884"
+            y="91.214966" width="127.94565" height="29.498657"
+            strokeWidth="1.0" autoSized="false" controlCount="0"
+            arrowState="2" xsi:type="link">
+            <strokeColor>#404040</strokeColor>
+            <textColor>#404040</textColor>
+            <font>Arial-plain-11</font>
+            <metadata-list category-list-size="1" other-list-size="0"
+                ontology-list-size="0" RCategoryListSize="0">
+                <ontology-list-string></ontology-list-string>
+                <metadata xsi:type="vue-metadata-element">
+                    <value></value>
+                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                    <type>1</type>
+                </metadata>
+            </metadata-list>
+            <URIString>http://vue.tufts.edu/rdf/resource/fbe331e80a80000173a0a5f339e55325</URIString>
+            <point1 x="287.9445" y="91.714966"/>
+            <point2 x="160.99884" y="120.21362"/>
+            <ID1 xsi:type="node">431</ID1>
+            <ID2 xsi:type="node">520</ID2>
+        </child>
+        <child ID="525" created="1254061403950" x="138.39966"
+            y="91.214966" width="304.5885" height="72.972046"
+            strokeWidth="1.0" autoSized="false" controlCount="0"
+            arrowState="2" xsi:type="link">
+            <strokeColor>#404040</strokeColor>
+            <textColor>#404040</textColor>
+            <font>Arial-plain-11</font>
+            <metadata-list category-list-size="1" other-list-size="0"
+                ontology-list-size="0" RCategoryListSize="0">
+                <ontology-list-string></ontology-list-string>
+                <metadata xsi:type="vue-metadata-element">
+                    <value></value>
+                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                    <type>1</type>
+                </metadata>
+            </metadata-list>
+            <URIString>http://vue.tufts.edu/rdf/resource/fbe331ea0a80000173a0a5f3a53b70e7</URIString>
+            <point1 x="442.48816" y="91.714966"/>
+            <point2 x="138.89964" y="163.68701"/>
+            <ID1 xsi:type="node">434</ID1>
+            <ID2 xsi:type="node">524</ID2>
+        </child>
+        <child ID="450" created="1254027259548" x="458.6347" y="22.0"
+            width="33.480804" height="15.214966" strokeWidth="1.0"
+            autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
+            <strokeColor>#404040</strokeColor>
+            <textColor>#404040</textColor>
+            <font>Arial-plain-11</font>
+            <metadata-list category-list-size="1" other-list-size="0"
+                ontology-list-size="0" RCategoryListSize="0">
+                <ontology-list-string></ontology-list-string>
+                <metadata xsi:type="vue-metadata-element">
+                    <value></value>
+                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                    <type>1</type>
+                </metadata>
+            </metadata-list>
+            <URIString>http://vue.tufts.edu/rdf/resource/f9d98d550a80000101d1d2b835e18d51</URIString>
+            <point1 x="491.61554" y="22.5"/>
+            <point2 x="459.13474" y="36.714966"/>
+            <ID1 xsi:type="node">442</ID1>
+            <ID2 xsi:type="node">445</ID2>
+        </child>
+        <child ID="523" created="1254061392642" x="113.816345"
+            y="58.214966" width="283.36734" height="84.23535"
+            strokeWidth="1.0" autoSized="false" controlCount="0"
+            arrowState="2" xsi:type="link">
+            <strokeColor>#404040</strokeColor>
+            <textColor>#404040</textColor>
+            <font>Arial-plain-11</font>
+            <metadata-list category-list-size="1" other-list-size="0"
+                ontology-list-size="0" RCategoryListSize="0">
+                <ontology-list-string></ontology-list-string>
+                <metadata xsi:type="vue-metadata-element">
+                    <value></value>
+                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                    <type>1</type>
+                </metadata>
+            </metadata-list>
+            <URIString>http://vue.tufts.edu/rdf/resource/fbe331e90a80000173a0a5f3b13cbbab</URIString>
+            <point1 x="396.6837" y="58.714966"/>
+            <point2 x="114.31635" y="141.95032"/>
+            <ID1 xsi:type="node">445</ID1>
+            <ID2 xsi:type="node">522</ID2>
+        </child>
+        <child ID="458" created="1254027542683" x="117.02098" y="22.0"
+            width="20.155716" height="15.214973" strokeWidth="1.0"
+            autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
+            <strokeColor>#404040</strokeColor>
+            <textColor>#404040</textColor>
+            <font>Arial-plain-11</font>
+            <metadata-list category-list-size="1" other-list-size="0"
+                ontology-list-size="0" RCategoryListSize="0">
+                <ontology-list-string></ontology-list-string>
+                <metadata xsi:type="vue-metadata-element">
+                    <value></value>
+                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                    <type>1</type>
+                </metadata>
+            </metadata-list>
+            <URIString>http://vue.tufts.edu/rdf/resource/f9ddcacd0a80000101d1d2b8a42722d3</URIString>
+            <point1 x="117.52098" y="22.5"/>
+            <point2 x="136.6767" y="36.714973"/>
+            <ID1 xsi:type="node">452</ID1>
+            <ID2 xsi:type="node">455</ID2>
+        </child>
+        <child ID="519" created="1254061359359" x="111.54895"
+            y="58.214966" width="31.9021" height="40.761963"
+            strokeWidth="1.0" autoSized="false" controlCount="0"
+            arrowState="2" xsi:type="link">
+            <strokeColor>#404040</strokeColor>
+            <textColor>#404040</textColor>
+            <font>Arial-plain-11</font>
+            <metadata-list category-list-size="1" other-list-size="0"
+                ontology-list-size="0" RCategoryListSize="0">
+                <ontology-list-string></ontology-list-string>
+                <metadata xsi:type="vue-metadata-element">
+                    <value></value>
+                    <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                    <type>1</type>
+                </metadata>
+            </metadata-list>
+            <URIString>http://vue.tufts.edu/rdf/resource/fbe331e80a80000173a0a5f31663b376</URIString>
+            <point1 x="142.95105" y="58.714966"/>
+            <point2 x="112.04895" y="98.47693"/>
+            <ID1 xsi:type="node">455</ID1>
+            <ID2 xsi:type="node">518</ID2>
+        </child>
+    </child>
+    <child ID="456" layerID="1" created="1254027521762" x="-63.38678"
+        y="657.0" width="393.60672" height="727.23804" strokeWidth="1.0"
+        autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
+        <strokeColor>#404040</strokeColor>
+        <textColor>#404040</textColor>
+        <font>Arial-plain-11</font>
+        <metadata-list category-list-size="1" other-list-size="0"
+            ontology-list-size="0" RCategoryListSize="0">
+            <ontology-list-string></ontology-list-string>
+            <metadata xsi:type="vue-metadata-element">
+                <value></value>
+                <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                <type>1</type>
+            </metadata>
+        </metadata-list>
+        <URIString>http://vue.tufts.edu/rdf/resource/f9ddcacd0a80000101d1d2b851feb6f2</URIString>
+        <point1 x="-62.886784" y="657.5"/>
+        <point2 x="329.71994" y="1383.738"/>
+        <ID1 xsi:type="node">451</ID1>
+        <ID2 xsi:type="node">455</ID2>
+    </child>
+    <child ID="453" layerID="1" created="1254027451148" x="245.64084"
+        y="898.23804" width="40.749146" height="449.78516"
+        strokeWidth="1.0" autoSized="false" controlCount="0"
+        arrowState="2" xsi:type="link">
+        <strokeColor>#404040</strokeColor>
+        <textColor>#404040</textColor>
+        <font>Arial-plain-11</font>
+        <metadata-list category-list-size="1" other-list-size="0"
+            ontology-list-size="0" RCategoryListSize="0">
+            <ontology-list-string></ontology-list-string>
+            <metadata xsi:type="vue-metadata-element">
+                <value></value>
+                <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                <type>1</type>
+            </metadata>
+        </metadata-list>
+        <URIString>http://vue.tufts.edu/rdf/resource/f9ddcacb0a80000101d1d2b8202be895</URIString>
+        <point1 x="246.14084" y="898.73804"/>
+        <point2 x="285.88998" y="1347.5232"/>
+        <ID1 xsi:type="node">420</ID1>
+        <ID2 xsi:type="node">452</ID2>
+    </child>
+    <child ID="454" layerID="1" created="1254027456331" x="288.3223"
+        y="802.73804" width="97.88379" height="545.2849"
+        strokeWidth="1.0" autoSized="false" controlCount="0"
+        arrowState="2" xsi:type="link">
+        <strokeColor>#404040</strokeColor>
+        <textColor>#404040</textColor>
+        <font>Arial-plain-11</font>
+        <metadata-list category-list-size="1" other-list-size="0"
+            ontology-list-size="0" RCategoryListSize="0">
+            <ontology-list-string></ontology-list-string>
+            <metadata xsi:type="vue-metadata-element">
+                <value></value>
+                <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                <type>1</type>
+            </metadata>
+        </metadata-list>
+        <URIString>http://vue.tufts.edu/rdf/resource/f9ddcacb0a80000101d1d2b80fd329af</URIString>
+        <point1 x="385.7061" y="803.23804"/>
+        <point2 x="288.8223" y="1347.523"/>
+        <ID1 xsi:type="node">163</ID1>
+        <ID2 xsi:type="node">452</ID2>
+    </child>
+    <child ID="446" layerID="1" created="1254027073742" x="-89.47803"
+        y="604.9636" width="698.2893" height="779.2744"
+        strokeWidth="1.0" autoSized="false" controlCount="0"
+        arrowState="2" xsi:type="link">
+        <strokeColor>#404040</strokeColor>
+        <textColor>#404040</textColor>
+        <font>Arial-plain-11</font>
+        <metadata-list category-list-size="1" other-list-size="0"
+            ontology-list-size="0" RCategoryListSize="0">
+            <ontology-list-string></ontology-list-string>
+            <metadata xsi:type="vue-metadata-element">
+                <value></value>
+                <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                <type>1</type>
+            </metadata>
+        </metadata-list>
+        <URIString>http://vue.tufts.edu/rdf/resource/f9d6c7a40a80000101d1d2b893efe499</URIString>
+        <point1 x="-88.97803" y="605.4636"/>
+        <point2 x="608.3113" y="1383.738"/>
+        <ID1 xsi:type="node">441</ID1>
+        <ID2 xsi:type="node">445</ID2>
+    </child>
+    <child ID="443" layerID="1" created="1254026925163" x="255.31528"
+        y="898.2381" width="435.45294" height="449.78503"
+        strokeWidth="1.0" autoSized="false" controlCount="0"
+        arrowState="2" xsi:type="link">
+        <strokeColor>#404040</strokeColor>
+        <textColor>#404040</textColor>
+        <font>Arial-plain-11</font>
+        <metadata-list category-list-size="1" other-list-size="0"
+            ontology-list-size="0" RCategoryListSize="0">
+            <ontology-list-string></ontology-list-string>
+            <metadata xsi:type="vue-metadata-element">
+                <value></value>
+                <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                <type>1</type>
+            </metadata>
+        </metadata-list>
+        <URIString>http://vue.tufts.edu/rdf/resource/f9d6c7a40a80000101d1d2b82df23149</URIString>
+        <point1 x="255.81526" y="898.73804"/>
+        <point2 x="690.2682" y="1347.5231"/>
+        <ID1 xsi:type="node">420</ID1>
+        <ID2 xsi:type="node">442</ID2>
+    </child>
+    <child ID="444" layerID="1" created="1254026948217" x="401.15784"
+        y="802.7379" width="294.33084" height="545.2851"
+        strokeWidth="1.0" autoSized="false" controlCount="0"
+        arrowState="2" xsi:type="link">
+        <strokeColor>#404040</strokeColor>
+        <textColor>#404040</textColor>
+        <font>Arial-plain-11</font>
+        <metadata-list category-list-size="1" other-list-size="0"
+            ontology-list-size="0" RCategoryListSize="0">
+            <ontology-list-string></ontology-list-string>
+            <metadata xsi:type="vue-metadata-element">
+                <value></value>
+                <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                <type>1</type>
+            </metadata>
+        </metadata-list>
+        <URIString>http://vue.tufts.edu/rdf/resource/f9d6c7a40a80000101d1d2b8cfed3f6d</URIString>
+        <point1 x="401.6578" y="803.238"/>
+        <point2 x="694.98865" y="1347.5231"/>
+        <ID1 xsi:type="node">163</ID1>
+        <ID2 xsi:type="node">442</ID2>
+    </child>
+    <child ID="440" layerID="1" created="1254026813048" x="311.6042"
+        y="160.23804" width="321.13498" height="1257.0"
+        strokeWidth="1.0" autoSized="false" controlCount="0"
+        arrowState="2" xsi:type="link">
+        <strokeColor>#404040</strokeColor>
+        <textColor>#404040</textColor>
+        <font>Arial-plain-11</font>
+        <metadata-list category-list-size="1" other-list-size="0"
+            ontology-list-size="0" RCategoryListSize="0">
+            <ontology-list-string></ontology-list-string>
+            <metadata xsi:type="vue-metadata-element">
+                <value></value>
+                <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                <type>1</type>
+            </metadata>
+        </metadata-list>
+        <URIString>http://vue.tufts.edu/rdf/resource/f9d2bcb40a80000101d1d2b820361354</URIString>
+        <point1 x="632.2392" y="160.73804"/>
+        <point2 x="312.10422" y="1416.738"/>
+        <ID1 xsi:type="node">439</ID1>
+        <ID2 xsi:type="node">437</ID2>
+    </child>
+    <child ID="436" layerID="1" created="1254026689245" x="499.16974"
+        y="463.23804" width="172.40613" height="954.0" strokeWidth="1.0"
+        autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
+        <strokeColor>#404040</strokeColor>
+        <textColor>#404040</textColor>
+        <font>Arial-plain-11</font>
+        <metadata-list category-list-size="1" other-list-size="0"
+            ontology-list-size="0" RCategoryListSize="0">
+            <ontology-list-string></ontology-list-string>
+            <metadata xsi:type="vue-metadata-element">
+                <value></value>
+                <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                <type>1</type>
+            </metadata>
+        </metadata-list>
+        <URIString>http://vue.tufts.edu/rdf/resource/f9d0c2ed0a80000101d1d2b87463de30</URIString>
+        <point1 x="499.66974" y="463.73804"/>
+        <point2 x="671.07587" y="1416.738"/>
+        <ID1 xsi:type="node">14</ID1>
+        <ID2 xsi:type="node">434</ID2>
+    </child>
+    <child ID="433" layerID="1" created="1254026629261" x="521.1574"
+        y="376.1328" width="52.763428" height="1041.1055"
+        strokeWidth="1.0" autoSized="false" controlCount="0"
+        arrowState="2" xsi:type="link">
+        <strokeColor>#404040</strokeColor>
+        <textColor>#404040</textColor>
+        <font>Arial-plain-11</font>
+        <metadata-list category-list-size="1" other-list-size="0"
+            ontology-list-size="0" RCategoryListSize="0">
+            <ontology-list-string></ontology-list-string>
+            <metadata xsi:type="vue-metadata-element">
+                <value></value>
+                <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                <type>1</type>
+            </metadata>
+        </metadata-list>
+        <URIString>http://vue.tufts.edu/rdf/resource/f9cff34f0a80000101d1d2b8daaaf8f3</URIString>
+        <point1 x="573.42084" y="376.6328"/>
+        <point2 x="521.6574" y="1416.7383"/>
+        <ID1 xsi:type="node">8</ID1>
+        <ID2 xsi:type="node">431</ID2>
+    </child>
+    <child ID="428" layerID="1" created="1254025749603" x="-101.79544"
+        y="631.2822" width="583.8756" height="751.9558"
+        strokeWidth="1.0" autoSized="false" controlCount="0"
+        arrowState="2" xsi:type="link">
+        <strokeColor>#404040</strokeColor>
+        <textColor>#404040</textColor>
+        <font>Arial-plain-11</font>
+        <metadata-list category-list-size="1" other-list-size="0"
+            ontology-list-size="0" RCategoryListSize="0">
+            <ontology-list-string></ontology-list-string>
+            <metadata xsi:type="vue-metadata-element">
+                <value></value>
+                <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                <type>1</type>
+            </metadata>
+        </metadata-list>
+        <URIString>http://vue.tufts.edu/rdf/resource/f9c2d1280a80000101d1d2b8264e89b9</URIString>
+        <point1 x="-101.29544" y="631.7822"/>
+        <point2 x="481.5802" y="1382.738"/>
+        <ID1 xsi:type="node">418</ID1>
+        <ID2 xsi:type="node">427</ID2>
+    </child>
+    <child ID="425" layerID="1" created="1254025654618" x="391.54315"
+        y="802.7378" width="59.135498" height="545.28516"
+        strokeWidth="1.0" autoSized="false" controlCount="0"
+        arrowState="2" xsi:type="link">
+        <strokeColor>#404040</strokeColor>
+        <textColor>#404040</textColor>
+        <font>Arial-plain-11</font>
+        <metadata-list category-list-size="1" other-list-size="0"
+            ontology-list-size="0" RCategoryListSize="0">
+            <ontology-list-string></ontology-list-string>
+            <metadata xsi:type="vue-metadata-element">
+                <value></value>
+                <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                <type>1</type>
+            </metadata>
+        </metadata-list>
+        <URIString>http://vue.tufts.edu/rdf/resource/f9c154d80a80000101d1d2b8493d4dea</URIString>
+        <point1 x="392.04315" y="803.2378"/>
+        <point2 x="450.17865" y="1347.523"/>
+        <ID1 xsi:type="node">163</ID1>
+        <ID2 xsi:type="node">424</ID2>
+    </child>
+    <child ID="426" layerID="1" created="1254025671822" x="249.48416"
+        y="898.2381" width="197.55182" height="449.78503"
+        strokeWidth="1.0" autoSized="false" controlCount="0"
+        arrowState="2" xsi:type="link">
+        <strokeColor>#404040</strokeColor>
+        <textColor>#404040</textColor>
+        <font>Arial-plain-11</font>
+        <metadata-list category-list-size="1" other-list-size="0"
+            ontology-list-size="0" RCategoryListSize="0">
+            <ontology-list-string></ontology-list-string>
+            <metadata xsi:type="vue-metadata-element">
+                <value></value>
+                <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                <type>1</type>
+            </metadata>
+        </metadata-list>
+        <URIString>http://vue.tufts.edu/rdf/resource/f9c154d80a80000101d1d2b80c597d16</URIString>
+        <point1 x="249.98416" y="898.73804"/>
+        <point2 x="446.53598" y="1347.5231"/>
+        <ID1 xsi:type="node">420</ID1>
+        <ID2 xsi:type="node">424</ID2>
+    </child>
     <layer ID="1" label="Layer 1" created="1254012613239" x="0.0"
         y="0.0" width="1.4E-45" height="1.4E-45" strokeWidth="0.0" autoSized="false">
         <metadata-list category-list-size="0" other-list-size="0"
@@ -18298,7 +16593,7 @@
         <URIString>http://vue.tufts.edu/rdf/resource/f8fc63800a80000101d1d2b8b21a73ed</URIString>
     </layer>
     <userZoom>0.03787136793992817</userZoom>
-    <userOrigin x="-322.33344" y="-596.36774"/>
+    <userOrigin x="-519.33344" y="-596.36774"/>
     <presentationBackground>#202020</presentationBackground>
     <PathwayList currentPathway="0" revealerIndex="-1">
         <pathway ID="0" label="Untitled Pathway" created="1254012613232"
