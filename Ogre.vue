@@ -1,7 +1,7 @@
 <!-- Tufts VUE 3.0 beta2b3 concept-map (Ogre.vue) 2009-10-02 -->
 <!-- Tufts VUE: http://vue.tufts.edu/ -->
 <!-- Do Not Remove: VUE mapping @version(1.1) jar:file:/home/deepfire/VUE.jar!/tufts/vue/resources/lw_mapping_1_1.xml -->
-<!-- Do Not Remove: Saved date Fri Oct 02 04:30:44 MSD 2009 by deepfire on platform Linux 2.6.26-2-amd64 in JVM 1.6.0_0-b16 -->
+<!-- Do Not Remove: Saved date Fri Oct 02 16:41:04 MSD 2009 by deepfire on platform Linux 2.6.26-2-amd64 in JVM 1.6.0_0-b16 -->
 <!-- Do Not Remove: Saving version @(#)VUE: built September 4 2009 at 0400 by vue on Linux 2.4.21-57.EL i386 JVM 1.5.0_06-b05 -->
 <?xml version="1.0" encoding="US-ASCII"?>
 <LW-MAP xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -9,7 +9,7 @@
     created="1254012613236" x="0.0" y="0.0" width="1477.5"
     height="1325.5" strokeWidth="0.0" autoSized="false">
     <notes>Ogre abstraction map.%nl;author: Samium Gromoff%nl;_deepfire-at-feelingofgreen-ru</notes>
-    <resource referenceCreated="1254443444910" size="1124162"
+    <resource referenceCreated="1254487264471" size="1124162"
         spec="/home/deepfire/source/tech/Ogre.vue" type="1" xsi:type="URLResource">
         <title>Ogre.vue</title>
         <property key="File" value="/home/deepfire/source/tech/Ogre.vue"/>
@@ -4278,7 +4278,7 @@
         <ID2 xsi:type="node">748</ID2>
     </child>
     <child ID="768"
-        label="Conscious omissions:&#xa;    &#xa;    &#xa;      - factories&#xa;    &#xa;    &#xa;      - comparator stuctures&#xa;    &#xa;    &#xa;      - set, list, map and shared-ptr type products&#xa;    &#xa;    &#xa;      - allocation mixinry&#xa;    &#xa;    &#xa;      - serializer/parser trivialties&#xa;    &#xa;    &#xa;      - all atomic types&#xa;    &#xa;    &#xa;      - most references to Vector*, Matrix*, Quaternion&#xa;    &#xa;    &#xa;      - SceneManager and Root, as excessively and fairly predictably connected"
+        label="Conscious omissions: - factories - comparator stuctures - set, list, map and shared-ptr type products - allocation mixinry - serializer/parser trivialties - all atomic types - most references to Vector*, Matrix*, Quaternion - SceneManager and Root, as excessively and fairly predictably connected"
         layerID="1" created="1254100343011" x="915.73364" y="5.632263"
         width="486.0" height="142.0" strokeWidth="0.0" autoSized="false" xsi:type="text">
         <strokeColor>#404040</strokeColor>
@@ -4295,78 +4295,54 @@
         </metadata-list>
         <URIString>http://vue.tufts.edu/rdf/resource/fe393d3b0a8000012fb212f0ebaf5b28</URIString>
         <richText>&lt;html&gt;
-  &lt;head color="#000000" style="color: #000000"&gt;
+  &lt;head style="color: #000000" color="#000000"&gt;
     &lt;style type="text/css"&gt;
       &lt;!--
-        body { font-family: Arial; color: #000000; margin-left: 0px; margin-right: 0px; margin-bottom: 0px; font-size: 12; margin-top: 0px }
-        ol { list-style-position: outside; font-family: Arial; vertical-align: middle; margin-left: 30; font-size: 12; margin-top: 6 }
-        p { color: #000000; margin-left: 0; margin-right: 0; margin-bottom: 0; margin-top: 0 }
-        ul { list-style-position: outside; font-family: Arial; vertical-align: middle; margin-left: 30; font-size: 12; margin-top: 6 }
+        body { color: #000000; margin-top: 0px; margin-left: 0px; margin-right: 0px; font-family: Arial; font-size: 12; margin-bottom: 0px }
+        ol { margin-top: 6; margin-left: 30; font-family: Arial; font-size: 12; vertical-align: middle; list-style-position: outside }
+        p { color: #000000; margin-top: 0; margin-left: 0; margin-right: 0; margin-bottom: 0 }
+        ul { margin-top: 6; margin-left: 30; font-family: Arial; vertical-align: middle; font-size: 12; list-style-position: outside }
       --&gt;
     &lt;/style&gt;
     
   &lt;/head&gt;
   &lt;body&gt;
-    &lt;p color="#000000" style="color: #000000"&gt;
+    &lt;p style="color: #000000" color="#000000"&gt;
       Conscious omissions:
     &lt;/p&gt;
-    &lt;p color="#000000" style="color: #000000"&gt;
+    &lt;p style="color: #000000" color="#000000"&gt;
       - factories
     &lt;/p&gt;
-    &lt;p color="#000000" style="color: #000000"&gt;
+    &lt;p style="color: #000000" color="#000000"&gt;
       - comparator stuctures
     &lt;/p&gt;
-    &lt;p color="#000000" style="color: #000000"&gt;
+    &lt;p style="color: #000000" color="#000000"&gt;
       - set, list, map and shared-ptr type products
     &lt;/p&gt;
-    &lt;p color="#000000" style="color: #000000"&gt;
+    &lt;p style="color: #000000" color="#000000"&gt;
       - allocation mixinry
     &lt;/p&gt;
-    &lt;p color="#000000" style="color: #000000"&gt;
+    &lt;p style="color: #000000" color="#000000"&gt;
       - serializer/parser trivialties
     &lt;/p&gt;
-    &lt;p color="#000000" style="color: #000000"&gt;
+    &lt;p style="color: #000000" color="#000000"&gt;
       - all atomic types
     &lt;/p&gt;
-    &lt;p color="#000000" style="color: #000000"&gt;
+    &lt;p style="color: #000000" color="#000000"&gt;
       - most references to Vector*, Matrix*, Quaternion
     &lt;/p&gt;
-    &lt;p color="#000000" style="color: #000000"&gt;
+    &lt;p style="color: #000000" color="#000000"&gt;
       - SceneManager and Root, as excessively and fairly predictably connected
     &lt;/p&gt;
   &lt;/body&gt;
 &lt;/html&gt;
 </richText>
-        <label>Conscious omissions:
-    
-    
-      - factories
-    
-    
-      - comparator stuctures
-    
-    
-      - set, list, map and shared-ptr type products
-    
-    
-      - allocation mixinry
-    
-    
-      - serializer/parser trivialties
-    
-    
-      - all atomic types
-    
-    
-      - most references to Vector*, Matrix*, Quaternion
-    
-    
-      - SceneManager and Root, as excessively and fairly predictably connected</label>
+        <label>Conscious omissions: - factories - comparator stuctures - set, list, map and shared-ptr type products - allocation mixinry - serializer/parser trivialties - all atomic types - most references to Vector*, Matrix*, Quaternion - SceneManager and Root, as excessively and fairly predictably connected</label>
     </child>
     <child ID="770"
-        label="Ogre abstraction map version: svn trunk of 17 Sep 2009"
+        label="Ogre abstraction map&#xa;    &#xa;    &#xa;      version: svn trunk of 1 Oct 2009"
         layerID="1" created="1254100757771" x="423.73364"
-        y="-0.36773682" width="512.0" height="60.0" strokeWidth="0.0"
+        y="-0.36773682" width="509.0" height="73.0" strokeWidth="0.0"
         autoSized="false" xsi:type="text">
         <strokeColor>#404040</strokeColor>
         <textColor>#000000</textColor>
@@ -4382,28 +4358,31 @@
         </metadata-list>
         <URIString>http://vue.tufts.edu/rdf/resource/fe3d1fd40a8000012fb212f0ac0faf6a</URIString>
         <richText>&lt;html&gt;
-  &lt;head color="#000000" style="color: #000000"&gt;
+  &lt;head style="color: #000000" color="#000000"&gt;
     &lt;style type="text/css"&gt;
       &lt;!--
-        body { font-family: Arial; color: #000000; margin-left: 0px; margin-right: 0px; margin-bottom: 0px; font-size: 24; margin-top: 0px }
-        ol { list-style-position: outside; font-family: Arial; vertical-align: middle; margin-left: 30; font-size: 24; margin-top: 6 }
-        p { color: #000000; margin-left: 0; margin-right: 0; margin-bottom: 0; margin-top: 0 }
-        ul { list-style-position: outside; font-family: Arial; vertical-align: middle; margin-left: 30; font-size: 24; margin-top: 6 }
+        body { color: #000000; margin-top: 0px; margin-left: 0px; margin-right: 0px; font-family: Arial; font-size: 24; margin-bottom: 0px }
+        ol { margin-top: 6; margin-left: 30; font-family: Arial; font-size: 24; vertical-align: middle; list-style-position: outside }
+        p { color: #000000; margin-top: 0; margin-left: 0; margin-right: 0; margin-bottom: 0 }
+        ul { margin-top: 6; margin-left: 30; font-family: Arial; vertical-align: middle; font-size: 24; list-style-position: outside }
       --&gt;
     &lt;/style&gt;
     
   &lt;/head&gt;
   &lt;body&gt;
-    &lt;p color="#000000" style="color: #000000; text-align: center"&gt;
+    &lt;p style="color: #000000; text-align: center" color="#000000"&gt;
       Ogre abstraction map
     &lt;/p&gt;
-    &lt;p color="#000000" style="color: #000000; text-align: center"&gt;
-      version: svn trunk of 17 Sep 2009
+    &lt;p style="color: #000000; text-align: center" color="#000000"&gt;
+      version: svn trunk of 1 Oct 2009
     &lt;/p&gt;
   &lt;/body&gt;
 &lt;/html&gt;
 </richText>
-        <label>Ogre abstraction map version: svn trunk of 17 Sep 2009</label>
+        <label>Ogre abstraction map
+    
+    
+      version: svn trunk of 1 Oct 2009</label>
     </child>
     <child ID="781" label="RenderQueueInvocation" layerID="1"
         created="1254102131421" x="-224.01367" y="1030.738"
@@ -8621,8 +8600,8 @@
             <ID1 xsi:type="node">387</ID1>
             <ID2 xsi:type="node">402</ID2>
         </child>
-        <child ID="414" created="1254025285264" x="153.44763" y="23.0"
-            width="222.40887" height="135.23523" strokeWidth="1.0"
+        <child ID="414" created="1254025285264" x="153.44781" y="23.0"
+            width="222.40868" height="135.23523" strokeWidth="1.0"
             autoSized="false" controlCount="0" arrowState="2" xsi:type="link">
             <strokeColor>#404040</strokeColor>
             <textColor>#404040</textColor>
@@ -8638,7 +8617,7 @@
             </metadata-list>
             <URIString>http://vue.tufts.edu/rdf/resource/f9bb96d10a80000101d1d2b8e6c78c1d</URIString>
             <point1 x="375.3565" y="23.5"/>
-            <point2 x="153.94763" y="157.73523"/>
+            <point2 x="153.94783" y="157.73523"/>
             <ID1 xsi:type="node">387</ID1>
             <ID2 xsi:type="node">403</ID2>
         </child>
@@ -22762,12 +22741,12 @@
         <ID2 xsi:type="node">518</ID2>
     </child>
     <child ID="1446"
-        label="Meaning of arrows:&#xa;    &#xa;    &#xa;      &#xa;    &#xa;    &#xa;      An arrow pointing from A to B is meant to convey that class A &#xa;      establishes context in which to interpret  class B.&#xa;    &#xa;    &#xa;      &#xa;    &#xa;    &#xa;      More specifically this means that B either subclasses A or has member &#xa;      references to objects of class A. Note that &quot;member references&quot; is taken &#xa;      widely, and includes not only direct references, but also references via &#xa;      any compound, non-class, non-structure type: lists, vectors, sets, maps &#xa;      etc."
+        label="Meaning of arrows: An arrow pointing from A to B is meant to convey that class A &#xa;      establishes context in which to interpret  class B. More specifically this means that B either subclasses A or has member references to objects of class A. Note that &quot;member references&quot; is taken &#xa;      widely, and includes not only direct references, but also references via any compound, non-class, non-structure type: lists, vectors, sets, maps &#xa;      etc."
         layerID="1" created="1254442870272" x="-42.333435" y="9.632263"
         width="288.0" height="212.0" strokeWidth="0.0" autoSized="false" xsi:type="text">
         <strokeColor>#404040</strokeColor>
         <textColor>#000000</textColor>
-        <font>SansSerif-plain-14</font>
+        <font>-plain-1</font>
         <metadata-list category-list-size="1" other-list-size="0"
             ontology-list-size="0" RCategoryListSize="0">
             <ontology-list-string></ontology-list-string>
@@ -22779,32 +22758,32 @@
         </metadata-list>
         <URIString>http://vue.tufts.edu/rdf/resource/12a7bcda0a800001443ad545ecca5116</URIString>
         <richText>&lt;html&gt;
-  &lt;head color="#000000" style="color: #000000"&gt;
+  &lt;head style="color: #000000" color="#000000"&gt;
     &lt;style type="text/css"&gt;
       &lt;!--
-        body { font-family: Arial; color: #000000; margin-left: 0px; margin-right: 0px; margin-bottom: 0px; font-size: 12; margin-top: 0px }
-        ol { list-style-position: outside; font-family: Arial; vertical-align: middle; margin-left: 30; font-size: 12; margin-top: 6 }
-        p { color: #000000; margin-left: 0; margin-right: 0; margin-bottom: 0; margin-top: 0 }
-        ul { list-style-position: outside; font-family: Arial; vertical-align: middle; margin-left: 30; font-size: 12; margin-top: 6 }
+        body { color: #000000; margin-top: 0px; margin-left: 0px; margin-right: 0px; font-family: Arial; font-size: 12; margin-bottom: 0px }
+        ol { margin-top: 6; margin-left: 30; font-family: Arial; font-size: 12; vertical-align: middle; list-style-position: outside }
+        p { color: #000000; margin-top: 0; margin-left: 0; margin-right: 0; margin-bottom: 0 }
+        ul { margin-top: 6; margin-left: 30; font-family: Arial; vertical-align: middle; font-size: 12; list-style-position: outside }
       --&gt;
     &lt;/style&gt;
     
   &lt;/head&gt;
   &lt;body&gt;
-    &lt;p color="#000000" style="color: #000000"&gt;
+    &lt;p style="color: #000000" color="#000000"&gt;
       Meaning of arrows:
     &lt;/p&gt;
-    &lt;p color="#000000" style="color: #000000"&gt;
+    &lt;p style="color: #000000" color="#000000"&gt;
       
     &lt;/p&gt;
-    &lt;p color="#000000" style="color: #000000"&gt;
+    &lt;p style="color: #000000" color="#000000"&gt;
       An arrow pointing from A to B is meant to convey that class A 
-      establishes context in which to interpret  class B.
+      establishes context in which to interpret class B.
     &lt;/p&gt;
-    &lt;p color="#000000" style="color: #000000"&gt;
+    &lt;p style="color: #000000" color="#000000"&gt;
       
     &lt;/p&gt;
-    &lt;p color="#000000" style="color: #000000"&gt;
+    &lt;p style="color: #000000" color="#000000"&gt;
       More specifically this means that B either subclasses A or has member 
       references to objects of class A. Note that &amp;quot;member references&amp;quot; is taken 
       widely, and includes not only direct references, but also references via 
@@ -22814,23 +22793,9 @@
   &lt;/body&gt;
 &lt;/html&gt;
 </richText>
-        <label>Meaning of arrows:
-    
-    
-      
-    
-    
-      An arrow pointing from A to B is meant to convey that class A 
-      establishes context in which to interpret  class B.
-    
-    
-      
-    
-    
-      More specifically this means that B either subclasses A or has member 
-      references to objects of class A. Note that "member references" is taken 
-      widely, and includes not only direct references, but also references via 
-      any compound, non-class, non-structure type: lists, vectors, sets, maps 
+        <label>Meaning of arrows: An arrow pointing from A to B is meant to convey that class A 
+      establishes context in which to interpret  class B. More specifically this means that B either subclasses A or has member references to objects of class A. Note that "member references" is taken 
+      widely, and includes not only direct references, but also references via any compound, non-class, non-structure type: lists, vectors, sets, maps 
       etc.</label>
     </child>
     <layer ID="1" label="Layer 1" created="1254012613239" x="0.0"
@@ -22841,8 +22806,8 @@
         </metadata-list>
         <URIString>http://vue.tufts.edu/rdf/resource/f8fc63800a80000101d1d2b8b21a73ed</URIString>
     </layer>
-    <userZoom>0.03787136793992817</userZoom>
-    <userOrigin x="-859.33344" y="-864.36774"/>
+    <userZoom>1.0</userZoom>
+    <userOrigin x="-363.83347" y="-261.01657"/>
     <presentationBackground>#202020</presentationBackground>
     <PathwayList currentPathway="0" revealerIndex="-1">
         <pathway ID="0" label="Untitled Pathway" created="1254012613232"
