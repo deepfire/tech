@@ -1,7 +1,7 @@
 <!-- Tufts VUE 3.0 beta2b3 concept-map (Ogre.vue) 2009-10-02 -->
 <!-- Tufts VUE: http://vue.tufts.edu/ -->
 <!-- Do Not Remove: VUE mapping @version(1.1) jar:file:/home/deepfire/VUE.jar!/tufts/vue/resources/lw_mapping_1_1.xml -->
-<!-- Do Not Remove: Saved date Fri Oct 02 04:05:33 MSD 2009 by deepfire on platform Linux 2.6.26-2-amd64 in JVM 1.6.0_0-b16 -->
+<!-- Do Not Remove: Saved date Fri Oct 02 04:30:44 MSD 2009 by deepfire on platform Linux 2.6.26-2-amd64 in JVM 1.6.0_0-b16 -->
 <!-- Do Not Remove: Saving version @(#)VUE: built September 4 2009 at 0400 by vue on Linux 2.4.21-57.EL i386 JVM 1.5.0_06-b05 -->
 <?xml version="1.0" encoding="US-ASCII"?>
 <LW-MAP xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -9,7 +9,7 @@
     created="1254012613236" x="0.0" y="0.0" width="1477.5"
     height="1325.5" strokeWidth="0.0" autoSized="false">
     <notes>Ogre abstraction map.%nl;author: Samium Gromoff%nl;_deepfire-at-feelingofgreen-ru</notes>
-    <resource referenceCreated="1254441933471" size="1120566"
+    <resource referenceCreated="1254443444910" size="1124162"
         spec="/home/deepfire/source/tech/Ogre.vue" type="1" xsi:type="URLResource">
         <title>Ogre.vue</title>
         <property key="File" value="/home/deepfire/source/tech/Ogre.vue"/>
@@ -22760,6 +22760,78 @@
         <point2 x="106.2155" y="2017.5"/>
         <ID1 xsi:type="node">455</ID1>
         <ID2 xsi:type="node">518</ID2>
+    </child>
+    <child ID="1446"
+        label="Meaning of arrows:&#xa;    &#xa;    &#xa;      &#xa;    &#xa;    &#xa;      An arrow pointing from A to B is meant to convey that class A &#xa;      establishes context in which to interpret  class B.&#xa;    &#xa;    &#xa;      &#xa;    &#xa;    &#xa;      More specifically this means that B either subclasses A or has member &#xa;      references to objects of class A. Note that &quot;member references&quot; is taken &#xa;      widely, and includes not only direct references, but also references via &#xa;      any compound, non-class, non-structure type: lists, vectors, sets, maps &#xa;      etc."
+        layerID="1" created="1254442870272" x="-42.333435" y="9.632263"
+        width="288.0" height="212.0" strokeWidth="0.0" autoSized="false" xsi:type="text">
+        <strokeColor>#404040</strokeColor>
+        <textColor>#000000</textColor>
+        <font>SansSerif-plain-14</font>
+        <metadata-list category-list-size="1" other-list-size="0"
+            ontology-list-size="0" RCategoryListSize="0">
+            <ontology-list-string></ontology-list-string>
+            <metadata xsi:type="vue-metadata-element">
+                <value></value>
+                <key>http://vue.tufts.edu/vue.rdfs#none</key>
+                <type>1</type>
+            </metadata>
+        </metadata-list>
+        <URIString>http://vue.tufts.edu/rdf/resource/12a7bcda0a800001443ad545ecca5116</URIString>
+        <richText>&lt;html&gt;
+  &lt;head color="#000000" style="color: #000000"&gt;
+    &lt;style type="text/css"&gt;
+      &lt;!--
+        body { font-family: Arial; color: #000000; margin-left: 0px; margin-right: 0px; margin-bottom: 0px; font-size: 12; margin-top: 0px }
+        ol { list-style-position: outside; font-family: Arial; vertical-align: middle; margin-left: 30; font-size: 12; margin-top: 6 }
+        p { color: #000000; margin-left: 0; margin-right: 0; margin-bottom: 0; margin-top: 0 }
+        ul { list-style-position: outside; font-family: Arial; vertical-align: middle; margin-left: 30; font-size: 12; margin-top: 6 }
+      --&gt;
+    &lt;/style&gt;
+    
+  &lt;/head&gt;
+  &lt;body&gt;
+    &lt;p color="#000000" style="color: #000000"&gt;
+      Meaning of arrows:
+    &lt;/p&gt;
+    &lt;p color="#000000" style="color: #000000"&gt;
+      
+    &lt;/p&gt;
+    &lt;p color="#000000" style="color: #000000"&gt;
+      An arrow pointing from A to B is meant to convey that class A 
+      establishes context in which to interpret  class B.
+    &lt;/p&gt;
+    &lt;p color="#000000" style="color: #000000"&gt;
+      
+    &lt;/p&gt;
+    &lt;p color="#000000" style="color: #000000"&gt;
+      More specifically this means that B either subclasses A or has member 
+      references to objects of class A. Note that &amp;quot;member references&amp;quot; is taken 
+      widely, and includes not only direct references, but also references via 
+      any compound, non-class, non-structure type: lists, vectors, sets, maps 
+      etc.
+    &lt;/p&gt;
+  &lt;/body&gt;
+&lt;/html&gt;
+</richText>
+        <label>Meaning of arrows:
+    
+    
+      
+    
+    
+      An arrow pointing from A to B is meant to convey that class A 
+      establishes context in which to interpret  class B.
+    
+    
+      
+    
+    
+      More specifically this means that B either subclasses A or has member 
+      references to objects of class A. Note that "member references" is taken 
+      widely, and includes not only direct references, but also references via 
+      any compound, non-class, non-structure type: lists, vectors, sets, maps 
+      etc.</label>
     </child>
     <layer ID="1" label="Layer 1" created="1254012613239" x="0.0"
         y="0.0" width="1.4E-45" height="1.4E-45" strokeWidth="0.0" autoSized="false">
