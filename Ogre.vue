@@ -1,7 +1,7 @@
 <!-- Tufts VUE 3.0 beta2b3 concept-map (Ogre.vue) 2009-10-02 -->
 <!-- Tufts VUE: http://vue.tufts.edu/ -->
 <!-- Do Not Remove: VUE mapping @version(1.1) jar:file:/home/deepfire/VUE.jar!/tufts/vue/resources/lw_mapping_1_1.xml -->
-<!-- Do Not Remove: Saved date Fri Oct 02 16:41:04 MSD 2009 by deepfire on platform Linux 2.6.26-2-amd64 in JVM 1.6.0_0-b16 -->
+<!-- Do Not Remove: Saved date Fri Oct 02 16:46:40 MSD 2009 by deepfire on platform Linux 2.6.26-2-amd64 in JVM 1.6.0_0-b16 -->
 <!-- Do Not Remove: Saving version @(#)VUE: built September 4 2009 at 0400 by vue on Linux 2.4.21-57.EL i386 JVM 1.5.0_06-b05 -->
 <?xml version="1.0" encoding="US-ASCII"?>
 <LW-MAP xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -9,7 +9,7 @@
     created="1254012613236" x="0.0" y="0.0" width="1477.5"
     height="1325.5" strokeWidth="0.0" autoSized="false">
     <notes>Ogre abstraction map.%nl;author: Samium Gromoff%nl;_deepfire-at-feelingofgreen-ru</notes>
-    <resource referenceCreated="1254487264471" size="1124162"
+    <resource referenceCreated="1254487600906" size="1123608"
         spec="/home/deepfire/source/tech/Ogre.vue" type="1" xsi:type="URLResource">
         <title>Ogre.vue</title>
         <property key="File" value="/home/deepfire/source/tech/Ogre.vue"/>
@@ -4340,7 +4340,7 @@
         <label>Conscious omissions: - factories - comparator stuctures - set, list, map and shared-ptr type products - allocation mixinry - serializer/parser trivialties - all atomic types - most references to Vector*, Matrix*, Quaternion - SceneManager and Root, as excessively and fairly predictably connected</label>
     </child>
     <child ID="770"
-        label="Ogre abstraction map&#xa;    &#xa;    &#xa;      version: svn trunk of 1 Oct 2009"
+        label="OgreMain abstraction map&#xa;    &#xa;    &#xa;      version: svn trunk of 1 Oct 2009"
         layerID="1" created="1254100757771" x="423.73364"
         y="-0.36773682" width="509.0" height="73.0" strokeWidth="0.0"
         autoSized="false" xsi:type="text">
@@ -4371,7 +4371,7 @@
   &lt;/head&gt;
   &lt;body&gt;
     &lt;p style="color: #000000; text-align: center" color="#000000"&gt;
-      Ogre abstraction map
+      OgreMain abstraction map
     &lt;/p&gt;
     &lt;p style="color: #000000; text-align: center" color="#000000"&gt;
       version: svn trunk of 1 Oct 2009
@@ -4379,7 +4379,7 @@
   &lt;/body&gt;
 &lt;/html&gt;
 </richText>
-        <label>Ogre abstraction map
+        <label>OgreMain abstraction map
     
     
       version: svn trunk of 1 Oct 2009</label>
