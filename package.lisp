@@ -2,6 +2,8 @@
 ;;;
 
 (defpackage tech
-  (:use :common-lisp :alexandria :pergamum :iterate)
+  (:use :common-lisp :alexandria :pergamum :iterate :bordeaux-threads :cl-opengl)
+  (:shadowing-import-from :cl-opengl :rotate :scale :index)
+  (:shadowing-import-from :cl-opengl-bindings :end :finish)
   (:export
   ))

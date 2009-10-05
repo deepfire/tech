@@ -61,7 +61,7 @@
     (/ nom denom)))
 
 (defgeneric volume (object))
-(defgeneric scale (object v3))
+(defgeneric scale-object (object v3))
 (defgeneric scalef (object v3))
 (defgeneric intersects-p (object-1 object-2 &key &allow-other-keys))
 (defgeneric contains-p (object-1 object-2))
@@ -592,7 +592,7 @@ Based on Stan Melax's article in Game Programming Gems."
   (v3-cross (v3- v1 v0) (v3- v2 v0)))
 
 (defun v3face-basic-normal (v0 v1 v2)
-  (v3-normalizef (v3-cross (v3- v1 v0) (v3- v2 v0))))
+  (v3-normalisef (v3-cross (v3- v1 v0) (v3- v2 v0))))
 
 (defun v3face-normal-notunit (v0 v1 v2)
   (let ((n (v3face-basic-normal-notunit v0 v1 v2)))
@@ -2409,7 +2409,7 @@ The matrix must be an affine matrix. m4-affine-p."
                (* (v3-x d) (v3-y d) (v3-z d))))
     (:infinite (+infinity))))
 
-(defmethod scale ((aab axis-aligned-box) (v3 vector3))
+(defmethod scale-object ((aab axis-aligned-box) (v3 vector3))
   (ecase (aab-extent aab)
     ((:null :infinite) aab)
     (:finite 

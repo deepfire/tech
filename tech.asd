@@ -6,7 +6,7 @@
 (in-package :tech.system)
 
 (defsystem :tech
-  :depends-on (:alexandria :pergamum :cffi)
+  :depends-on (:alexandria :pergamum :cffi :bordeaux-threads :cl-opengl)
   :components
   ((:file "package")
    (:file "axis-aligned-box" :depends-on ("package"))
