@@ -2147,6 +2147,13 @@ visibility determination."
   (max nil :type vector3)
   (corners nil :type (or null simple-vector)))
 
+(defun make-aab (&key extent origin)
+  (multiple-value-bind (extent min max)
+      (cond (extent (values extent (make-v3 -0.5 -0.5 -0.5) (make-v3 0.5 0.5 0.5)))
+            (origin (values (aab-extent origin) (aab-min origin) (aab-max origin)))
+            (t      (values :null (make-v3 -0.5 -0.5 -0.5) (make-v3 0.5 0.5 0.5))))
+    (%make-axis-aligned-box extent min max)))
+
 (defvar *aab-null* (make-aab))
 (defvar *aab-infinite* (make-aab :extent :infinite))
 
@@ -2178,13 +2185,6 @@ visibility determination."
 (defun aab-set-extents* (aab min-x min-y min-z max-x max-y max-z)
   (aab-set-min* aab min-x min-y min-z)
   (aab-set-max* aab max-x max-y max-z))
-
-(defun make-aab (&key extent origin)
-  (multiple-value-bind (extent min max)
-      (cond (extent (values extent (make-v3 -0.5 -0.5 -0.5) (make-v3 0.5 0.5 0.5)))
-            (origin (values (aab-extent origin) (aab-min origin) (aab-max origin)))
-            (t      (values :null (make-v3 -0.5 -0.5 -0.5) (make-v3 0.5 0.5 0.5))))
-    (%make-axis-aligned-box extent min max)))
 
 (defun make-aab* (min max)
   (%make-axis-aligned-box :finite min max))
