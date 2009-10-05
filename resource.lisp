@@ -83,12 +83,6 @@ other then FIXNUM or T."
 ;;;
 ;;; Resource
 ;;;
-(defclass resource-manager ()
-  ())
-
-(defclass manual-resource-loader ()
-  ())
-
 (defcassable resource-state value)
 
 (defclass resource (named auto-locked)
@@ -125,26 +119,6 @@ Subclasses must implement:
  - StringInterface ParamCommand and ParamDictionary setups in order to allow
 setting of core parameters (prior to load) through a generic interface."))
 
-(defclass resource-loader ()
-  ((resource-type :accessor resource-loader-resource-type :initarg :resource-type)))
-
-(defclass manual-resource-loader (resource-loader)  ())
-
-(defgeneric resource-loader-prepare-resource (loader resource))
-(defgeneric resource-loader-load-resource (loader resource))
-
-(defgeneric resource-manager-notify-resource-loaded (manager resource))
-(defgeneric resource-manager-notify-resource-unloaded (manager resource))
-(defgeneric resource-manager-notify-resource-touched (manager resource))
-
-(defclass resource-group-manager () ())
-
-(defvar *resource-group-manager*)
-
-(defgeneric resource-group-manager-find-group-containing-resource (manager resource-name))
-(defgeneric resource-group-manager-notify-resource-group-changed (manager old-group resource))
-
-
 (defgeneric resource-compute-size (resource))
 (defgeneric resource-change-ownership (resource resource-group))
 
@@ -164,6 +138,31 @@ setting of core parameters (prior to load) through a generic interface."))
 
 (defgeneric resource-reload (resource))
 (defgeneric resource-touch (resource))
+
+(defclass manual-resource-loader ()
+  ())
+
+(defclass resource-loader ()
+  ((resource-type :accessor resource-loader-resource-type :initarg :resource-type)))
+
+(defclass manual-resource-loader (resource-loader)  ())
+
+(defgeneric resource-loader-prepare-resource (loader resource))
+(defgeneric resource-loader-load-resource (loader resource))
+
+(defclass resource-manager ()
+  ())
+
+(defgeneric resource-manager-notify-resource-loaded (manager resource))
+(defgeneric resource-manager-notify-resource-unloaded (manager resource))
+(defgeneric resource-manager-notify-resource-touched (manager resource))
+
+(defclass resource-group-manager () ())
+
+(defvar *resource-group-manager*)
+
+(defgeneric resource-group-manager-find-group-containing-resource (manager resource-name))
+(defgeneric resource-group-manager-notify-resource-group-changed (manager old-group resource))
 
 (defclass resource-listener () ())
 
