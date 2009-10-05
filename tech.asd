@@ -10,4 +10,5 @@
   :components
   ((:file "package")
    (:file "axis-aligned-box" :depends-on ("package"))
+   (:file "resource" :depends-on ("package"))
    (:file "tech" :depends-on ("package"))))
