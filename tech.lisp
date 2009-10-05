@@ -52,7 +52,7 @@ with all values through a single class."))
 (defgeneric apply-delta-value (animable-value delta-value))
 
 (defclass animable-object ()
-  ((animable-dictionary :type hash-table :docstring "Static map of class name to list of animable value names."))
+  ((animable-dictionary :type hash-table :documentation "Static map of class name to list of animable value names."))
   (:documentation
    "Defines an interface to classes which have one or more AnimableValue
 instances to expose."))
@@ -123,7 +123,7 @@ object which owns the animation, e.g. Skeleton."))
 
 (defgeneric animation-destroy-all-tracks (animation))
 
-(defgeneric animation-apply (animation target time-position weight scale &key &allow-other-keys))
+(defgeneric animation-apply (animation target time-position &optional weight scale &key &allow-other-keys))
 
 ;; let's see how iterators are used and then redo this in a more sensible manner 
 (defgeneric animation-node-tracks (animation))
@@ -236,8 +236,6 @@ it may be desirable to assign animation weights per bone using a 'blend mask'.")
    "Listener allowing you to override certain behaviour of a track, 
 for example to drive animation procedurally."))
 
-(defgeneric get-interpolated-keyframe (animation-track-listener animation-track time-index keyframe))
-
 (defclass animation-track ()
   ((animation :accessor animation-track-animation)
    (handle :accessor animation-track-handle)
@@ -335,7 +333,7 @@ for you, so you don't need to create this one, just access it using getKeyFrame(
 (defmethod get-interpolated-keyframe ((o node-animation-track) time-index keyframe))
 (defmethod animation-track-keyframe ((o node-animation-track) index))
 (defmethod animation-apply ((o node-animation-track) (self null) time-index &optional  (weight 1.0) (scale 1.0) &key &allow-other-keys))
-(defmethod animation-apply ((o node-animation-track) (a node) time-index &optional  (weight 1.0) (scale 1.0) &key &allow-other-keys))
+;; (defmethod animation-apply ((o node-animation-track) (a node) time-index &optional  (weight 1.0) (scale 1.0) &key &allow-other-keys))
 
 (defgeneric node-animation-track-build-interpolation-splines (node-animation-track))
 
@@ -402,7 +400,7 @@ versa."))
 
 (defmethod get-interpolated-keyframe ((o vertex-animation-track) time-index keyframe))
 (defmethod animation-apply ((o vertex-animation-track) (self null) time-index &optional  (weight 1.0) (scale 1.0) &key &allow-other-keys))
-(defmethod animation-apply ((o vertex-animation-track) (a vertex-data) time-index &optional  (weight 1.0) (scale 1.0) &key &allow-other-keys))
+;; (defmethod animation-apply ((o vertex-animation-track) (a vertex-data) time-index &optional  (weight 1.0) (scale 1.0) &key &allow-other-keys))
 
 (defclass morph-animation-track (vertex-animation-track)
   ())
