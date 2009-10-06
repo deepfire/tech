@@ -625,7 +625,7 @@ Based on Stan Melax's article in Game Programming Gems."
         ;; This is because the triangle has been mirrored when going from tangent space to object space.
         ;; reverse tangents if necessary
         (if (minusp (dot tangentcross normal))
-            (- tangent)
+            (v3-neg tangent)
             tangent)))))
 
 ;;;;
