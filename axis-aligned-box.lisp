@@ -608,15 +608,15 @@ Based on Stan Melax's article in Game Programming Gems."
   (let* ((side0 (v3- pos1 pos2))
          (side1 (v3- pos3 pos1))
          ;; Calculate face normal
-         (normal (v3-normalizef (v3-cross side1 side0))))
+         (normal (v3-normalisef (v3-cross side1 side0))))
     ;; Now we use a formula to calculate the tangent.
     (let* ((deltav0 (- v1 v2))
            (deltav1 (- v3 v1))
-           (tangent (v3-normalizef (v3- (v3* side0 deltav1) (v3* side1 deltav0))))
+           (tangent (v3-normalisef (v3- (v3* side0 deltav1) (v3* side1 deltav0))))
            ;; Calculate binormal
            (deltau0 (- u1 u2))
            (deltau1 (- u3 u1))
-           (binormal (v3-normalizef (v3- (v3* side0 deltau1) (v3* side1 deltau0)))))
+           (binormal (v3-normalisef (v3- (v3* side0 deltau1) (v3* side1 deltau0)))))
       (let ((tangentcross (v3-cross tangent binormal)))
         ;; Now, we take the cross product of the tangents to get a vector which 
         ;; should point in the same direction as our normal calculated above. 
