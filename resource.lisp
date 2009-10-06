@@ -80,6 +80,8 @@ other then FIXNUM or T."
 (defclass named ()
   ((name :accessor name :initarg :name)))
 
+(defgeneric free (object))
+
 ;;;
 ;;; Resource
 ;;;
@@ -139,6 +141,8 @@ setting of core parameters (prior to load) through a generic interface."))
 (defgeneric resource-reload (resource))
 (defgeneric resource-touch (resource))
 
+(defgeneric resource-set-parameter-list (resource parameter-list))
+
 (defclass manual-resource-loader ()
   ())
 
@@ -150,19 +154,130 @@ setting of core parameters (prior to load) through a generic interface."))
 (defgeneric resource-loader-prepare-resource (loader resource))
 (defgeneric resource-loader-load-resource (loader resource))
 
-(defclass resource-manager ()
-  ())
+(defclass resource-loading-listener () ())
 
-(defgeneric resource-manager-notify-resource-loaded (manager resource))
-(defgeneric resource-manager-notify-resource-unloaded (manager resource))
-(defgeneric resource-manager-notify-resource-touched (manager resource))
+(defgeneric resource-loading-listener-resource-collision (listener resource resource-manager))
 
 (defclass resource-group-manager () ())
 
 (defvar *resource-group-manager*)
 
 (defgeneric resource-group-manager-find-group-containing-resource (manager resource-name))
+(defgeneric resource-group-manager-group-in-global-pool-p (manager resource-group-name))
+(defgeneric resource-group-manager-get-loading-listener (manager))
+(defgeneric resource-group-manager-notify-resource-created (manager resource))
 (defgeneric resource-group-manager-notify-resource-group-changed (manager old-group resource))
+(defgeneric resource-group-manager-notify-resource-removed (manager resource))
+
+(defclass resource-pool () ())
+
+(defclass script-loader () ())
+
+(defgeneric script-loader-get-script-patterns (script-loader))
+(defgeneric script-loader-parse-script (script-loader data-stream group-name))
+(defgeneric script-loader-get-loading-order (script-loader))
+
+(defclass resource-manager (script-loader auto-locked)
+  ((resource-map :type hash-table :initarg :resource-map)
+   (grouped-resource-map :type hash-table :initarg :grouped-resource-map)
+   (resource-handle-map :accessor resource-manager-resource-handle-map :type hash-table :initarg :resource-handle-map)
+   (resource-pool-map :accessor resource-manager-resource-pool-map :type hash-table :initarg :resource-handle-map)
+   (next-handle :accessor resource-manager-next-handle :initarg :next-handle)
+   (memory-budget :reader resource-manager-memory-budget :initarg :memory-budget)
+   (memory-usage :accessor resource-manager-memory-usage :initarg :memory-usage)
+   (verbose :accessor resource-manager-verbose-p :initarg :verbose-p)
+   (script-patterns :accessor resource-manager-script-patterns :initarg :script-patterns)
+   (load-order :reader resource-manager-load-order :initarg :load-order)
+   (resource-type :accessor resource-manager-resource-type :initarg :resource-type))
+  (:default-initargs
+   :load-order 0
+   :next-handle 1
+   :verbose t
+   :memory-budget most-positive-fixnum
+   :resource-map (make-hash-table :test 'eq)
+   :grouped-resource-map (make-hash-table :test 'eq)
+   :resource-handle-map (make-hash-table :test 'eq)))
+
+(define-subcontainer manager-resource-by-handle :container-slot resource-handle-map :if-exists :error
+                     :iterator do-manager-resources-by-handle :iterator-bind-key t :remover remove-resource-handle :type resource)
+(define-subcontainer manager-resource-group :container-slot grouped-resource-map :remover remove-resource-group :if-does-not-exist :continue :type hash-table)
+(define-subcontainer manager-resource :container-slot resource-map :if-exists :return-nil :if-does-not-exist :continue
+                     :iterator do-manager-resources :iterator-bind-key t :remover t :type resource)
+
+(defgeneric resource-manager-notify-resource-loaded (manager resource))
+(defgeneric resource-manager-notify-resource-unloaded (manager resource))
+(defgeneric resource-manager-notify-resource-touched (manager resource))
+(defgeneric resource-manager-create-resource (manager name group manualp params &key &allow-other-keys))
+(defgeneric resource-manager-prepare-resource (manager name group manualp params &key &allow-other-keys))
+(defgeneric resource-manager-load-resource (manager name group manualp params &key &allow-other-keys))
+(defgeneric resource-manager-unload-resource (manager name group manualp params &key &allow-other-keys))
+(defgeneric resource-manager-get-next-handle (manager))
+(defgeneric resource-manager-check-usage (manager))
+(defgeneric resource-manager-get-by-name (manager name group-name))
+(defgeneric resource-manager-add-resource (manager resource))
+(defgeneric resource-manager-remote-resource (manager resource))
+(defgeneric resource-manager-create-or-retrieve-resource (manager name group-name manualp params &key &allow-other-keys))
+
+(defmethod free ((o resource-manager))
+  (destroy-all-resource-pool o)
+  (remove-all o))
+
+(defmethod resource-manager-get-next-handle ((o resource-manager)))
+
+(defmethod resource-manager-create-resource :around ((o resource-manager) name group-name manualp params &key resource-loader)
+  (lret ((resource (call-next-method name group-name manualp params :resource-loader resource-loader :handle (resource-manager-get-next-handle o))))
+    (when params
+      (resource-set-parameter-list resource params))
+    (resource-manager-add-resource o resource)
+    (resource-group-manager-notify-resource-created *resource-group-manager* resource)))
+
+(defmethod resource-manager-create-or-retrieve-resource ((o resource-manager) name group-name manualp params &key resource-loader)
+  (with-auto-lock o
+    (if-let ((r (resource-manager-get-by-name o name group-name)))
+      (values r nil)
+      (values (resource-manager-create-resource o name group-name manualp params :resource-loader resource-loader) t))))
+
+(defmethod resource-manager-prepare-resource ((o resource-manager) name group-name manualp params &key resource-loader)
+  (lret ((r (resource-manager-create-or-retrieve-resource o name group-name manualp params :resource-loader resource-loader)))
+    (resource-prepare r)))
+
+(defmethod resource-manager-load-resource ((o resource-manager) name group-name manualp params &key resource-loader backgroundp)
+  (lret ((r (resource-manager-create-or-retrieve-resource o name group-name manualp params :resource-loader resource-loader)))
+    (resource-load r backgroundp)))
+
+(defmethod resource-manager-add-resource ((o resource-manager) r)
+  (with-auto-lock o
+    (unless (if (resource-group-manager-group-in-global-pool-p *resource-group-manager* (resource-groupname r))
+                (setf (manager-resource o (name r)) r)
+                (puthash-unique (name r)
+                                (or (manager-resource-group o (resource-groupname r))
+                                    (setf (manager-resource-group o (resource-groupname r)) (make-hash-table :test #'eq)))
+                                r))
+      (if-let ((listener (resource-group-manager-get-loading-listener *resource-group-manager*)))
+        (when (resource-loading-listener-resource-collision listener r o)
+          (unless (if (resource-group-manager-group-in-global-pool-p *resource-group-manager* (resource-groupname r))
+                      (setf (manager-resource o (name r)) r)
+                      (puthash-unique (name r)
+                                      (manager-resource-group o (resource-groupname r))
+                                      r))
+            (error "~@<Resource named ~S already exists.~:@>" (name r))))
+        (return-from resource-manager-add-resource))
+      (setf (manager-resource-by-handle o (resource-handle r)) r))))
+
+(defmethod resource-manager-remove-resource ((o resource-manager) r)
+  (with-auto-lock o
+    (if (resource-group-manager-group-in-global-pool-p *resource-group-manager* (resource-groupname r))
+        (remove-resource o (name r))
+        (when-let ((group (manager-resource-group o (resource-groupname r))))
+          (remhash (name r) group)
+          (when (zerop (hash-table-count group))
+            (remove-resource-group o (resource-groupname r)))))
+    (remove-resource-handle o (resource-handle r))
+    (resource-group-manager-notify-resource-removed *resource-group-manager* r)))
+
+(defmethod (setf resource-manager-memory-budget) (new-budget (o resource-manager))
+  (setf (slot-value o 'memory-budget) new-budget)
+  (resource-manager-check-usage o))
 
 (defclass resource-listener () ())
 
