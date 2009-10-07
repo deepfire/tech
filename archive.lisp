@@ -20,9 +20,8 @@
 
 (in-package :archive)
 
-(defclass archive ()
-  ((name :accessor archive-name)
-   (read-only-p :accessor archive-read-only-p)
+(defclass archive (named)
+  ((read-only-p :accessor archive-read-only-p)
    (case-sensitive-p :accessor archive-case-sensitive-p)))
 
 (defgeneric archive-init (archive))
