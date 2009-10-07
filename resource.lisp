@@ -198,8 +198,6 @@ setting of core parameters (prior to load) through a generic interface."))
 (defgeneric resource-loading-listener-stream-opened (listener name group-name resource data-stream))
 (defgeneric resource-loading-listener-resource-collision (listener resource resource-manager))
 
-(defclass archive () ())
-
 (defstruct resource-declaration
   (name nil :type (or null symbol))
   (type nil :type (or null symbol))

@@ -42,3 +42,9 @@
 
 (defgeneric archive-load (filename type))
 (defgeneric archive-unload (archive))
+
+(defclass archive-manager () ())
+
+(defgeneric archive-manager-load (archive-manager name type))
+
+(defvar *archive-manager*)

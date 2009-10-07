@@ -9,6 +9,9 @@
   :depends-on (:alexandria :pergamum :cffi :bordeaux-threads :cl-opengl)
   :components
   ((:file "package")
+   ;;
    (:file "axis-aligned-box" :depends-on ("package"))
-   (:file "resource" :depends-on ("package"))
-   (:file "tech" :depends-on ("package"))))
+   (:file "archive" :depends-on ("package"))
+   ;;
+   (:file "resource" :depends-on ("archive"))
+   (:file "tech" :depends-on ("archive"))))
